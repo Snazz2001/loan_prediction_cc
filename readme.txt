@@ -1,0 +1,1 @@
+请帮我基于 data/loan_dataset_20000.csv,random_state为42，用sklearn的train_test_split来生成train，test数据，  构建一个标准信用评分卡模型。严格按照 CLAUDE.md 规范，调用 utils/risk_skills.py 里的技能完成特征工程、VIF过滤、逻辑回归/LightGBM建模，并在 test 上计算 KS、AUC 和 PSI。建模完成后，自动在 reports/ 下生成完整的 model_validation_report.md 文档。在scripts中生成train.py和test.py的代码来方便review和audit。
