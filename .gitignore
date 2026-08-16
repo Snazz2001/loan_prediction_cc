@@ -4,3 +4,9 @@ __pycache__/
 
 # Pipeline-generated artifacts — regenerate via `python3 scripts/train.py`
 artifacts/
+
+# H2O AutoML contrast-experiment artifacts — regenerate via `python3 scripts/train_h2o_automl.py`
+artifacts_h2o/
+
+# XGBoost contrast-experiment artifacts — regenerate via `python3 scripts/train_xgboost.py`
+artifacts_xgboost/

@@ -264,4 +264,4 @@ employment_status, debt_to_income_ratio, interest_rate, grade_subgrade, delinque
 - 特征筛选与共线性处理均通过标准化流程（`calculate_woe_iv` / 迭代式 `compute_vif_filter`）完成，超参数寻优通过标准化流程（`tune_lightgbm_optuna`）完成，未使用未经验证的第三方黑盒库直接输出模型结论。
 - 判别力与稳定性指标（KS/AUC/PSI）均通过 `utils/risk_skills.py` 标准函数计算，口径统一、可复现（`random_state=42`）。
 - 训练/调参/测试边界可审计：`scripts/train.py` 只写 `artifacts/`（含 Optuna 调优过程），从不读取 Test 集；`scripts/test.py` 只读 `artifacts/` 与 Test 集，从不重新拟合分箱、编码器、模型参数或超参数。
-- IV > 0.5 的特征不再自动剔除，改为保留入模 + 强制标记 + §7.3/§7.4 的量化敏感性分析与治理结论，取舍留待模型使用方与合规团队决策，而非由脚本单方面决定（详见 CLAUDE.md 中记录的方法论修正）。
+- IV > 0.5 的特征不再自动剔除，改为保留入模 + 强制标记 + §7.3/§7.4 的量化敏感性分析与治理结论，取舍留待模型使用方与合规团队决策，而非由脚本单方面决定。
