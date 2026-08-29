@@ -234,7 +234,7 @@ Selection happened on Train OOF AUC only. Test was not used to choose this candi
 
 ### (i) mean |SHAP| by feature on train
 
-Computed with `model.booster_.predict(..., pred_contrib=True)` on all {len(X_train)} train rows.
+Computed with Exact SHAP (`shap.explainers.Exact` on `predict_proba`, Independent train background n=200, `interactions=True`) on all {len(X_train)} train rows. Native LightGBM `pred_contrib` is not implemented for `linear_tree`.
 
 {md_table(shap_table)}
 
