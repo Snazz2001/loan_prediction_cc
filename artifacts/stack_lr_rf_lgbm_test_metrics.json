@@ -1,0 +1,37 @@
+{
+  "AUC": 0.8885,
+  "KS_Statistic": 0.5795,
+  "Gini": 0.7769,
+  "PSI": 0.0028,
+  "PSI_Status": "Stable (<0.10) - No action needed",
+  "Validation_Rating": "Good (0.40 - 0.60)",
+  "Optimal_Cutoff_Probability": 0.1312,
+  "beat_last_run_test_auc_0.8858": true,
+  "last_run_champion": {
+    "AUC": 0.8858,
+    "KS": 0.5777,
+    "Gini": 0.7715,
+    "PSI": 0.0021
+  },
+  "train_oof_stack": {
+    "AUC": 0.8891,
+    "Gini": 0.7781,
+    "KS_Statistic": 0.5824,
+    "Optimal_Cutoff_Probability": 0.1722,
+    "Validation_Rating": "Good (0.40 - 0.60)"
+  },
+  "confusion": {
+    "cutoff": 0.1312,
+    "TN": 3760,
+    "FP": 1039,
+    "FN": 246,
+    "TP": 955,
+    "accuracy": 0.7858,
+    "precision": 0.4789,
+    "recall_sensitivity": 0.7952,
+    "specificity": 0.7835
+  },
+  "eval_never_fits": true,
+  "freeze_timestamp_utc": "2026-08-29T05:29:17.340260+00:00",
+  "test_labels_used_to_fit_or_select": false
+}
