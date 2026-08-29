@@ -1,0 +1,292 @@
+{
+  "model_type": "stack_lr_rf_lgbm",
+  "freeze_timestamp_utc": "2026-08-29T05:29:17.340260+00:00",
+  "test_looked_at": false,
+  "test_metrics": null,
+  "test_labels_used_to_fit_or_select": false,
+  "split": {
+    "source": "scripts/train.py::load_and_split",
+    "test_size": 0.3,
+    "stratify": "default",
+    "random_state": 42,
+    "train_n": 14000,
+    "train_bad_rate": 0.2001,
+    "test_n": 6000,
+    "test_bad_rate": 0.2002
+  },
+  "feature_cols": [
+    "age",
+    "gender",
+    "marital_status",
+    "education_level",
+    "annual_income",
+    "monthly_income",
+    "employment_status",
+    "debt_to_income_ratio",
+    "credit_score",
+    "loan_amount",
+    "loan_purpose",
+    "interest_rate",
+    "loan_term",
+    "installment",
+    "grade_subgrade",
+    "num_of_open_accounts",
+    "total_credit_limit",
+    "current_balance",
+    "delinquency_history",
+    "public_records",
+    "num_of_delinquencies"
+  ],
+  "n_features": 21,
+  "loan_paid_back_in_features": false,
+  "iv_drop": false,
+  "vif_drop": false,
+  "woe_bins": 5,
+  "cv_folds": 5,
+  "n_trials_requested": 30,
+  "n_trials_completed": 30,
+  "optuna_sampler": "TPESampler",
+  "optuna_seed": 42,
+  "best_hyperparameters": {
+    "lr": {
+      "penalty": "l2",
+      "C": 19.832294665045822,
+      "solver": "lbfgs",
+      "max_iter": 1000,
+      "random_state": 42
+    },
+    "rf": {
+      "n_estimators": 337,
+      "max_depth": 5,
+      "min_samples_leaf": 72,
+      "n_jobs": -1,
+      "random_state": 42
+    },
+    "lgbm_tune": {
+      "objective": "binary",
+      "boosting_type": "gbdt",
+      "verbosity": -1,
+      "random_state": 42,
+      "n_estimators": 1000,
+      "learning_rate": 0.03139974180336646,
+      "num_leaves": 18,
+      "max_depth": 4
+    },
+    "lgbm_final": {
+      "objective": "binary",
+      "boosting_type": "gbdt",
+      "verbosity": -1,
+      "random_state": 42,
+      "n_estimators": 225,
+      "learning_rate": 0.03139974180336646,
+      "num_leaves": 18,
+      "max_depth": 4
+    },
+    "meta": {
+      "penalty": "l2",
+      "C": 10.0,
+      "solver": "lbfgs",
+      "max_iter": 1000,
+      "random_state": 42
+    }
+  },
+  "lgbm_best_iterations_oof": [
+    218,
+    278,
+    179,
+    213,
+    236
+  ],
+  "lgbm_mean_best_iteration": 224.8,
+  "n_estimators_final": 225,
+  "meta_c_grid": [
+    0.1,
+    0.5,
+    1.0,
+    2.0,
+    10.0
+  ],
+  "meta_c_scores": {
+    "0.1": 0.885739,
+    "0.5": 0.887675,
+    "1.0": 0.888327,
+    "2.0": 0.888705,
+    "10.0": 0.889071
+  },
+  "best_meta_C": 10.0,
+  "oof_stack_metrics": {
+    "AUC": 0.8891,
+    "Gini": 0.7781,
+    "KS_Statistic": 0.5824,
+    "Optimal_Cutoff_Probability": 0.1722,
+    "Validation_Rating": "Good (0.40 - 0.60)"
+  },
+  "oof_stack_auc": 0.8891,
+  "oof_stack_auc_raw": 0.8890707491957113,
+  "beat_last_run_cv_0.8862": true,
+  "last_run_cv_auc": 0.8862,
+  "per_base_oof_metrics": {
+    "lr": {
+      "AUC": 0.8806,
+      "Gini": 0.7612,
+      "KS_Statistic": 0.5643,
+      "Optimal_Cutoff_Probability": 0.2547,
+      "Validation_Rating": "Good (0.40 - 0.60)"
+    },
+    "rf": {
+      "AUC": 0.8699,
+      "Gini": 0.7399,
+      "KS_Statistic": 0.5432,
+      "Optimal_Cutoff_Probability": 0.2142,
+      "Validation_Rating": "Good (0.40 - 0.60)"
+    },
+    "lgbm": {
+      "AUC": 0.8892,
+      "Gini": 0.7784,
+      "KS_Statistic": 0.5815,
+      "Optimal_Cutoff_Probability": 0.2221,
+      "Validation_Rating": "Good (0.40 - 0.60)"
+    }
+  },
+  "optuna_best_value_during_search": 0.8883267520283711,
+  "optuna_trial_values": [
+    0.887219395545179,
+    0.887757325453556,
+    0.8874768839812324,
+    0.886935798030368,
+    0.8848613217397547,
+    0.8881378676673937,
+    0.8870626773141977,
+    0.8857219012038198,
+    0.8877287297958687,
+    0.887306138894752,
+    0.8878286711412974,
+    0.8877418959125074,
+    0.8878445788706015,
+    0.8883058073827741,
+    0.887456513161542,
+    0.8879154463700873,
+    0.8882079063072361,
+    0.887313662389974,
+    0.8872456640200223,
+    0.8876598069286227,
+    0.8875532028268321,
+    0.8877492918908612,
+    0.8873751255204323,
+    0.8880572770067099,
+    0.8883267520283711,
+    0.8877855066814218,
+    0.887499167553945,
+    0.8880238038288151,
+    0.888026641079132,
+    0.8873318973021224
+  ],
+  "iv_table_diagnostic": [
+    {
+      "feature": "employment_status",
+      "iv": 1.9096,
+      "predictive_power": "Suspicious / Overfitting (>0.5)"
+    },
+    {
+      "feature": "debt_to_income_ratio",
+      "iv": 0.3211,
+      "predictive_power": "Strong (0.3 - 0.5)"
+    },
+    {
+      "feature": "grade_subgrade",
+      "iv": 0.2755,
+      "predictive_power": "Medium (0.1 - 0.3)"
+    },
+    {
+      "feature": "credit_score",
+      "iv": 0.2601,
+      "predictive_power": "Medium (0.1 - 0.3)"
+    },
+    {
+      "feature": "interest_rate",
+      "iv": 0.08,
+      "predictive_power": "Weak (0.02 - 0.1)"
+    },
+    {
+      "feature": "delinquency_history",
+      "iv": 0.041,
+      "predictive_power": "Weak (0.02 - 0.1)"
+    },
+    {
+      "feature": "num_of_delinquencies",
+      "iv": 0.0317,
+      "predictive_power": "Weak (0.02 - 0.1)"
+    },
+    {
+      "feature": "loan_purpose",
+      "iv": 0.0073,
+      "predictive_power": "Unpredictive (<0.02)"
+    },
+    {
+      "feature": "education_level",
+      "iv": 0.0037,
+      "predictive_power": "Unpredictive (<0.02)"
+    },
+    {
+      "feature": "monthly_income",
+      "iv": 0.003,
+      "predictive_power": "Unpredictive (<0.02)"
+    },
+    {
+      "feature": "annual_income",
+      "iv": 0.003,
+      "predictive_power": "Unpredictive (<0.02)"
+    },
+    {
+      "feature": "current_balance",
+      "iv": 0.0022,
+      "predictive_power": "Unpredictive (<0.02)"
+    },
+    {
+      "feature": "loan_amount",
+      "iv": 0.0022,
+      "predictive_power": "Unpredictive (<0.02)"
+    },
+    {
+      "feature": "num_of_open_accounts",
+      "iv": 0.0021,
+      "predictive_power": "Unpredictive (<0.02)"
+    },
+    {
+      "feature": "installment",
+      "iv": 0.002,
+      "predictive_power": "Unpredictive (<0.02)"
+    },
+    {
+      "feature": "marital_status",
+      "iv": 0.0019,
+      "predictive_power": "Unpredictive (<0.02)"
+    },
+    {
+      "feature": "total_credit_limit",
+      "iv": 0.0016,
+      "predictive_power": "Unpredictive (<0.02)"
+    },
+    {
+      "feature": "age",
+      "iv": 0.0015,
+      "predictive_power": "Unpredictive (<0.02)"
+    },
+    {
+      "feature": "gender",
+      "iv": 0.0004,
+      "predictive_power": "Unpredictive (<0.02)"
+    },
+    {
+      "feature": "public_records",
+      "iv": 0.0002,
+      "predictive_power": "Unpredictive (<0.02)"
+    },
+    {
+      "feature": "loan_term",
+      "iv": 0.0001,
+      "predictive_power": "Unpredictive (<0.02)"
+    }
+  ],
+  "notes": "Meta-learner is fitted on OOF base PDs only and is NOT refit on full-train in-sample base PDs. Train stacked PD for PSI must be meta.predict_proba on the OOF 14000x3 matrix."
+}
