@@ -1,0 +1,323 @@
+{
+  "algorithm": "lightgbm.LGBMClassifier",
+  "fixed": {
+    "objective": "binary",
+    "boosting_type": "gbdt",
+    "linear_tree": true,
+    "random_state": 42,
+    "monotone_constraints": [
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1
+    ],
+    "interaction_constraints": [
+      [
+        "employment_status"
+      ],
+      [
+        "debt_to_income_ratio",
+        "interest_rate",
+        "grade_subgrade",
+        "delinquency_history",
+        "num_of_delinquencies"
+      ]
+    ],
+    "final_features": [
+      "employment_status",
+      "debt_to_income_ratio",
+      "interest_rate",
+      "grade_subgrade",
+      "delinquency_history",
+      "num_of_delinquencies"
+    ]
+  },
+  "search_space": {
+    "n_trials": 80,
+    "cv_folds": 5,
+    "objective": "OOF AUC",
+    "ks_role": "monitoring only",
+    "learning_rate": "log 0.01-0.1",
+    "num_leaves": "15-127",
+    "max_depth": "3-8",
+    "min_child_samples": "20-300",
+    "subsample": "0.6-1.0 (subsample_freq=1)",
+    "colsample_bytree": "0.6-1.0",
+    "reg_alpha": "log 1e-3-10",
+    "reg_lambda": "log 1e-3-10",
+    "path_smooth": "0-10",
+    "min_gain_to_split": "0-0.5",
+    "n_estimators_tune": 1000,
+    "early_stopping": 30
+  },
+  "best_hyperparameters": {
+    "learning_rate": 0.013862778117581485,
+    "num_leaves": 88,
+    "max_depth": 8,
+    "min_child_samples": 154,
+    "subsample": 0.6163952015934984,
+    "colsample_bytree": 0.8301931354519108,
+    "reg_alpha": 0.0010090125025421872,
+    "reg_lambda": 0.0015889624999375618,
+    "path_smooth": 4.685572392389939,
+    "min_gain_to_split": 0.21582236887983208
+  },
+  "n_estimators_final": 50,
+  "winning_fold_best_iterations": [
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "winning_fold_aucs": [
+    0.747183,
+    0.779088,
+    0.781089,
+    0.777005,
+    0.774276
+  ],
+  "winning_fold_ks": [
+    0.462054,
+    0.514286,
+    0.523214,
+    0.516964,
+    0.513265
+  ],
+  "train_oof_auc": 0.7732,
+  "train_oof_auc_raw": 0.7732413439398039,
+  "train_oof_ks_monitoring": 0.506,
+  "n_trials_completed": 80,
+  "feature_importances": [
+    {
+      "feature": "employment_status",
+      "importance": 120
+    },
+    {
+      "feature": "debt_to_income_ratio",
+      "importance": 0
+    },
+    {
+      "feature": "interest_rate",
+      "importance": 0
+    },
+    {
+      "feature": "grade_subgrade",
+      "importance": 0
+    },
+    {
+      "feature": "delinquency_history",
+      "importance": 0
+    },
+    {
+      "feature": "num_of_delinquencies",
+      "importance": 0
+    }
+  ],
+  "split": {
+    "train_n": 14000,
+    "train_bad_rate": 0.2001,
+    "test_n": 6000,
+    "test_bad_rate": 0.2002,
+    "note": "Test labels persisted for eval only; not used to fit or select."
+  },
+  "freeze": {
+    "timestamp_utc": "2026-08-29T04:20:53.928978+00:00",
+    "selection_rule": "higher train OOF AUC vs last run CV 0.8862",
+    "last_run_cv_auc": 0.8862,
+    "train_oof_auc": 0.7732,
+    "beats_last_cv": false,
+    "test_looked_at": false,
+    "test_metrics": null,
+    "test_labels_used_to_fit_or_select": false
+  },
+  "train_governance_exhibits": {
+    "mean_abs_shap_by_feature": [
+      {
+        "feature": "employment_status",
+        "mean_abs_shap": 0.069619
+      },
+      {
+        "feature": "interest_rate",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "grade_subgrade",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "debt_to_income_ratio",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "delinquency_history",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "num_of_delinquencies",
+        "mean_abs_shap": 0.0
+      }
+    ],
+    "employment_status_pairwise_shap_interactions": [
+      {
+        "feature_a": "employment_status",
+        "feature_b": "debt_to_income_ratio",
+        "mean_abs_interaction": 0.0,
+        "mean_interaction": -0.0,
+        "max_abs_interaction": 0.0
+      },
+      {
+        "feature_a": "employment_status",
+        "feature_b": "interest_rate",
+        "mean_abs_interaction": 0.0,
+        "mean_interaction": 0.0,
+        "max_abs_interaction": 0.0
+      },
+      {
+        "feature_a": "employment_status",
+        "feature_b": "grade_subgrade",
+        "mean_abs_interaction": 0.0,
+        "mean_interaction": -0.0,
+        "max_abs_interaction": 0.0
+      },
+      {
+        "feature_a": "employment_status",
+        "feature_b": "delinquency_history",
+        "mean_abs_interaction": 0.0,
+        "mean_interaction": -0.0,
+        "max_abs_interaction": 0.0
+      },
+      {
+        "feature_a": "employment_status",
+        "feature_b": "num_of_delinquencies",
+        "mean_abs_interaction": 0.0,
+        "mean_interaction": 0.0,
+        "max_abs_interaction": 0.0
+      }
+    ],
+    "interaction_method": "shap.explainers.Exact(predict_proba, Independent(train_background=200), interactions=True) on all train rows. Native LightGBM pred_contrib is not implemented for linear_tree; TreeExplainer would be invalid.",
+    "generate_shap_summary_train": {
+      "xai_method": "SHAP (Kernel/Tree)",
+      "global_importance_ranking": [
+        [
+          "employment_status",
+          0.3252
+        ],
+        [
+          "debt_to_income_ratio",
+          0.0
+        ],
+        [
+          "interest_rate",
+          0.0
+        ],
+        [
+          "grade_subgrade",
+          0.0
+        ],
+        [
+          "delinquency_history",
+          0.0
+        ],
+        [
+          "num_of_delinquencies",
+          0.0
+        ]
+      ],
+      "note": "generate_shap_summary uses shap.Explainer -> TreeExplainer, which is NOT valid for linear_tree (leaf linear models). Exact SHAP above is the exhibit of record."
+    },
+    "employment_status_woe_bin_table": [
+      {
+        "employment_status": "Unemployed",
+        "n": 1475,
+        "n_default": 1210,
+        "default_rate": 0.8203,
+        "woe": -2.9045
+      },
+      {
+        "employment_status": "Student",
+        "n": 566,
+        "n_default": 332,
+        "default_rate": 0.5866,
+        "woe": -1.7357
+      },
+      {
+        "employment_status": "Employed",
+        "n": 9086,
+        "n_default": 1029,
+        "default_rate": 0.1133,
+        "woe": 0.6721
+      },
+      {
+        "employment_status": "Self-employed",
+        "n": 2021,
+        "n_default": 224,
+        "default_rate": 0.1108,
+        "woe": 0.6964
+      },
+      {
+        "employment_status": "Retired",
+        "n": 852,
+        "n_default": 6,
+        "default_rate": 0.007,
+        "woe": 3.5629
+      }
+    ],
+    "employment_status_iv": {
+      "iv": 1.9096,
+      "predictive_power": "Suspicious / Overfitting (>0.5)",
+      "bin_details": [
+        {
+          "bin": "Employed",
+          "total_count": 9086,
+          "bad_count": 1029,
+          "woe": 0.6721058296205613,
+          "iv_component": 0.23662859434633252
+        },
+        {
+          "bin": "Retired",
+          "total_count": 852,
+          "bad_count": 6,
+          "woe": 3.5629118980555834,
+          "iv_component": 0.2615190410419695
+        },
+        {
+          "bin": "Self-employed",
+          "total_count": 2021,
+          "bad_count": 224,
+          "woe": 0.6963798426059343,
+          "iv_component": 0.056051137662083354
+        },
+        {
+          "bin": "Student",
+          "total_count": 566,
+          "bad_count": 332,
+          "woe": -1.735661845881372,
+          "iv_component": 0.16946025781229862
+        },
+        {
+          "bin": "Unemployed",
+          "total_count": 1475,
+          "bad_count": 1210,
+          "woe": -2.9044938049271494,
+          "iv_component": 1.185979606825153
+        }
+      ]
+    }
+  },
+  "artifact_paths": {
+    "model": "artifacts/lgbm_linear_tree_model.joblib",
+    "meta": "artifacts/lgbm_linear_tree_meta.json",
+    "encoders": "artifacts/linear_tree_woe_encoders.joblib",
+    "feature_selection": "artifacts/linear_tree_feature_selection.json",
+    "X_train": "artifacts/linear_tree_X_train.csv",
+    "y_train": "artifacts/linear_tree_y_train.csv",
+    "X_test": "artifacts/linear_tree_X_test.csv",
+    "y_test": "artifacts/linear_tree_y_test.csv"
+  },
+  "did_not_write": [
+    "artifacts/lgbm_model.joblib"
+  ]
+}
