@@ -3,7 +3,15 @@ __pycache__/
 .DS_Store
 
 # Pipeline-generated artifacts — regenerate via `python3 scripts/train.py`
-artifacts/
+artifacts/*
+# Stacking candidate (this PR) — committed for audit; do not use last-run / linear-tree names
+!artifacts/stack_lr_rf_lgbm_bases.joblib
+!artifacts/stack_lr_rf_lgbm_meta.joblib
+!artifacts/stack_lr_rf_lgbm_encoders.joblib
+!artifacts/stack_lr_rf_lgbm_meta.json
+!artifacts/stack_lr_rf_lgbm_oof_pds.csv
+!artifacts/stack_lr_rf_lgbm_test_metrics.json
+!artifacts/stack_lr_rf_lgbm_run_report.md
 
 # H2O AutoML contrast-experiment artifacts — regenerate via `python3 scripts/train_h2o_automl.py`
 artifacts_h2o/
