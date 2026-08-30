@@ -1,0 +1,40 @@
+{
+  "computed_after_freeze": true,
+  "freeze_timestamp_utc": "2026-08-30T15:57:35.847264+00:00",
+  "gender_in_model": false,
+  "employment_status_in_model": true,
+  "in_model_features": [
+    "employment_status",
+    "debt_to_income_ratio",
+    "interest_rate",
+    "grade_subgrade",
+    "delinquency_history",
+    "num_of_delinquencies"
+  ],
+  "beats_last_run_test_auc_0_8858": false,
+  "boosting_type": "dart",
+  "early_stopping_used": false,
+  "beats_stack_test_auc_0_8885": false,
+  "beats_pr4_test_auc_0_8859": false,
+  "train_refit_metrics": {
+    "AUC": 0.7728,
+    "Gini": 0.5455,
+    "KS_Statistic": 0.506,
+    "Optimal_Cutoff_Probability": 0.4278,
+    "Validation_Rating": "Good (0.40 - 0.60)"
+  },
+  "test_metrics": {
+    "AUC": 0.7645,
+    "Gini": 0.5289,
+    "KS_Statistic": 0.4989,
+    "Optimal_Cutoff_Probability": 0.4278,
+    "Validation_Rating": "Good (0.40 - 0.60)"
+  },
+  "score_psi": {
+    "PSI": 0.0011,
+    "Status": "Stable (<0.10) - No action needed"
+  },
+  "used_to_select_model": false,
+  "collapsed_to_employment_lookup": true,
+  "note": "Test metrics are reported after freeze. They were not used to choose hyperparameters, n_estimators, or whether to keep the candidate. Eval never fits. employment_status is in-model (additive-only singleton interaction group). gender is absent from X, encoders, feature_name_, and SHAP. boosting_type=dart. No early_stopping."
+}

@@ -1,0 +1,260 @@
+{
+  "algorithm": "lightgbm.LGBMClassifier",
+  "stacked": false,
+  "competing_models": [],
+  "boosting_type": "dart",
+  "early_stopping_used": false,
+  "fixed": {
+    "objective": "cross_entropy",
+    "boosting_type": "dart",
+    "linear_tree": false,
+    "random_state": 42,
+    "monotone_constraints": [
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1
+    ],
+    "interaction_constraints": [
+      [
+        "employment_status"
+      ],
+      [
+        "debt_to_income_ratio",
+        "interest_rate",
+        "grade_subgrade",
+        "delinquency_history",
+        "num_of_delinquencies"
+      ]
+    ],
+    "in_model_features": [
+      "employment_status",
+      "debt_to_income_ratio",
+      "interest_rate",
+      "grade_subgrade",
+      "delinquency_history",
+      "num_of_delinquencies"
+    ],
+    "dropped_from_model": [
+      "gender"
+    ],
+    "gender_in_model": false,
+    "employment_status_in_model": true,
+    "employment_status_role": "additive_only_singleton_interaction_group",
+    "iv_drop": false,
+    "vif_drop": false,
+    "loan_paid_back_in_features": false,
+    "n_in_model_features": 6,
+    "early_stopping": false
+  },
+  "search_space": {
+    "n_trials": 50,
+    "cv_folds": 5,
+    "objective": "OOF AUC",
+    "ks_role": "monitoring only",
+    "learning_rate": "log 0.01-0.1",
+    "num_leaves": "16-64",
+    "max_depth": "3-6",
+    "min_child_samples": "100-800 (min_data_in_leaf)",
+    "feature_fraction": "0.5-1.0 (passed as sklearn colsample_bytree)",
+    "reg_alpha": "log 1e-3-10",
+    "reg_lambda": "log 1e-3-10",
+    "drop_rate": "0.05-0.3",
+    "skip_drop": "0.2-0.8",
+    "n_estimators": "200-800 (searched; DART has no early_stopping)",
+    "early_stopping": false,
+    "sampler": "TPESampler",
+    "sampler_seed": 42,
+    "subsample_searched": false
+  },
+  "best_hyperparameters": {
+    "learning_rate": 0.018623353562709655,
+    "num_leaves": 48,
+    "max_depth": 5,
+    "min_child_samples": 752,
+    "feature_fraction": 0.6787252920759664,
+    "colsample_bytree": 0.6787252920759664,
+    "reg_alpha": 3.0124989986733963,
+    "reg_lambda": 0.1671382022795037,
+    "drop_rate": 0.20531181715063013,
+    "skip_drop": 0.6097155734197113,
+    "n_estimators": 406
+  },
+  "n_estimators": 406,
+  "n_estimators_final": 406,
+  "winning_fold_n_estimators": [
+    406,
+    406,
+    406,
+    406,
+    406
+  ],
+  "winning_fold_aucs": [
+    0.744013,
+    0.766684,
+    0.778335,
+    0.791048,
+    0.769138
+  ],
+  "winning_fold_ks": [
+    0.462054,
+    0.514286,
+    0.523214,
+    0.516964,
+    0.513265
+  ],
+  "train_oof_auc": 0.7707,
+  "train_oof_auc_raw": 0.7706795938166943,
+  "train_oof_ks_monitoring": 0.506,
+  "train_refit_metrics": {
+    "AUC": 0.7728,
+    "Gini": 0.5455,
+    "KS_Statistic": 0.506,
+    "Optimal_Cutoff_Probability": 0.4278,
+    "Validation_Rating": "Good (0.40 - 0.60)"
+  },
+  "n_trials_requested": 50,
+  "n_trials_completed": 50,
+  "feature_importances": [
+    {
+      "feature": "employment_status",
+      "importance": 622
+    },
+    {
+      "feature": "debt_to_income_ratio",
+      "importance": 0
+    },
+    {
+      "feature": "interest_rate",
+      "importance": 0
+    },
+    {
+      "feature": "grade_subgrade",
+      "importance": 0
+    },
+    {
+      "feature": "delinquency_history",
+      "importance": 0
+    },
+    {
+      "feature": "num_of_delinquencies",
+      "importance": 0
+    }
+  ],
+  "in_model_features": [
+    "employment_status",
+    "debt_to_income_ratio",
+    "interest_rate",
+    "grade_subgrade",
+    "delinquency_history",
+    "num_of_delinquencies"
+  ],
+  "gender_in_model": false,
+  "employment_status_in_model": true,
+  "split": {
+    "source": "scripts/train.py::load_and_split UNCHANGED",
+    "test_size": 0.3,
+    "stratify": "default",
+    "random_state": 42,
+    "train_n": 14000,
+    "train_bad_rate": 0.2001,
+    "train_n_bads": 2801,
+    "test_n": 6000,
+    "test_bad_rate": 0.2002,
+    "test_n_bads": 1201,
+    "note": "Test labels persisted for eval only; not used to fit or select."
+  },
+  "freeze": {
+    "timestamp_utc": "2026-08-30T15:57:35.847264+00:00",
+    "selection_rule": "higher train OOF AUC (test not used)",
+    "last_run_cv_auc": 0.8862,
+    "train_oof_auc": 0.7707,
+    "beats_last_cv": false,
+    "test_looked_at": false,
+    "test_metrics": null,
+    "test_labels_used_to_fit_or_select": false
+  },
+  "train_shap": {
+    "method": "shap.TreeExplainer (TreeSHAP) on all TRAIN rows",
+    "n_rows": 14000,
+    "mean_abs_shap_by_feature": [
+      {
+        "feature": "employment_status",
+        "mean_abs_shap": 0.082269
+      },
+      {
+        "feature": "debt_to_income_ratio",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "interest_rate",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "grade_subgrade",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "delinquency_history",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "num_of_delinquencies",
+        "mean_abs_shap": 0.0
+      }
+    ],
+    "employment_status_rank": 1,
+    "collapsed_to_employment_lookup": true,
+    "collapse_note": "Other 5 features have ~0 mean |SHAP| relative to employment_status (max other <= max(1e-4, 5% of emp)). Singleton interaction + monotone can collapse DART to an employment lookup (same risk as PR #1). Not 'fixed'.",
+    "tree_explainer_error": null,
+    "generate_shap_summary_train": {
+      "xai_method": "SHAP (Kernel/Tree)",
+      "global_importance_ranking": [
+        [
+          "employment_status",
+          0.0804
+        ],
+        [
+          "debt_to_income_ratio",
+          0.0
+        ],
+        [
+          "interest_rate",
+          0.0
+        ],
+        [
+          "grade_subgrade",
+          0.0
+        ],
+        [
+          "delinquency_history",
+          0.0
+        ],
+        [
+          "num_of_delinquencies",
+          0.0
+        ]
+      ]
+    }
+  },
+  "artifact_paths": {
+    "model": "artifacts/lgbm_dart_monotone_model.joblib",
+    "encoders": "artifacts/lgbm_dart_monotone_encoders.joblib",
+    "meta": "artifacts/lgbm_dart_monotone_meta.json",
+    "oof_pds": "artifacts/lgbm_dart_monotone_oof_pds.csv",
+    "X_train": "artifacts/lgbm_dart_monotone_X_train.csv",
+    "y_train": "artifacts/lgbm_dart_monotone_y_train.csv",
+    "X_test": "artifacts/lgbm_dart_monotone_X_test.csv",
+    "y_test": "artifacts/lgbm_dart_monotone_y_test.csv"
+  },
+  "did_not_write": [
+    "artifacts/lgbm_model.joblib",
+    "artifacts/lgbm_linear_tree_*",
+    "artifacts/linear_tree_*",
+    "artifacts/stack_lr_rf_lgbm_*",
+    "artifacts/lgbm_no_gender_emp_overlay_*",
+    "artifacts/lgbm_emp_in_no_gender_*"
+  ]
+}
