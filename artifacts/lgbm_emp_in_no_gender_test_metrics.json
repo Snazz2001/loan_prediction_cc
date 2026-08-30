@@ -1,0 +1,51 @@
+{
+  "computed_after_freeze": true,
+  "freeze_timestamp_utc": "2026-08-30T13:25:39.431309+00:00",
+  "train_refit_metrics": {
+    "AUC": 0.898,
+    "Gini": 0.796,
+    "KS_Statistic": 0.6067,
+    "Optimal_Cutoff_Probability": 0.2243,
+    "Validation_Rating": "Suspicious / Extreme (>0.60)"
+  },
+  "test_metrics": {
+    "AUC": 0.8859,
+    "Gini": 0.7718,
+    "KS_Statistic": 0.5735,
+    "Optimal_Cutoff_Probability": 0.1879,
+    "Validation_Rating": "Good (0.40 - 0.60)"
+  },
+  "score_psi": {
+    "PSI": 0.0019,
+    "Status": "Stable (<0.10) - No action needed"
+  },
+  "beats_last_run_test_auc_0_8858": true,
+  "beats_stack_test_auc_0_8885": false,
+  "beats_overlay_test_auc_0_6995": true,
+  "used_to_select_model": false,
+  "in_model_features": [
+    "age",
+    "marital_status",
+    "education_level",
+    "annual_income",
+    "monthly_income",
+    "employment_status",
+    "debt_to_income_ratio",
+    "credit_score",
+    "loan_amount",
+    "loan_purpose",
+    "interest_rate",
+    "loan_term",
+    "installment",
+    "grade_subgrade",
+    "num_of_open_accounts",
+    "total_credit_limit",
+    "current_balance",
+    "delinquency_history",
+    "public_records",
+    "num_of_delinquencies"
+  ],
+  "gender_in_model": false,
+  "employment_status_in_model": true,
+  "note": "Test metrics are reported after freeze. They were not used to choose hyperparameters, n_estimators_final, or whether to keep the candidate. Eval never fits. employment_status is a normal in-model WOE feature. gender is absent from X, encoders, feature_name_, and SHAP."
+}
