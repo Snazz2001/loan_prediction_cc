@@ -1,0 +1,424 @@
+{
+  "algorithm": "lightgbm.LGBMClassifier",
+  "stacked": false,
+  "competing_models": [],
+  "fixed": {
+    "objective": "binary",
+    "boosting_type": "gbdt",
+    "linear_tree": false,
+    "random_state": 42,
+    "monotone_constraints": [
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1
+    ],
+    "interaction_constraints": null,
+    "in_model_features": [
+      "age",
+      "marital_status",
+      "education_level",
+      "annual_income",
+      "monthly_income",
+      "debt_to_income_ratio",
+      "credit_score",
+      "loan_amount",
+      "loan_purpose",
+      "interest_rate",
+      "loan_term",
+      "installment",
+      "grade_subgrade",
+      "num_of_open_accounts",
+      "total_credit_limit",
+      "current_balance",
+      "delinquency_history",
+      "public_records",
+      "num_of_delinquencies"
+    ],
+    "dropped_from_model": [
+      "gender",
+      "employment_status"
+    ],
+    "gender_in_model": false,
+    "employment_status_in_model": false,
+    "employment_status_role": "policy_overlay_only",
+    "iv_drop": false,
+    "vif_drop": false,
+    "loan_paid_back_in_features": false
+  },
+  "search_space": {
+    "n_trials": 50,
+    "cv_folds": 5,
+    "objective": "OOF AUC",
+    "ks_role": "monitoring only",
+    "learning_rate": "log 0.01-0.1",
+    "num_leaves": "15-63",
+    "max_depth": "3-8",
+    "min_child_samples": "20-300",
+    "subsample": "0.6-1.0 (subsample_freq=1)",
+    "colsample_bytree": "0.6-1.0",
+    "reg_alpha": "log 1e-3-10",
+    "reg_lambda": "log 1e-3-10",
+    "n_estimators_tune": 1000,
+    "early_stopping": 30,
+    "sampler": "TPESampler",
+    "sampler_seed": 42
+  },
+  "best_hyperparameters": {
+    "learning_rate": 0.018426932029835672,
+    "num_leaves": 17,
+    "max_depth": 3,
+    "min_child_samples": 169,
+    "subsample": 0.6209197183594259,
+    "colsample_bytree": 0.668048776781886,
+    "reg_alpha": 0.19906320633702526,
+    "reg_lambda": 0.004007312868129964
+  },
+  "n_estimators_final": 253,
+  "winning_fold_best_iterations": [
+    466,
+    308,
+    170,
+    169,
+    154
+  ],
+  "winning_fold_aucs": [
+    0.720054,
+    0.699912,
+    0.720085,
+    0.70783,
+    0.701236
+  ],
+  "winning_fold_ks": [
+    0.345089,
+    0.300446,
+    0.338839,
+    0.329018,
+    0.305353
+  ],
+  "train_oof_auc": 0.7094,
+  "train_oof_auc_raw": 0.7093987806008206,
+  "train_oof_ks_monitoring": 0.3192,
+  "n_trials_requested": 50,
+  "n_trials_completed": 50,
+  "feature_importances": [
+    {
+      "feature": "debt_to_income_ratio",
+      "importance": 351
+    },
+    {
+      "feature": "grade_subgrade",
+      "importance": 309
+    },
+    {
+      "feature": "credit_score",
+      "importance": 222
+    },
+    {
+      "feature": "loan_purpose",
+      "importance": 100
+    },
+    {
+      "feature": "education_level",
+      "importance": 74
+    },
+    {
+      "feature": "interest_rate",
+      "importance": 65
+    },
+    {
+      "feature": "installment",
+      "importance": 61
+    },
+    {
+      "feature": "delinquency_history",
+      "importance": 57
+    },
+    {
+      "feature": "age",
+      "importance": 56
+    },
+    {
+      "feature": "current_balance",
+      "importance": 52
+    },
+    {
+      "feature": "num_of_open_accounts",
+      "importance": 51
+    },
+    {
+      "feature": "loan_amount",
+      "importance": 49
+    },
+    {
+      "feature": "annual_income",
+      "importance": 41
+    },
+    {
+      "feature": "marital_status",
+      "importance": 29
+    },
+    {
+      "feature": "total_credit_limit",
+      "importance": 27
+    },
+    {
+      "feature": "num_of_delinquencies",
+      "importance": 25
+    },
+    {
+      "feature": "loan_term",
+      "importance": 20
+    },
+    {
+      "feature": "monthly_income",
+      "importance": 14
+    },
+    {
+      "feature": "public_records",
+      "importance": 4
+    }
+  ],
+  "in_model_features": [
+    "age",
+    "marital_status",
+    "education_level",
+    "annual_income",
+    "monthly_income",
+    "debt_to_income_ratio",
+    "credit_score",
+    "loan_amount",
+    "loan_purpose",
+    "interest_rate",
+    "loan_term",
+    "installment",
+    "grade_subgrade",
+    "num_of_open_accounts",
+    "total_credit_limit",
+    "current_balance",
+    "delinquency_history",
+    "public_records",
+    "num_of_delinquencies"
+  ],
+  "split": {
+    "source": "scripts/train.py::load_and_split UNCHANGED",
+    "test_size": 0.3,
+    "stratify": "default",
+    "random_state": 42,
+    "train_n": 14000,
+    "train_bad_rate": 0.2001,
+    "test_n": 6000,
+    "test_bad_rate": 0.2002,
+    "note": "Test labels persisted for eval only; not used to fit or select."
+  },
+  "freeze": {
+    "timestamp_utc": "2026-08-30T13:09:20.179500+00:00",
+    "selection_rule": "higher train OOF AUC (test not used)",
+    "last_run_cv_auc": 0.8862,
+    "stack_oof_auc_comparator": 0.8891,
+    "train_oof_auc": 0.7094,
+    "beats_last_cv": false,
+    "beats_stack_oof": false,
+    "test_looked_at": false,
+    "test_metrics": null,
+    "test_labels_used_to_fit_or_select": false
+  },
+  "train_shap": {
+    "method": "shap.TreeExplainer on all TRAIN rows, in-model WOE features only (non-linear_tree LGBM; path-dependent TreeSHAP). utils.risk_skills.generate_shap_summary also run on TRAIN.",
+    "n_rows": 14000,
+    "mean_abs_shap_by_feature": [
+      {
+        "feature": "debt_to_income_ratio",
+        "mean_abs_shap": 0.569143
+      },
+      {
+        "feature": "credit_score",
+        "mean_abs_shap": 0.32396
+      },
+      {
+        "feature": "grade_subgrade",
+        "mean_abs_shap": 0.243119
+      },
+      {
+        "feature": "loan_purpose",
+        "mean_abs_shap": 0.042492
+      },
+      {
+        "feature": "interest_rate",
+        "mean_abs_shap": 0.036853
+      },
+      {
+        "feature": "education_level",
+        "mean_abs_shap": 0.031956
+      },
+      {
+        "feature": "delinquency_history",
+        "mean_abs_shap": 0.028118
+      },
+      {
+        "feature": "installment",
+        "mean_abs_shap": 0.022608
+      },
+      {
+        "feature": "loan_amount",
+        "mean_abs_shap": 0.019769
+      },
+      {
+        "feature": "age",
+        "mean_abs_shap": 0.018741
+      },
+      {
+        "feature": "num_of_open_accounts",
+        "mean_abs_shap": 0.017697
+      },
+      {
+        "feature": "annual_income",
+        "mean_abs_shap": 0.017174
+      },
+      {
+        "feature": "current_balance",
+        "mean_abs_shap": 0.016511
+      },
+      {
+        "feature": "total_credit_limit",
+        "mean_abs_shap": 0.010681
+      },
+      {
+        "feature": "num_of_delinquencies",
+        "mean_abs_shap": 0.009189
+      },
+      {
+        "feature": "loan_term",
+        "mean_abs_shap": 0.00789
+      },
+      {
+        "feature": "marital_status",
+        "mean_abs_shap": 0.00783
+      },
+      {
+        "feature": "monthly_income",
+        "mean_abs_shap": 0.005894
+      },
+      {
+        "feature": "public_records",
+        "mean_abs_shap": 0.000931
+      }
+    ],
+    "gender_present": false,
+    "employment_status_present": false,
+    "generate_shap_summary_train": {
+      "xai_method": "SHAP (Kernel/Tree)",
+      "n_rows": 2000,
+      "global_importance_ranking": [
+        [
+          "debt_to_income_ratio",
+          0.5653
+        ],
+        [
+          "credit_score",
+          0.3115
+        ],
+        [
+          "grade_subgrade",
+          0.247
+        ],
+        [
+          "loan_purpose",
+          0.0416
+        ],
+        [
+          "interest_rate",
+          0.0388
+        ],
+        [
+          "education_level",
+          0.032
+        ],
+        [
+          "delinquency_history",
+          0.0295
+        ],
+        [
+          "installment",
+          0.0229
+        ],
+        [
+          "loan_amount",
+          0.0199
+        ],
+        [
+          "age",
+          0.018
+        ],
+        [
+          "annual_income",
+          0.0169
+        ],
+        [
+          "num_of_open_accounts",
+          0.0169
+        ],
+        [
+          "current_balance",
+          0.0168
+        ],
+        [
+          "total_credit_limit",
+          0.0114
+        ],
+        [
+          "num_of_delinquencies",
+          0.0084
+        ],
+        [
+          "loan_term",
+          0.0078
+        ],
+        [
+          "marital_status",
+          0.0075
+        ],
+        [
+          "monthly_income",
+          0.0058
+        ],
+        [
+          "public_records",
+          0.0009
+        ]
+      ]
+    }
+  },
+  "overlay_artifact": "artifacts/lgbm_no_gender_emp_overlay_overlay.json",
+  "artifact_paths": {
+    "model": "artifacts/lgbm_no_gender_emp_overlay_model.joblib",
+    "encoders": "artifacts/lgbm_no_gender_emp_overlay_encoders.joblib",
+    "meta": "artifacts/lgbm_no_gender_emp_overlay_meta.json",
+    "overlay": "artifacts/lgbm_no_gender_emp_overlay_overlay.json",
+    "X_train": "artifacts/lgbm_no_gender_emp_overlay_X_train.csv",
+    "y_train": "artifacts/lgbm_no_gender_emp_overlay_y_train.csv",
+    "X_test": "artifacts/lgbm_no_gender_emp_overlay_X_test.csv",
+    "y_test": "artifacts/lgbm_no_gender_emp_overlay_y_test.csv"
+  },
+  "did_not_write": [
+    "artifacts/lgbm_model.joblib",
+    "artifacts/lgbm_linear_tree_*",
+    "artifacts/linear_tree_*",
+    "artifacts/stack_lr_rf_lgbm_*"
+  ]
+}

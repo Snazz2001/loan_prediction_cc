@@ -1,0 +1,99 @@
+{
+  "feature": "employment_status",
+  "role": "policy_overlay_only",
+  "used_as_model_input": false,
+  "used_to_select_model": false,
+  "statement": "This employment_status WOE table is a TRAIN-only policy / human-review overlay. It is NOT a model input. It is not passed to LightGBM, not present in the WOE feature matrix, and not consumed by the eval model path.",
+  "fit_on": "TRAIN only (calculate_woe_iv + fit_woe_encoder, WOE_BINS from utils.config)",
+  "iv": 1.9096,
+  "predictive_power": "Suspicious / Overfitting (>0.5)",
+  "woe_table": [
+    {
+      "employment_status": "Unemployed",
+      "n": 1475,
+      "n_default": 1210,
+      "default_rate": 0.8203,
+      "woe": -2.9045
+    },
+    {
+      "employment_status": "Student",
+      "n": 566,
+      "n_default": 332,
+      "default_rate": 0.5866,
+      "woe": -1.7357
+    },
+    {
+      "employment_status": "Employed",
+      "n": 9086,
+      "n_default": 1029,
+      "default_rate": 0.1133,
+      "woe": 0.6721
+    },
+    {
+      "employment_status": "Self-employed",
+      "n": 2021,
+      "n_default": 224,
+      "default_rate": 0.1108,
+      "woe": 0.6964
+    },
+    {
+      "employment_status": "Retired",
+      "n": 852,
+      "n_default": 6,
+      "default_rate": 0.007,
+      "woe": 3.5629
+    }
+  ],
+  "calculate_woe_iv_bin_details": [
+    {
+      "bin": "Employed",
+      "total_count": 9086,
+      "bad_count": 1029,
+      "woe": 0.6721058296205613,
+      "iv_component": 0.23662859434633252
+    },
+    {
+      "bin": "Retired",
+      "total_count": 852,
+      "bad_count": 6,
+      "woe": 3.5629118980555834,
+      "iv_component": 0.2615190410419695
+    },
+    {
+      "bin": "Self-employed",
+      "total_count": 2021,
+      "bad_count": 224,
+      "woe": 0.6963798426059343,
+      "iv_component": 0.056051137662083354
+    },
+    {
+      "bin": "Student",
+      "total_count": 566,
+      "bad_count": 332,
+      "woe": -1.735661845881372,
+      "iv_component": 0.16946025781229862
+    },
+    {
+      "bin": "Unemployed",
+      "total_count": 1475,
+      "bad_count": 1210,
+      "woe": -2.9044938049271494,
+      "iv_component": 1.185979606825153
+    }
+  ],
+  "train_defaults_total": 2801,
+  "share_of_train_defaults": {
+    "Unemployed": {
+      "n": 1475,
+      "n_default": 1210,
+      "share_of_all_train_defaults": 0.431989,
+      "share_of_all_train_defaults_pct": 43.1989
+    },
+    "Retired": {
+      "n": 852,
+      "n_default": 6,
+      "share_of_all_train_defaults": 0.002142,
+      "share_of_all_train_defaults_pct": 0.2142
+    }
+  }
+}
