@@ -1,0 +1,49 @@
+{
+  "computed_after_freeze": true,
+  "freeze_timestamp_utc": "2026-08-30T13:09:20.179500+00:00",
+  "train_refit_metrics": {
+    "AUC": 0.7209,
+    "Gini": 0.4419,
+    "KS_Statistic": 0.3312,
+    "Optimal_Cutoff_Probability": 0.1865,
+    "Validation_Rating": "Acceptable (0.20 - 0.40)"
+  },
+  "test_metrics": {
+    "AUC": 0.6995,
+    "Gini": 0.3989,
+    "KS_Statistic": 0.2848,
+    "Optimal_Cutoff_Probability": 0.1686,
+    "Validation_Rating": "Acceptable (0.20 - 0.40)"
+  },
+  "score_psi": {
+    "PSI": 0.0011,
+    "Status": "Stable (<0.10) - No action needed"
+  },
+  "beats_last_run_test_auc_0_8858": false,
+  "beats_stack_test_auc_0_8885": false,
+  "used_to_select_model": false,
+  "in_model_features": [
+    "age",
+    "marital_status",
+    "education_level",
+    "annual_income",
+    "monthly_income",
+    "debt_to_income_ratio",
+    "credit_score",
+    "loan_amount",
+    "loan_purpose",
+    "interest_rate",
+    "loan_term",
+    "installment",
+    "grade_subgrade",
+    "num_of_open_accounts",
+    "total_credit_limit",
+    "current_balance",
+    "delinquency_history",
+    "public_records",
+    "num_of_delinquencies"
+  ],
+  "gender_in_model": false,
+  "employment_status_in_model": false,
+  "note": "Test metrics are reported after freeze. They were not used to choose hyperparameters, n_estimators_final, or whether to keep the candidate. Eval never fits. employment_status is overlay-only and was not scored."
+}
