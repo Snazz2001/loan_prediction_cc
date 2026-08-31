@@ -1,0 +1,705 @@
+{
+  "model_type": "ensemble_no_gender_lr_gbdt_dart_catboost",
+  "freeze_timestamp_utc": "2026-08-31T09:14:06.319383+00:00",
+  "test_looked_at": false,
+  "test_metrics": null,
+  "test_labels_used_to_fit_or_select": false,
+  "monotone_constraints": false,
+  "interaction_constraints": false,
+  "gender_in_model": false,
+  "employment_status_in_model": true,
+  "in_model_features": [
+    "age",
+    "marital_status",
+    "education_level",
+    "annual_income",
+    "monthly_income",
+    "employment_status",
+    "debt_to_income_ratio",
+    "credit_score",
+    "loan_amount",
+    "loan_purpose",
+    "interest_rate",
+    "loan_term",
+    "installment",
+    "grade_subgrade",
+    "num_of_open_accounts",
+    "total_credit_limit",
+    "current_balance",
+    "delinquency_history",
+    "public_records",
+    "num_of_delinquencies"
+  ],
+  "dropped_from_model": [
+    "gender"
+  ],
+  "n_in_model_features": 20,
+  "loan_paid_back_in_features": false,
+  "iv_drop": false,
+  "vif_drop": false,
+  "woe_bins": 5,
+  "cv_folds": 5,
+  "optuna_sampler": "TPESampler",
+  "optuna_seed": 42,
+  "n_trials_requested": 50,
+  "bases_trained": [
+    "lr",
+    "lgbm_gbdt",
+    "lgbm_dart",
+    "catboost"
+  ],
+  "split": {
+    "source": "scripts/train.py::load_and_split UNCHANGED",
+    "test_size": 0.3,
+    "stratify": "default",
+    "random_state": 42,
+    "train_n": 14000,
+    "train_bad_rate": 0.2001,
+    "train_n_bads": 2801,
+    "test_n": 6000,
+    "test_bad_rate": 0.2002,
+    "test_n_bads": 1201,
+    "note": "Test labels persisted for eval only; not used to fit or select."
+  },
+  "hyperparams": {
+    "lr": {
+      "penalty": "l2",
+      "C": 10.0,
+      "solver": "lbfgs",
+      "max_iter": 1000,
+      "random_state": 42
+    },
+    "lr_c_grid": [
+      0.01,
+      0.03,
+      0.1,
+      0.3,
+      1.0,
+      3.0,
+      10.0,
+      30.0,
+      100.0
+    ],
+    "lr_grid_scores": [
+      {
+        "C": 0.01,
+        "oof_auc": 0.877693,
+        "oof_ks": 0.553196
+      },
+      {
+        "C": 0.03,
+        "oof_auc": 0.879027,
+        "oof_ks": 0.557396
+      },
+      {
+        "C": 0.1,
+        "oof_auc": 0.879838,
+        "oof_ks": 0.559043
+      },
+      {
+        "C": 0.3,
+        "oof_auc": 0.880348,
+        "oof_ks": 0.561171
+      },
+      {
+        "C": 1.0,
+        "oof_auc": 0.880563,
+        "oof_ks": 0.563043
+      },
+      {
+        "C": 3.0,
+        "oof_auc": 0.880619,
+        "oof_ks": 0.563938
+      },
+      {
+        "C": 10.0,
+        "oof_auc": 0.88064,
+        "oof_ks": 0.564385
+      },
+      {
+        "C": 30.0,
+        "oof_auc": 0.880638,
+        "oof_ks": 0.564116
+      },
+      {
+        "C": 100.0,
+        "oof_auc": 0.880636,
+        "oof_ks": 0.563938
+      }
+    ],
+    "lgbm_gbdt_search": {
+      "learning_rate": 0.05435025690302303,
+      "num_leaves": 53,
+      "max_depth": 3,
+      "min_child_samples": 103,
+      "subsample": 0.7312202514997275,
+      "colsample_bytree": 0.9728984059205478,
+      "reg_alpha": 0.4366724940335208,
+      "reg_lambda": 0.042964739661628434
+    },
+    "lgbm_gbdt_final": {
+      "objective": "binary",
+      "boosting_type": "gbdt",
+      "random_state": 42,
+      "verbosity": -1,
+      "n_jobs": 4,
+      "subsample_freq": 1,
+      "n_estimators": 152,
+      "learning_rate": 0.05435025690302303,
+      "num_leaves": 53,
+      "max_depth": 3,
+      "min_child_samples": 103,
+      "subsample": 0.7312202514997275,
+      "colsample_bytree": 0.9728984059205478,
+      "reg_alpha": 0.4366724940335208,
+      "reg_lambda": 0.042964739661628434
+    },
+    "lgbm_gbdt_n_estimators_final": 152,
+    "lgbm_gbdt_best_iterations": [
+      147,
+      132,
+      159,
+      171,
+      153
+    ],
+    "lgbm_gbdt_n_trials_completed": 50,
+    "lgbm_dart_search": {
+      "n_estimators": 499,
+      "learning_rate": 0.054048018851067,
+      "num_leaves": 64,
+      "max_depth": 3,
+      "min_child_samples": 294,
+      "feature_fraction": 0.8835726202569505,
+      "reg_alpha": 3.1471274492014585,
+      "reg_lambda": 0.029616152297803622,
+      "drop_rate": 0.24478158628129132,
+      "skip_drop": 0.6928734309755
+    },
+    "lgbm_dart_final": {
+      "objective": "binary",
+      "boosting_type": "dart",
+      "random_state": 42,
+      "verbosity": -1,
+      "n_jobs": 4,
+      "n_estimators": 499,
+      "learning_rate": 0.054048018851067,
+      "num_leaves": 64,
+      "max_depth": 3,
+      "min_child_samples": 294,
+      "feature_fraction": 0.8835726202569505,
+      "reg_alpha": 3.1471274492014585,
+      "reg_lambda": 0.029616152297803622,
+      "drop_rate": 0.24478158628129132,
+      "skip_drop": 0.6928734309755
+    },
+    "lgbm_dart_n_trials_completed": 50,
+    "catboost_search": {
+      "depth": 4,
+      "learning_rate": 0.03258548935284139,
+      "l2_leaf_reg": 2.596756291129093,
+      "iterations": 479,
+      "min_data_in_leaf": 38,
+      "subsample": 0.9721880459666276
+    },
+    "catboost_final": {
+      "loss_function": "Logloss",
+      "eval_metric": "AUC",
+      "random_state": 42,
+      "verbose": 0,
+      "allow_writing_files": false,
+      "thread_count": 4,
+      "depth": 4,
+      "learning_rate": 0.03258548935284139,
+      "l2_leaf_reg": 2.596756291129093,
+      "iterations": 479,
+      "min_data_in_leaf": 38,
+      "subsample": 0.9721880459666276,
+      "bootstrap_type": "Bernoulli"
+    },
+    "catboost_n_trials_completed": 50,
+    "stack_meta": {
+      "penalty": "l2",
+      "C": 1.0,
+      "solver": "lbfgs",
+      "max_iter": 1000,
+      "random_state": 42,
+      "fitted_on": "OOF PDs of four bases (not full-train in-sample PDs)"
+    }
+  },
+  "oof_metrics": {
+    "lr": {
+      "AUC": 0.8806,
+      "KS_Statistic": 0.5644,
+      "Gini": 0.7613,
+      "Validation_Rating": "Good (0.40 - 0.60)",
+      "auc_raw": 0.8806398758189731,
+      "ks_raw": 0.564384525968316
+    },
+    "lgbm_gbdt": {
+      "AUC": 0.8893,
+      "KS_Statistic": 0.5823,
+      "Gini": 0.7785,
+      "Validation_Rating": "Good (0.40 - 0.60)",
+      "auc_raw": 0.8892671251726937,
+      "ks_raw": 0.5823292097247297
+    },
+    "lgbm_dart": {
+      "AUC": 0.8875,
+      "KS_Statistic": 0.5799,
+      "Gini": 0.775,
+      "Validation_Rating": "Good (0.40 - 0.60)",
+      "auc_raw": 0.8875076633652869,
+      "ks_raw": 0.5799068036593134
+    },
+    "catboost": {
+      "AUC": 0.8877,
+      "KS_Statistic": 0.5785,
+      "Gini": 0.7754,
+      "Validation_Rating": "Good (0.40 - 0.60)",
+      "auc_raw": 0.8877235972419248,
+      "ks_raw": 0.5784819301743771
+    },
+    "average": {
+      "AUC": 0.8872,
+      "KS_Statistic": 0.5785,
+      "Gini": 0.7743,
+      "Validation_Rating": "Good (0.40 - 0.60)",
+      "auc_raw": 0.8871587293951468,
+      "ks_raw": 0.5784835241352292
+    },
+    "stack": {
+      "AUC": 0.8885,
+      "KS_Statistic": 0.5811,
+      "Gini": 0.777,
+      "Validation_Rating": "Good (0.40 - 0.60)",
+      "auc_raw": 0.8885109820236603,
+      "ks_raw": 0.5810822860293252
+    }
+  },
+  "oof_auc": {
+    "lr": 0.8806,
+    "lgbm_gbdt": 0.8893,
+    "lgbm_dart": 0.8875,
+    "catboost": 0.8877,
+    "average": 0.8872,
+    "stack": 0.8885
+  },
+  "oof_ks": {
+    "lr": 0.5644,
+    "lgbm_gbdt": 0.5823,
+    "lgbm_dart": 0.5799,
+    "catboost": 0.5785,
+    "average": 0.5785,
+    "stack": 0.5811
+  },
+  "oof_selected_ensemble": "stack",
+  "stack_meta_coefs": {
+    "pd_lr": 0.434013,
+    "pd_lgbm_gbdt": 2.379526,
+    "pd_lgbm_dart": 2.116687,
+    "pd_catboost": 2.507628
+  },
+  "stack_meta_intercept": -3.193918,
+  "train_explains": {
+    "lr": {
+      "method": "absolute logistic coefficient ranking on TRAIN-fitted WOE columns",
+      "intercept": -1.47107,
+      "abs_coef_by_feature": [
+        {
+          "feature": "debt_to_income_ratio",
+          "coef": -1.602244,
+          "abs_coef": 1.602244
+        },
+        {
+          "feature": "current_balance",
+          "coef": -1.582467,
+          "abs_coef": 1.582467
+        },
+        {
+          "feature": "education_level",
+          "coef": -1.300558,
+          "abs_coef": 1.300558
+        },
+        {
+          "feature": "employment_status",
+          "coef": -1.288471,
+          "abs_coef": 1.288471
+        },
+        {
+          "feature": "loan_amount",
+          "coef": -1.171731,
+          "abs_coef": 1.171731
+        },
+        {
+          "feature": "marital_status",
+          "coef": -0.978944,
+          "abs_coef": 0.978944
+        },
+        {
+          "feature": "grade_subgrade",
+          "coef": -0.94344,
+          "abs_coef": 0.94344
+        },
+        {
+          "feature": "loan_purpose",
+          "coef": -0.916411,
+          "abs_coef": 0.916411
+        },
+        {
+          "feature": "credit_score",
+          "coef": -0.770023,
+          "abs_coef": 0.770023
+        },
+        {
+          "feature": "age",
+          "coef": -0.749178,
+          "abs_coef": 0.749178
+        },
+        {
+          "feature": "num_of_open_accounts",
+          "coef": -0.732302,
+          "abs_coef": 0.732302
+        },
+        {
+          "feature": "annual_income",
+          "coef": -0.697167,
+          "abs_coef": 0.697167
+        },
+        {
+          "feature": "monthly_income",
+          "coef": -0.697167,
+          "abs_coef": 0.697167
+        },
+        {
+          "feature": "total_credit_limit",
+          "coef": -0.612879,
+          "abs_coef": 0.612879
+        },
+        {
+          "feature": "delinquency_history",
+          "coef": -0.43446,
+          "abs_coef": 0.43446
+        },
+        {
+          "feature": "num_of_delinquencies",
+          "coef": 0.328618,
+          "abs_coef": 0.328618
+        },
+        {
+          "feature": "loan_term",
+          "coef": -0.290443,
+          "abs_coef": 0.290443
+        },
+        {
+          "feature": "interest_rate",
+          "coef": -0.267929,
+          "abs_coef": 0.267929
+        },
+        {
+          "feature": "public_records",
+          "coef": -0.195041,
+          "abs_coef": 0.195041
+        },
+        {
+          "feature": "installment",
+          "coef": -0.161995,
+          "abs_coef": 0.161995
+        }
+      ],
+      "employment_status_rank": 4,
+      "gender_present": false,
+      "employment_status_present": true
+    },
+    "lgbm_gbdt": {
+      "method": "shap.TreeExplainer (TreeSHAP) on all TRAIN rows — lgbm_gbdt",
+      "n_rows": 14000,
+      "mean_abs_shap_by_feature": [
+        {
+          "feature": "employment_status",
+          "mean_abs_shap": 1.185698
+        },
+        {
+          "feature": "debt_to_income_ratio",
+          "mean_abs_shap": 0.830874
+        },
+        {
+          "feature": "credit_score",
+          "mean_abs_shap": 0.500282
+        },
+        {
+          "feature": "grade_subgrade",
+          "mean_abs_shap": 0.354993
+        },
+        {
+          "feature": "interest_rate",
+          "mean_abs_shap": 0.060224
+        },
+        {
+          "feature": "annual_income",
+          "mean_abs_shap": 0.042879
+        },
+        {
+          "feature": "current_balance",
+          "mean_abs_shap": 0.038794
+        },
+        {
+          "feature": "loan_amount",
+          "mean_abs_shap": 0.033436
+        },
+        {
+          "feature": "education_level",
+          "mean_abs_shap": 0.032685
+        },
+        {
+          "feature": "loan_purpose",
+          "mean_abs_shap": 0.030652
+        },
+        {
+          "feature": "marital_status",
+          "mean_abs_shap": 0.019138
+        },
+        {
+          "feature": "age",
+          "mean_abs_shap": 0.015932
+        },
+        {
+          "feature": "delinquency_history",
+          "mean_abs_shap": 0.014096
+        },
+        {
+          "feature": "total_credit_limit",
+          "mean_abs_shap": 0.010255
+        },
+        {
+          "feature": "installment",
+          "mean_abs_shap": 0.009552
+        },
+        {
+          "feature": "num_of_open_accounts",
+          "mean_abs_shap": 0.008155
+        },
+        {
+          "feature": "num_of_delinquencies",
+          "mean_abs_shap": 0.005304
+        },
+        {
+          "feature": "loan_term",
+          "mean_abs_shap": 0.005229
+        },
+        {
+          "feature": "monthly_income",
+          "mean_abs_shap": 0.003622
+        },
+        {
+          "feature": "public_records",
+          "mean_abs_shap": 0.0
+        }
+      ],
+      "employment_status_rank": 1,
+      "gender_present": false,
+      "employment_status_present": true
+    },
+    "lgbm_dart": {
+      "method": "shap.TreeExplainer (TreeSHAP) on all TRAIN rows — lgbm_dart",
+      "n_rows": 14000,
+      "mean_abs_shap_by_feature": [
+        {
+          "feature": "employment_status",
+          "mean_abs_shap": 1.24186
+        },
+        {
+          "feature": "debt_to_income_ratio",
+          "mean_abs_shap": 0.877479
+        },
+        {
+          "feature": "credit_score",
+          "mean_abs_shap": 0.575471
+        },
+        {
+          "feature": "grade_subgrade",
+          "mean_abs_shap": 0.327437
+        },
+        {
+          "feature": "interest_rate",
+          "mean_abs_shap": 0.066664
+        },
+        {
+          "feature": "loan_amount",
+          "mean_abs_shap": 0.036351
+        },
+        {
+          "feature": "education_level",
+          "mean_abs_shap": 0.034107
+        },
+        {
+          "feature": "current_balance",
+          "mean_abs_shap": 0.029571
+        },
+        {
+          "feature": "annual_income",
+          "mean_abs_shap": 0.028744
+        },
+        {
+          "feature": "loan_purpose",
+          "mean_abs_shap": 0.025908
+        },
+        {
+          "feature": "delinquency_history",
+          "mean_abs_shap": 0.024011
+        },
+        {
+          "feature": "age",
+          "mean_abs_shap": 0.019688
+        },
+        {
+          "feature": "total_credit_limit",
+          "mean_abs_shap": 0.017336
+        },
+        {
+          "feature": "marital_status",
+          "mean_abs_shap": 0.013205
+        },
+        {
+          "feature": "num_of_delinquencies",
+          "mean_abs_shap": 0.009281
+        },
+        {
+          "feature": "num_of_open_accounts",
+          "mean_abs_shap": 0.00412
+        },
+        {
+          "feature": "installment",
+          "mean_abs_shap": 0.003767
+        },
+        {
+          "feature": "monthly_income",
+          "mean_abs_shap": 0.003198
+        },
+        {
+          "feature": "loan_term",
+          "mean_abs_shap": 0.002932
+        },
+        {
+          "feature": "public_records",
+          "mean_abs_shap": 0.0
+        }
+      ],
+      "employment_status_rank": 1,
+      "gender_present": false,
+      "employment_status_present": true
+    },
+    "catboost": {
+      "method": "shap.TreeExplainer (TreeSHAP) on all TRAIN rows — catboost",
+      "n_rows": 14000,
+      "mean_abs_shap_by_feature": [
+        {
+          "feature": "employment_status",
+          "mean_abs_shap": 1.465034
+        },
+        {
+          "feature": "debt_to_income_ratio",
+          "mean_abs_shap": 1.073518
+        },
+        {
+          "feature": "credit_score",
+          "mean_abs_shap": 0.639332
+        },
+        {
+          "feature": "grade_subgrade",
+          "mean_abs_shap": 0.459358
+        },
+        {
+          "feature": "interest_rate",
+          "mean_abs_shap": 0.089816
+        },
+        {
+          "feature": "education_level",
+          "mean_abs_shap": 0.054397
+        },
+        {
+          "feature": "loan_purpose",
+          "mean_abs_shap": 0.054129
+        },
+        {
+          "feature": "current_balance",
+          "mean_abs_shap": 0.052272
+        },
+        {
+          "feature": "loan_amount",
+          "mean_abs_shap": 0.044447
+        },
+        {
+          "feature": "delinquency_history",
+          "mean_abs_shap": 0.039139
+        },
+        {
+          "feature": "marital_status",
+          "mean_abs_shap": 0.031403
+        },
+        {
+          "feature": "age",
+          "mean_abs_shap": 0.026692
+        },
+        {
+          "feature": "monthly_income",
+          "mean_abs_shap": 0.025381
+        },
+        {
+          "feature": "annual_income",
+          "mean_abs_shap": 0.025299
+        },
+        {
+          "feature": "total_credit_limit",
+          "mean_abs_shap": 0.018209
+        },
+        {
+          "feature": "installment",
+          "mean_abs_shap": 0.018066
+        },
+        {
+          "feature": "num_of_delinquencies",
+          "mean_abs_shap": 0.015032
+        },
+        {
+          "feature": "num_of_open_accounts",
+          "mean_abs_shap": 0.014217
+        },
+        {
+          "feature": "loan_term",
+          "mean_abs_shap": 0.010144
+        },
+        {
+          "feature": "public_records",
+          "mean_abs_shap": 0.005299
+        }
+      ],
+      "employment_status_rank": 1,
+      "gender_present": false,
+      "employment_status_present": true
+    }
+  },
+  "artifact_paths": {
+    "encoders": "artifacts/ensemble_no_gender_encoders.joblib",
+    "lr": "artifacts/ensemble_no_gender_lr.joblib",
+    "lgbm_gbdt": "artifacts/ensemble_no_gender_lgbm_gbdt.joblib",
+    "lgbm_dart": "artifacts/ensemble_no_gender_lgbm_dart.joblib",
+    "catboost": "artifacts/ensemble_no_gender_catboost.joblib",
+    "stack_meta": "artifacts/ensemble_no_gender_stack_meta.joblib",
+    "meta": "artifacts/ensemble_no_gender_meta.json",
+    "oof_pds": "artifacts/ensemble_no_gender_oof_pds.csv",
+    "X_train": "artifacts/ensemble_no_gender_X_train.csv",
+    "y_train": "artifacts/ensemble_no_gender_y_train.csv",
+    "X_test": "artifacts/ensemble_no_gender_X_test.csv",
+    "y_test": "artifacts/ensemble_no_gender_y_test.csv"
+  },
+  "did_not_write": [
+    "artifacts/lgbm_model.joblib",
+    "artifacts/lgbm_linear_tree_*",
+    "artifacts/linear_tree_*",
+    "artifacts/stack_lr_rf_lgbm_*",
+    "artifacts/lgbm_no_gender_emp_overlay_*",
+    "artifacts/lgbm_emp_in_no_gender_*",
+    "artifacts/lgbm_dart_monotone_*"
+  ],
+  "notes": "Stack meta is fitted on OOF base PDs only and is NOT refit on full-train in-sample base PDs. PSI train side must be OOF ensemble PD. No monotone_constraints. No interaction_constraints. gender dropped. employment_status is a normal in-model WOE feature."
+}

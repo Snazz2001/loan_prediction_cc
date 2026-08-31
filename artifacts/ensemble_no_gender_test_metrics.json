@@ -1,0 +1,156 @@
+{
+  "computed_after_freeze": true,
+  "freeze_timestamp_utc": "2026-08-31T09:14:06.319383+00:00",
+  "gender_in_model": false,
+  "employment_status_in_model": true,
+  "in_model_features": [
+    "age",
+    "marital_status",
+    "education_level",
+    "annual_income",
+    "monthly_income",
+    "employment_status",
+    "debt_to_income_ratio",
+    "credit_score",
+    "loan_amount",
+    "loan_purpose",
+    "interest_rate",
+    "loan_term",
+    "installment",
+    "grade_subgrade",
+    "num_of_open_accounts",
+    "total_credit_limit",
+    "current_balance",
+    "delinquency_history",
+    "public_records",
+    "num_of_delinquencies"
+  ],
+  "monotone_constraints": false,
+  "interaction_constraints": false,
+  "eval_never_fits": true,
+  "test_labels_used_to_fit_or_select": false,
+  "oof_selected_ensemble": "stack",
+  "oof_auc": {
+    "lr": 0.8806,
+    "lgbm_gbdt": 0.8893,
+    "lgbm_dart": 0.8875,
+    "catboost": 0.8877,
+    "average": 0.8872,
+    "stack": 0.8885
+  },
+  "oof_ks": {
+    "lr": 0.5644,
+    "lgbm_gbdt": 0.5823,
+    "lgbm_dart": 0.5799,
+    "catboost": 0.5785,
+    "average": 0.5785,
+    "stack": 0.5811
+  },
+  "test_metrics": {
+    "lr": {
+      "AUC": 0.8823,
+      "KS_Statistic": 0.5695,
+      "Gini": 0.7646,
+      "Validation_Rating": "Good (0.40 - 0.60)",
+      "Optimal_Cutoff_Probability": 0.1864,
+      "PSI": 0.0027,
+      "PSI_Status": "Stable (<0.10) - No action needed"
+    },
+    "lgbm_gbdt": {
+      "AUC": 0.8895,
+      "KS_Statistic": 0.5816,
+      "Gini": 0.779,
+      "Validation_Rating": "Good (0.40 - 0.60)",
+      "Optimal_Cutoff_Probability": 0.1839,
+      "PSI": 0.0091,
+      "PSI_Status": "Stable (<0.10) - No action needed"
+    },
+    "lgbm_dart": {
+      "AUC": 0.8869,
+      "KS_Statistic": 0.5779,
+      "Gini": 0.7738,
+      "Validation_Rating": "Good (0.40 - 0.60)",
+      "Optimal_Cutoff_Probability": 0.1955,
+      "PSI": 0.0038,
+      "PSI_Status": "Stable (<0.10) - No action needed"
+    },
+    "catboost": {
+      "AUC": 0.8878,
+      "KS_Statistic": 0.5804,
+      "Gini": 0.7756,
+      "Validation_Rating": "Good (0.40 - 0.60)",
+      "Optimal_Cutoff_Probability": 0.2141,
+      "PSI": 0.0044,
+      "PSI_Status": "Stable (<0.10) - No action needed"
+    },
+    "average": {
+      "AUC": 0.8871,
+      "KS_Statistic": 0.5764,
+      "Gini": 0.7743,
+      "Validation_Rating": "Good (0.40 - 0.60)",
+      "Optimal_Cutoff_Probability": 0.1762,
+      "PSI": 0.0024,
+      "PSI_Status": "Stable (<0.10) - No action needed"
+    },
+    "stack": {
+      "AUC": 0.8883,
+      "KS_Statistic": 0.5795,
+      "Gini": 0.7766,
+      "Validation_Rating": "Good (0.40 - 0.60)",
+      "Optimal_Cutoff_Probability": 0.1261,
+      "PSI": 0.0035,
+      "PSI_Status": "Stable (<0.10) - No action needed"
+    }
+  },
+  "beats_last_run": {
+    "average": {
+      "beats_last_run_0.8858": true,
+      "beats_pr2_stack_0.8885": false,
+      "beats_pr4_0.8859": true
+    },
+    "stack": {
+      "beats_last_run_0.8858": true,
+      "beats_pr2_stack_0.8885": false,
+      "beats_pr4_0.8859": true
+    }
+  },
+  "which_ensemble_oof_would_select": "stack",
+  "comparators": {
+    "last_run": {
+      "AUC": 0.8858,
+      "KS": 0.5777,
+      "Gini": 0.7715,
+      "PSI": 0.0021,
+      "CV": 0.8862
+    },
+    "pr2_stack_test_auc": 0.8885,
+    "pr4_test_auc": 0.8859,
+    "pr5_dart_test_auc": 0.7645
+  },
+  "stack_meta_coefs": {
+    "pd_lr": 0.434013,
+    "pd_lgbm_gbdt": 2.379526,
+    "pd_lgbm_dart": 2.116687,
+    "pd_catboost": 2.507628
+  },
+  "stack_meta_intercept": -3.193918,
+  "bases_trained": [
+    "lr",
+    "lgbm_gbdt",
+    "lgbm_dart",
+    "catboost"
+  ],
+  "split": {
+    "source": "scripts/train.py::load_and_split UNCHANGED",
+    "test_size": 0.3,
+    "stratify": "default",
+    "random_state": 42,
+    "train_n": 14000,
+    "train_bad_rate": 0.2001,
+    "train_n_bads": 2801,
+    "test_n": 6000,
+    "test_bad_rate": 0.2002,
+    "test_n_bads": 1201,
+    "note": "Test labels persisted for eval only; not used to fit or select."
+  }
+}
