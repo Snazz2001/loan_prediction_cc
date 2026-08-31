@@ -1,0 +1,1340 @@
+{
+  "model_type": "ensemble_fm_ft_six_base",
+  "freeze_timestamp_utc": "2026-08-31T11:31:24.259174+00:00",
+  "test_looked_at": true,
+  "test_metrics": {
+    "lr": {
+      "AUC": 0.8823,
+      "KS_Statistic": 0.5695,
+      "Gini": 0.7646,
+      "Validation_Rating": "Good (0.40 - 0.60)",
+      "Optimal_Cutoff_Probability": 0.1864,
+      "PSI": 0.0027,
+      "PSI_Status": "Stable (<0.10) - No action needed"
+    },
+    "modern_fm": {
+      "AUC": 0.8795,
+      "KS_Statistic": 0.5575,
+      "Gini": 0.7589,
+      "Validation_Rating": "Good (0.40 - 0.60)",
+      "Optimal_Cutoff_Probability": 0.1496,
+      "PSI": 0.0231,
+      "PSI_Status": "Stable (<0.10) - No action needed"
+    },
+    "ft_transformer": {
+      "AUC": 0.8963,
+      "KS_Statistic": 0.5947,
+      "Gini": 0.7927,
+      "Validation_Rating": "Good (0.40 - 0.60)",
+      "Optimal_Cutoff_Probability": 0.1488,
+      "PSI": 0.1297,
+      "PSI_Status": "Slight Shift (0.10 - 0.25) - Close monitoring advised"
+    },
+    "lgbm_gbdt": {
+      "AUC": 0.8895,
+      "KS_Statistic": 0.5816,
+      "Gini": 0.779,
+      "Validation_Rating": "Good (0.40 - 0.60)",
+      "Optimal_Cutoff_Probability": 0.1839,
+      "PSI": 0.0091,
+      "PSI_Status": "Stable (<0.10) - No action needed"
+    },
+    "lgbm_dart": {
+      "AUC": 0.8869,
+      "KS_Statistic": 0.5779,
+      "Gini": 0.7738,
+      "Validation_Rating": "Good (0.40 - 0.60)",
+      "Optimal_Cutoff_Probability": 0.1955,
+      "PSI": 0.0038,
+      "PSI_Status": "Stable (<0.10) - No action needed"
+    },
+    "catboost": {
+      "AUC": 0.8878,
+      "KS_Statistic": 0.5804,
+      "Gini": 0.7756,
+      "Validation_Rating": "Good (0.40 - 0.60)",
+      "Optimal_Cutoff_Probability": 0.2141,
+      "PSI": 0.0044,
+      "PSI_Status": "Stable (<0.10) - No action needed"
+    },
+    "average": {
+      "AUC": 0.8893,
+      "KS_Statistic": 0.5798,
+      "Gini": 0.7786,
+      "Validation_Rating": "Good (0.40 - 0.60)",
+      "Optimal_Cutoff_Probability": 0.2211,
+      "PSI": 0.0081,
+      "PSI_Status": "Stable (<0.10) - No action needed"
+    },
+    "stack": {
+      "AUC": 0.8951,
+      "KS_Statistic": 0.593,
+      "Gini": 0.7902,
+      "Validation_Rating": "Good (0.40 - 0.60)",
+      "Optimal_Cutoff_Probability": 0.1667,
+      "PSI": 0.0618,
+      "PSI_Status": "Stable (<0.10) - No action needed"
+    }
+  },
+  "test_labels_used_to_fit_or_select": false,
+  "monotone_constraints": false,
+  "interaction_constraints": false,
+  "gender_in_model": false,
+  "employment_status_in_model": true,
+  "in_model_features": [
+    "age",
+    "marital_status",
+    "education_level",
+    "annual_income",
+    "monthly_income",
+    "employment_status",
+    "debt_to_income_ratio",
+    "credit_score",
+    "loan_amount",
+    "loan_purpose",
+    "interest_rate",
+    "loan_term",
+    "installment",
+    "grade_subgrade",
+    "num_of_open_accounts",
+    "total_credit_limit",
+    "current_balance",
+    "delinquency_history",
+    "public_records",
+    "num_of_delinquencies"
+  ],
+  "dropped_from_model": [
+    "gender"
+  ],
+  "n_in_model_features": 20,
+  "loan_paid_back_in_features": false,
+  "iv_drop": false,
+  "vif_drop": false,
+  "woe_bins": 5,
+  "cv_folds": 5,
+  "optuna_sampler": "TPESampler",
+  "optuna_seed": 42,
+  "n_trials_requested": 50,
+  "neural_n_configs": {
+    "modern_fm": 8,
+    "ft_transformer": 8
+  },
+  "bases_trained": [
+    "lr",
+    "modern_fm",
+    "ft_transformer",
+    "lgbm_gbdt",
+    "lgbm_dart",
+    "catboost"
+  ],
+  "neural_impl": {
+    "modern_fm": {
+      "library": "torchfm",
+      "class": "torchfm.model.dfm.DeepFactorizationMachineModel",
+      "version": "0.7.0",
+      "note": "torchfm 0.7.0 has no DeepFM alias; class is DeepFactorizationMachineModel. CPU. Quantile-binned numeric + integer cat maps (same 20 columns)."
+    },
+    "ft_transformer": {
+      "library": "rtdl",
+      "class": "rtdl.FTTransformer",
+      "constructor": "rtdl.FTTransformer.make_baseline",
+      "version": "0.0.13",
+      "note": "rtdl.nn.FTTransformer does not exist in rtdl 0.0.13; using rtdl.modules.FTTransformer. rtdl pinned torch<2 so installed --no-deps on torch 2.13 CPU. make_baseline hardcodes attention_n_heads=8."
+    }
+  },
+  "package_versions": {
+    "python": "3.12.3",
+    "torch": "2.13.0+cu130",
+    "numpy": "2.4.4",
+    "pandas": "2.3.3",
+    "sklearn": "1.9.0",
+    "lightgbm": "4.7.0",
+    "catboost": "1.2.10",
+    "optuna": "4.9.0",
+    "shap": "0.52.0",
+    "joblib": "1.6.0",
+    "torchfm": "0.7.0",
+    "rtdl": "0.0.13"
+  },
+  "cpu_architecture_notes": {
+    "shrunk_for_cpu": true,
+    "modern_fm": "embed_dim 8-16, MLP 1-2 layers width 32-64, max_epochs=20, patience=5, batch=512, n_bins=16, short grid n=8 (not 50 Optuna trials)",
+    "ft_transformer": "n_blocks 1-2, d_token 16-32, ffn_d_hidden 32-64, attention_n_heads=8 (rtdl.make_baseline hardcoded; requested 2-4 not available without forking), last_layer_query_idx=[-1], max_epochs=20, patience=5, batch=512, short grid n=8",
+    "device": "cpu",
+    "torch_cuda_available": false
+  },
+  "neural_num_cols": [
+    "age",
+    "annual_income",
+    "monthly_income",
+    "debt_to_income_ratio",
+    "credit_score",
+    "loan_amount",
+    "interest_rate",
+    "installment",
+    "num_of_open_accounts",
+    "total_credit_limit",
+    "current_balance",
+    "num_of_delinquencies"
+  ],
+  "neural_cat_cols": [
+    "marital_status",
+    "education_level",
+    "employment_status",
+    "loan_purpose",
+    "loan_term",
+    "grade_subgrade",
+    "delinquency_history",
+    "public_records"
+  ],
+  "split": {
+    "source": "scripts/train.py::load_and_split UNCHANGED",
+    "test_size": 0.3,
+    "stratify": "default",
+    "random_state": 42,
+    "train_n": 14000,
+    "train_bad_rate": 0.2001,
+    "train_n_bads": 2801,
+    "test_n": 6000,
+    "test_bad_rate": 0.2002,
+    "test_n_bads": 1201,
+    "note": "Test labels persisted for eval only; not used to fit or select."
+  },
+  "hyperparams": {
+    "lr": {
+      "penalty": "l2",
+      "C": 10.0,
+      "solver": "lbfgs",
+      "max_iter": 1000,
+      "random_state": 42
+    },
+    "lr_c_grid": [
+      0.01,
+      0.03,
+      0.1,
+      0.3,
+      1.0,
+      3.0,
+      10.0,
+      30.0,
+      100.0
+    ],
+    "lr_grid_scores": [
+      {
+        "C": 0.01,
+        "oof_auc": 0.877693,
+        "oof_ks": 0.553196
+      },
+      {
+        "C": 0.03,
+        "oof_auc": 0.879027,
+        "oof_ks": 0.557396
+      },
+      {
+        "C": 0.1,
+        "oof_auc": 0.879838,
+        "oof_ks": 0.559043
+      },
+      {
+        "C": 0.3,
+        "oof_auc": 0.880348,
+        "oof_ks": 0.561171
+      },
+      {
+        "C": 1.0,
+        "oof_auc": 0.880563,
+        "oof_ks": 0.563043
+      },
+      {
+        "C": 3.0,
+        "oof_auc": 0.880619,
+        "oof_ks": 0.563938
+      },
+      {
+        "C": 10.0,
+        "oof_auc": 0.88064,
+        "oof_ks": 0.564385
+      },
+      {
+        "C": 30.0,
+        "oof_auc": 0.880638,
+        "oof_ks": 0.564116
+      },
+      {
+        "C": 100.0,
+        "oof_auc": 0.880636,
+        "oof_ks": 0.563938
+      }
+    ],
+    "modern_fm_search": {
+      "embed_dim": 8,
+      "mlp_dims": [
+        32
+      ],
+      "dropout": 0.2,
+      "lr": 0.003
+    },
+    "modern_fm_grid_scores": [
+      {
+        "config": 0,
+        "hparams": {
+          "embed_dim": 8,
+          "mlp_dims": [
+            32
+          ],
+          "dropout": 0.1,
+          "lr": 0.001
+        },
+        "oof_auc": 0.874054,
+        "oof_ks": 0.56107
+      },
+      {
+        "config": 1,
+        "hparams": {
+          "embed_dim": 8,
+          "mlp_dims": [
+            64
+          ],
+          "dropout": 0.2,
+          "lr": 0.001
+        },
+        "oof_auc": 0.875161,
+        "oof_ks": 0.562415
+      },
+      {
+        "config": 2,
+        "hparams": {
+          "embed_dim": 8,
+          "mlp_dims": [
+            64,
+            32
+          ],
+          "dropout": 0.1,
+          "lr": 0.003
+        },
+        "oof_auc": 0.870054,
+        "oof_ks": 0.550005
+      },
+      {
+        "config": 3,
+        "hparams": {
+          "embed_dim": 16,
+          "mlp_dims": [
+            32
+          ],
+          "dropout": 0.1,
+          "lr": 0.001
+        },
+        "oof_auc": 0.87189,
+        "oof_ks": 0.550991
+      },
+      {
+        "config": 4,
+        "hparams": {
+          "embed_dim": 16,
+          "mlp_dims": [
+            64
+          ],
+          "dropout": 0.2,
+          "lr": 0.001
+        },
+        "oof_auc": 0.873914,
+        "oof_ks": 0.557502
+      },
+      {
+        "config": 5,
+        "hparams": {
+          "embed_dim": 16,
+          "mlp_dims": [
+            64,
+            32
+          ],
+          "dropout": 0.1,
+          "lr": 0.003
+        },
+        "oof_auc": 0.867813,
+        "oof_ks": 0.550105
+      },
+      {
+        "config": 6,
+        "hparams": {
+          "embed_dim": 8,
+          "mlp_dims": [
+            32
+          ],
+          "dropout": 0.2,
+          "lr": 0.003
+        },
+        "oof_auc": 0.876849,
+        "oof_ks": 0.562572
+      },
+      {
+        "config": 7,
+        "hparams": {
+          "embed_dim": 16,
+          "mlp_dims": [
+            32
+          ],
+          "dropout": 0.2,
+          "lr": 0.003
+        },
+        "oof_auc": 0.874866,
+        "oof_ks": 0.557241
+      }
+    ],
+    "modern_fm_n_epochs_final": 11,
+    "modern_fm_fold_best_epochs": [
+      10,
+      7,
+      9,
+      14,
+      17
+    ],
+    "ft_transformer_search": {
+      "n_blocks": 1,
+      "d_token": 32,
+      "ffn_d_hidden": 64,
+      "attention_dropout": 0.2,
+      "ffn_dropout": 0.1,
+      "lr": 0.003
+    },
+    "ft_transformer_grid_scores": [
+      {
+        "config": 0,
+        "hparams": {
+          "n_blocks": 1,
+          "d_token": 16,
+          "ffn_d_hidden": 32,
+          "attention_dropout": 0.1,
+          "ffn_dropout": 0.1,
+          "lr": 0.001
+        },
+        "oof_auc": 0.889842,
+        "oof_ks": 0.58542
+      },
+      {
+        "config": 1,
+        "hparams": {
+          "n_blocks": 1,
+          "d_token": 16,
+          "ffn_d_hidden": 64,
+          "attention_dropout": 0.2,
+          "ffn_dropout": 0.1,
+          "lr": 0.001
+        },
+        "oof_auc": 0.882102,
+        "oof_ks": 0.564569
+      },
+      {
+        "config": 2,
+        "hparams": {
+          "n_blocks": 1,
+          "d_token": 32,
+          "ffn_d_hidden": 32,
+          "attention_dropout": 0.1,
+          "ffn_dropout": 0.1,
+          "lr": 0.001
+        },
+        "oof_auc": 0.889133,
+        "oof_ks": 0.577123
+      },
+      {
+        "config": 3,
+        "hparams": {
+          "n_blocks": 1,
+          "d_token": 32,
+          "ffn_d_hidden": 64,
+          "attention_dropout": 0.2,
+          "ffn_dropout": 0.1,
+          "lr": 0.003
+        },
+        "oof_auc": 0.8938,
+        "oof_ks": 0.586593
+      },
+      {
+        "config": 4,
+        "hparams": {
+          "n_blocks": 2,
+          "d_token": 16,
+          "ffn_d_hidden": 32,
+          "attention_dropout": 0.1,
+          "ffn_dropout": 0.1,
+          "lr": 0.001
+        },
+        "oof_auc": 0.890717,
+        "oof_ks": 0.587046
+      },
+      {
+        "config": 5,
+        "hparams": {
+          "n_blocks": 2,
+          "d_token": 16,
+          "ffn_d_hidden": 64,
+          "attention_dropout": 0.2,
+          "ffn_dropout": 0.1,
+          "lr": 0.001
+        },
+        "oof_auc": 0.893003,
+        "oof_ks": 0.585873
+      },
+      {
+        "config": 6,
+        "hparams": {
+          "n_blocks": 2,
+          "d_token": 32,
+          "ffn_d_hidden": 32,
+          "attention_dropout": 0.1,
+          "ffn_dropout": 0.1,
+          "lr": 0.001
+        },
+        "oof_auc": 0.893555,
+        "oof_ks": 0.58846
+      },
+      {
+        "config": 7,
+        "hparams": {
+          "n_blocks": 2,
+          "d_token": 32,
+          "ffn_d_hidden": 64,
+          "attention_dropout": 0.2,
+          "ffn_dropout": 0.1,
+          "lr": 0.003
+        },
+        "oof_auc": 0.893246,
+        "oof_ks": 0.585444
+      }
+    ],
+    "ft_transformer_n_epochs_final": 19,
+    "ft_transformer_fold_best_epochs": [
+      17,
+      20,
+      20,
+      17,
+      19
+    ],
+    "lgbm_gbdt_search": {
+      "learning_rate": 0.05435025690302303,
+      "num_leaves": 53,
+      "max_depth": 3,
+      "min_child_samples": 103,
+      "subsample": 0.7312202514997275,
+      "colsample_bytree": 0.9728984059205478,
+      "reg_alpha": 0.4366724940335208,
+      "reg_lambda": 0.042964739661628434
+    },
+    "lgbm_gbdt_final": {
+      "objective": "binary",
+      "boosting_type": "gbdt",
+      "random_state": 42,
+      "verbosity": -1,
+      "n_jobs": 4,
+      "subsample_freq": 1,
+      "n_estimators": 152,
+      "learning_rate": 0.05435025690302303,
+      "num_leaves": 53,
+      "max_depth": 3,
+      "min_child_samples": 103,
+      "subsample": 0.7312202514997275,
+      "colsample_bytree": 0.9728984059205478,
+      "reg_alpha": 0.4366724940335208,
+      "reg_lambda": 0.042964739661628434
+    },
+    "lgbm_gbdt_n_estimators_final": 152,
+    "lgbm_gbdt_best_iterations": [
+      147,
+      132,
+      159,
+      171,
+      153
+    ],
+    "lgbm_gbdt_n_trials_completed": 50,
+    "lgbm_dart_search": {
+      "n_estimators": 499,
+      "learning_rate": 0.054048018851067,
+      "num_leaves": 64,
+      "max_depth": 3,
+      "min_child_samples": 294,
+      "feature_fraction": 0.8835726202569505,
+      "reg_alpha": 3.1471274492014585,
+      "reg_lambda": 0.029616152297803622,
+      "drop_rate": 0.24478158628129132,
+      "skip_drop": 0.6928734309755
+    },
+    "lgbm_dart_final": {
+      "objective": "binary",
+      "boosting_type": "dart",
+      "random_state": 42,
+      "verbosity": -1,
+      "n_jobs": 4,
+      "n_estimators": 499,
+      "learning_rate": 0.054048018851067,
+      "num_leaves": 64,
+      "max_depth": 3,
+      "min_child_samples": 294,
+      "feature_fraction": 0.8835726202569505,
+      "reg_alpha": 3.1471274492014585,
+      "reg_lambda": 0.029616152297803622,
+      "drop_rate": 0.24478158628129132,
+      "skip_drop": 0.6928734309755
+    },
+    "lgbm_dart_n_trials_completed": 50,
+    "catboost_search": {
+      "depth": 4,
+      "learning_rate": 0.03258548935284139,
+      "l2_leaf_reg": 2.596756291129093,
+      "iterations": 479,
+      "min_data_in_leaf": 38,
+      "subsample": 0.9721880459666276
+    },
+    "catboost_final": {
+      "loss_function": "Logloss",
+      "eval_metric": "AUC",
+      "random_state": 42,
+      "verbose": 0,
+      "allow_writing_files": false,
+      "thread_count": 4,
+      "depth": 4,
+      "learning_rate": 0.03258548935284139,
+      "l2_leaf_reg": 2.596756291129093,
+      "iterations": 479,
+      "min_data_in_leaf": 38,
+      "subsample": 0.9721880459666276,
+      "bootstrap_type": "Bernoulli"
+    },
+    "catboost_n_trials_completed": 50,
+    "stack_meta": {
+      "penalty": "l2",
+      "C": 1.0,
+      "solver": "lbfgs",
+      "max_iter": 1000,
+      "random_state": 42,
+      "fitted_on": "OOF PDs of six bases (not full-train in-sample PDs)"
+    }
+  },
+  "oof_metrics": {
+    "lr": {
+      "AUC": 0.8806,
+      "KS_Statistic": 0.5644,
+      "Gini": 0.7613,
+      "Validation_Rating": "Good (0.40 - 0.60)",
+      "auc_raw": 0.8806398758189731,
+      "ks_raw": 0.564384525968316
+    },
+    "modern_fm": {
+      "AUC": 0.8768,
+      "KS_Statistic": 0.5626,
+      "Gini": 0.7537,
+      "Validation_Rating": "Good (0.40 - 0.60)",
+      "auc_raw": 0.8768487196302239,
+      "ks_raw": 0.5625717142911885
+    },
+    "ft_transformer": {
+      "AUC": 0.8938,
+      "KS_Statistic": 0.5866,
+      "Gini": 0.7876,
+      "Validation_Rating": "Good (0.40 - 0.60)",
+      "auc_raw": 0.893800349836152,
+      "ks_raw": 0.5865933100379143
+    },
+    "lgbm_gbdt": {
+      "AUC": 0.8893,
+      "KS_Statistic": 0.5823,
+      "Gini": 0.7785,
+      "Validation_Rating": "Good (0.40 - 0.60)",
+      "auc_raw": 0.8892671251726937,
+      "ks_raw": 0.5823292097247297
+    },
+    "lgbm_dart": {
+      "AUC": 0.8875,
+      "KS_Statistic": 0.5799,
+      "Gini": 0.775,
+      "Validation_Rating": "Good (0.40 - 0.60)",
+      "auc_raw": 0.8875076633652869,
+      "ks_raw": 0.5799068036593134
+    },
+    "catboost": {
+      "AUC": 0.8877,
+      "KS_Statistic": 0.5785,
+      "Gini": 0.7754,
+      "Validation_Rating": "Good (0.40 - 0.60)",
+      "auc_raw": 0.8877235972419248,
+      "ks_raw": 0.5784819301743771
+    },
+    "average": {
+      "AUC": 0.8891,
+      "KS_Statistic": 0.5799,
+      "Gini": 0.7783,
+      "Validation_Rating": "Good (0.40 - 0.60)",
+      "auc_raw": 0.8891252945360711,
+      "ks_raw": 0.5799031375493534
+    },
+    "stack": {
+      "AUC": 0.8938,
+      "KS_Statistic": 0.5907,
+      "Gini": 0.7877,
+      "Validation_Rating": "Good (0.40 - 0.60)",
+      "auc_raw": 0.8938429404701209,
+      "ks_raw": 0.5907148464924843
+    }
+  },
+  "oof_auc": {
+    "lr": 0.8806,
+    "modern_fm": 0.8768,
+    "ft_transformer": 0.8938,
+    "lgbm_gbdt": 0.8893,
+    "lgbm_dart": 0.8875,
+    "catboost": 0.8877,
+    "average": 0.8891,
+    "stack": 0.8938
+  },
+  "oof_ks": {
+    "lr": 0.5644,
+    "modern_fm": 0.5626,
+    "ft_transformer": 0.5866,
+    "lgbm_gbdt": 0.5823,
+    "lgbm_dart": 0.5799,
+    "catboost": 0.5785,
+    "average": 0.5799,
+    "stack": 0.5907
+  },
+  "oof_selected_ensemble": "stack",
+  "stack_meta_coefs": {
+    "pd_lr": -0.322604,
+    "pd_modern_fm": 0.433229,
+    "pd_ft_transformer": 5.456879,
+    "pd_lgbm_gbdt": 0.87954,
+    "pd_lgbm_dart": 0.549874,
+    "pd_catboost": 1.09548
+  },
+  "stack_meta_intercept": -3.295449,
+  "train_explains": {
+    "lr": {
+      "method": "absolute logistic coefficient ranking on TRAIN-fitted WOE columns",
+      "intercept": -1.47107,
+      "abs_coef_by_feature": [
+        {
+          "feature": "debt_to_income_ratio",
+          "coef": -1.602244,
+          "abs_coef": 1.602244
+        },
+        {
+          "feature": "current_balance",
+          "coef": -1.582467,
+          "abs_coef": 1.582467
+        },
+        {
+          "feature": "education_level",
+          "coef": -1.300558,
+          "abs_coef": 1.300558
+        },
+        {
+          "feature": "employment_status",
+          "coef": -1.288471,
+          "abs_coef": 1.288471
+        },
+        {
+          "feature": "loan_amount",
+          "coef": -1.171731,
+          "abs_coef": 1.171731
+        },
+        {
+          "feature": "marital_status",
+          "coef": -0.978944,
+          "abs_coef": 0.978944
+        },
+        {
+          "feature": "grade_subgrade",
+          "coef": -0.94344,
+          "abs_coef": 0.94344
+        },
+        {
+          "feature": "loan_purpose",
+          "coef": -0.916411,
+          "abs_coef": 0.916411
+        },
+        {
+          "feature": "credit_score",
+          "coef": -0.770023,
+          "abs_coef": 0.770023
+        },
+        {
+          "feature": "age",
+          "coef": -0.749178,
+          "abs_coef": 0.749178
+        },
+        {
+          "feature": "num_of_open_accounts",
+          "coef": -0.732302,
+          "abs_coef": 0.732302
+        },
+        {
+          "feature": "annual_income",
+          "coef": -0.697167,
+          "abs_coef": 0.697167
+        },
+        {
+          "feature": "monthly_income",
+          "coef": -0.697167,
+          "abs_coef": 0.697167
+        },
+        {
+          "feature": "total_credit_limit",
+          "coef": -0.612879,
+          "abs_coef": 0.612879
+        },
+        {
+          "feature": "delinquency_history",
+          "coef": -0.43446,
+          "abs_coef": 0.43446
+        },
+        {
+          "feature": "num_of_delinquencies",
+          "coef": 0.328618,
+          "abs_coef": 0.328618
+        },
+        {
+          "feature": "loan_term",
+          "coef": -0.290443,
+          "abs_coef": 0.290443
+        },
+        {
+          "feature": "interest_rate",
+          "coef": -0.267929,
+          "abs_coef": 0.267929
+        },
+        {
+          "feature": "public_records",
+          "coef": -0.195041,
+          "abs_coef": 0.195041
+        },
+        {
+          "feature": "installment",
+          "coef": -0.161995,
+          "abs_coef": 0.161995
+        }
+      ],
+      "employment_status_rank": 4,
+      "gender_present": false,
+      "employment_status_present": true
+    },
+    "modern_fm": {
+      "method": "permutation importance on TRAIN sample n=500, seed=42, metric=AUC drop vs baseline AUC=0.945431 — modern_fm",
+      "n_rows": 500,
+      "baseline_auc": 0.945431,
+      "auc_drop_by_feature": [
+        {
+          "feature": "employment_status",
+          "auc_drop": 0.271313,
+          "perm_auc": 0.674118
+        },
+        {
+          "feature": "debt_to_income_ratio",
+          "auc_drop": 0.058277,
+          "perm_auc": 0.887154
+        },
+        {
+          "feature": "credit_score",
+          "auc_drop": 0.044843,
+          "perm_auc": 0.900588
+        },
+        {
+          "feature": "grade_subgrade",
+          "auc_drop": 0.015019,
+          "perm_auc": 0.930412
+        },
+        {
+          "feature": "loan_amount",
+          "auc_drop": 0.011231,
+          "perm_auc": 0.9342
+        },
+        {
+          "feature": "interest_rate",
+          "auc_drop": 0.009672,
+          "perm_auc": 0.935759
+        },
+        {
+          "feature": "annual_income",
+          "auc_drop": 0.009404,
+          "perm_auc": 0.936027
+        },
+        {
+          "feature": "installment",
+          "auc_drop": 0.008248,
+          "perm_auc": 0.937183
+        },
+        {
+          "feature": "num_of_delinquencies",
+          "auc_drop": 0.007872,
+          "perm_auc": 0.937559
+        },
+        {
+          "feature": "monthly_income",
+          "auc_drop": 0.007792,
+          "perm_auc": 0.937639
+        },
+        {
+          "feature": "total_credit_limit",
+          "auc_drop": 0.006448,
+          "perm_auc": 0.938983
+        },
+        {
+          "feature": "delinquency_history",
+          "auc_drop": 0.005938,
+          "perm_auc": 0.939493
+        },
+        {
+          "feature": "education_level",
+          "auc_drop": 0.004836,
+          "perm_auc": 0.940595
+        },
+        {
+          "feature": "age",
+          "auc_drop": 0.004729,
+          "perm_auc": 0.940702
+        },
+        {
+          "feature": "current_balance",
+          "auc_drop": 0.003144,
+          "perm_auc": 0.942288
+        },
+        {
+          "feature": "num_of_open_accounts",
+          "auc_drop": 0.002848,
+          "perm_auc": 0.942583
+        },
+        {
+          "feature": "marital_status",
+          "auc_drop": 0.002015,
+          "perm_auc": 0.943416
+        },
+        {
+          "feature": "public_records",
+          "auc_drop": 0.001424,
+          "perm_auc": 0.944007
+        },
+        {
+          "feature": "loan_purpose",
+          "auc_drop": 0.001343,
+          "perm_auc": 0.944088
+        },
+        {
+          "feature": "loan_term",
+          "auc_drop": 0.00094,
+          "perm_auc": 0.944491
+        }
+      ],
+      "employment_status_rank": 1,
+      "gender_present": false,
+      "employment_status_present": true
+    },
+    "ft_transformer": {
+      "method": "permutation importance on TRAIN sample n=500, seed=42, metric=AUC drop vs baseline AUC=0.909724 — ft_transformer",
+      "n_rows": 500,
+      "baseline_auc": 0.909724,
+      "auc_drop_by_feature": [
+        {
+          "feature": "employment_status",
+          "auc_drop": 0.248475,
+          "perm_auc": 0.661248
+        },
+        {
+          "feature": "debt_to_income_ratio",
+          "auc_drop": 0.106908,
+          "perm_auc": 0.802816
+        },
+        {
+          "feature": "credit_score",
+          "auc_drop": 0.056933,
+          "perm_auc": 0.85279
+        },
+        {
+          "feature": "grade_subgrade",
+          "auc_drop": 0.004245,
+          "perm_auc": 0.905478
+        },
+        {
+          "feature": "delinquency_history",
+          "auc_drop": 0.000752,
+          "perm_auc": 0.908971
+        },
+        {
+          "feature": "total_credit_limit",
+          "auc_drop": 0.000564,
+          "perm_auc": 0.909159
+        },
+        {
+          "feature": "loan_purpose",
+          "auc_drop": 0.000296,
+          "perm_auc": 0.909428
+        },
+        {
+          "feature": "interest_rate",
+          "auc_drop": 0.000242,
+          "perm_auc": 0.909482
+        },
+        {
+          "feature": "marital_status",
+          "auc_drop": 0.000215,
+          "perm_auc": 0.909509
+        },
+        {
+          "feature": "annual_income",
+          "auc_drop": 0.000107,
+          "perm_auc": 0.909616
+        },
+        {
+          "feature": "current_balance",
+          "auc_drop": 5.4e-05,
+          "perm_auc": 0.90967
+        },
+        {
+          "feature": "loan_amount",
+          "auc_drop": -0.0,
+          "perm_auc": 0.909724
+        },
+        {
+          "feature": "installment",
+          "auc_drop": -0.000134,
+          "perm_auc": 0.909858
+        },
+        {
+          "feature": "num_of_open_accounts",
+          "auc_drop": -0.000188,
+          "perm_auc": 0.909912
+        },
+        {
+          "feature": "age",
+          "auc_drop": -0.000215,
+          "perm_auc": 0.909938
+        },
+        {
+          "feature": "loan_term",
+          "auc_drop": -0.000269,
+          "perm_auc": 0.909992
+        },
+        {
+          "feature": "monthly_income",
+          "auc_drop": -0.000322,
+          "perm_auc": 0.910046
+        },
+        {
+          "feature": "education_level",
+          "auc_drop": -0.000484,
+          "perm_auc": 0.910207
+        },
+        {
+          "feature": "num_of_delinquencies",
+          "auc_drop": -0.000618,
+          "perm_auc": 0.910341
+        },
+        {
+          "feature": "public_records",
+          "auc_drop": -0.000752,
+          "perm_auc": 0.910476
+        }
+      ],
+      "employment_status_rank": 1,
+      "gender_present": false,
+      "employment_status_present": true
+    },
+    "lgbm_gbdt": {
+      "method": "shap.TreeExplainer (TreeSHAP) on all TRAIN rows — lgbm_gbdt",
+      "n_rows": 14000,
+      "mean_abs_shap_by_feature": [
+        {
+          "feature": "employment_status",
+          "mean_abs_shap": 1.185698
+        },
+        {
+          "feature": "debt_to_income_ratio",
+          "mean_abs_shap": 0.830874
+        },
+        {
+          "feature": "credit_score",
+          "mean_abs_shap": 0.500282
+        },
+        {
+          "feature": "grade_subgrade",
+          "mean_abs_shap": 0.354993
+        },
+        {
+          "feature": "interest_rate",
+          "mean_abs_shap": 0.060224
+        },
+        {
+          "feature": "annual_income",
+          "mean_abs_shap": 0.042879
+        },
+        {
+          "feature": "current_balance",
+          "mean_abs_shap": 0.038794
+        },
+        {
+          "feature": "loan_amount",
+          "mean_abs_shap": 0.033436
+        },
+        {
+          "feature": "education_level",
+          "mean_abs_shap": 0.032685
+        },
+        {
+          "feature": "loan_purpose",
+          "mean_abs_shap": 0.030652
+        },
+        {
+          "feature": "marital_status",
+          "mean_abs_shap": 0.019138
+        },
+        {
+          "feature": "age",
+          "mean_abs_shap": 0.015932
+        },
+        {
+          "feature": "delinquency_history",
+          "mean_abs_shap": 0.014096
+        },
+        {
+          "feature": "total_credit_limit",
+          "mean_abs_shap": 0.010255
+        },
+        {
+          "feature": "installment",
+          "mean_abs_shap": 0.009552
+        },
+        {
+          "feature": "num_of_open_accounts",
+          "mean_abs_shap": 0.008155
+        },
+        {
+          "feature": "num_of_delinquencies",
+          "mean_abs_shap": 0.005304
+        },
+        {
+          "feature": "loan_term",
+          "mean_abs_shap": 0.005229
+        },
+        {
+          "feature": "monthly_income",
+          "mean_abs_shap": 0.003622
+        },
+        {
+          "feature": "public_records",
+          "mean_abs_shap": 0.0
+        }
+      ],
+      "employment_status_rank": 1,
+      "gender_present": false,
+      "employment_status_present": true
+    },
+    "lgbm_dart": {
+      "method": "shap.TreeExplainer (TreeSHAP) on all TRAIN rows — lgbm_dart",
+      "n_rows": 14000,
+      "mean_abs_shap_by_feature": [
+        {
+          "feature": "employment_status",
+          "mean_abs_shap": 1.24186
+        },
+        {
+          "feature": "debt_to_income_ratio",
+          "mean_abs_shap": 0.877479
+        },
+        {
+          "feature": "credit_score",
+          "mean_abs_shap": 0.575471
+        },
+        {
+          "feature": "grade_subgrade",
+          "mean_abs_shap": 0.327437
+        },
+        {
+          "feature": "interest_rate",
+          "mean_abs_shap": 0.066664
+        },
+        {
+          "feature": "loan_amount",
+          "mean_abs_shap": 0.036351
+        },
+        {
+          "feature": "education_level",
+          "mean_abs_shap": 0.034107
+        },
+        {
+          "feature": "current_balance",
+          "mean_abs_shap": 0.029571
+        },
+        {
+          "feature": "annual_income",
+          "mean_abs_shap": 0.028744
+        },
+        {
+          "feature": "loan_purpose",
+          "mean_abs_shap": 0.025908
+        },
+        {
+          "feature": "delinquency_history",
+          "mean_abs_shap": 0.024011
+        },
+        {
+          "feature": "age",
+          "mean_abs_shap": 0.019688
+        },
+        {
+          "feature": "total_credit_limit",
+          "mean_abs_shap": 0.017336
+        },
+        {
+          "feature": "marital_status",
+          "mean_abs_shap": 0.013205
+        },
+        {
+          "feature": "num_of_delinquencies",
+          "mean_abs_shap": 0.009281
+        },
+        {
+          "feature": "num_of_open_accounts",
+          "mean_abs_shap": 0.00412
+        },
+        {
+          "feature": "installment",
+          "mean_abs_shap": 0.003767
+        },
+        {
+          "feature": "monthly_income",
+          "mean_abs_shap": 0.003198
+        },
+        {
+          "feature": "loan_term",
+          "mean_abs_shap": 0.002932
+        },
+        {
+          "feature": "public_records",
+          "mean_abs_shap": 0.0
+        }
+      ],
+      "employment_status_rank": 1,
+      "gender_present": false,
+      "employment_status_present": true
+    },
+    "catboost": {
+      "method": "shap.TreeExplainer (TreeSHAP) on all TRAIN rows — catboost",
+      "n_rows": 14000,
+      "mean_abs_shap_by_feature": [
+        {
+          "feature": "employment_status",
+          "mean_abs_shap": 1.465034
+        },
+        {
+          "feature": "debt_to_income_ratio",
+          "mean_abs_shap": 1.073518
+        },
+        {
+          "feature": "credit_score",
+          "mean_abs_shap": 0.639332
+        },
+        {
+          "feature": "grade_subgrade",
+          "mean_abs_shap": 0.459358
+        },
+        {
+          "feature": "interest_rate",
+          "mean_abs_shap": 0.089816
+        },
+        {
+          "feature": "education_level",
+          "mean_abs_shap": 0.054397
+        },
+        {
+          "feature": "loan_purpose",
+          "mean_abs_shap": 0.054129
+        },
+        {
+          "feature": "current_balance",
+          "mean_abs_shap": 0.052272
+        },
+        {
+          "feature": "loan_amount",
+          "mean_abs_shap": 0.044447
+        },
+        {
+          "feature": "delinquency_history",
+          "mean_abs_shap": 0.039139
+        },
+        {
+          "feature": "marital_status",
+          "mean_abs_shap": 0.031403
+        },
+        {
+          "feature": "age",
+          "mean_abs_shap": 0.026692
+        },
+        {
+          "feature": "monthly_income",
+          "mean_abs_shap": 0.025381
+        },
+        {
+          "feature": "annual_income",
+          "mean_abs_shap": 0.025299
+        },
+        {
+          "feature": "total_credit_limit",
+          "mean_abs_shap": 0.018209
+        },
+        {
+          "feature": "installment",
+          "mean_abs_shap": 0.018066
+        },
+        {
+          "feature": "num_of_delinquencies",
+          "mean_abs_shap": 0.015032
+        },
+        {
+          "feature": "num_of_open_accounts",
+          "mean_abs_shap": 0.014217
+        },
+        {
+          "feature": "loan_term",
+          "mean_abs_shap": 0.010144
+        },
+        {
+          "feature": "public_records",
+          "mean_abs_shap": 0.005299
+        }
+      ],
+      "employment_status_rank": 1,
+      "gender_present": false,
+      "employment_status_present": true
+    }
+  },
+  "artifact_paths": {
+    "encoders": "artifacts/ensemble_fm_ft_encoders.joblib",
+    "lr": "artifacts/ensemble_fm_ft_lr.joblib",
+    "modern_fm": "artifacts/ensemble_fm_ft_modern_fm.pt",
+    "ft_transformer": "artifacts/ensemble_fm_ft_ft_transformer.pt",
+    "lgbm_gbdt": "artifacts/ensemble_fm_ft_lgbm_gbdt.joblib",
+    "lgbm_dart": "artifacts/ensemble_fm_ft_lgbm_dart.joblib",
+    "catboost": "artifacts/ensemble_fm_ft_catboost.joblib",
+    "stack_meta": "artifacts/ensemble_fm_ft_stack_meta.joblib",
+    "neural_preprocess": "artifacts/ensemble_fm_ft_neural_preprocess.joblib",
+    "meta": "artifacts/ensemble_fm_ft_meta.json",
+    "oof_pds": "artifacts/ensemble_fm_ft_oof_pds.csv",
+    "X_train": "artifacts/ensemble_fm_ft_X_train.csv",
+    "y_train": "artifacts/ensemble_fm_ft_y_train.csv",
+    "X_test": "artifacts/ensemble_fm_ft_X_test.csv",
+    "y_test": "artifacts/ensemble_fm_ft_y_test.csv",
+    "X_train_raw": "artifacts/ensemble_fm_ft_X_train_raw.csv",
+    "X_test_raw": "artifacts/ensemble_fm_ft_X_test_raw.csv",
+    "requirements": "artifacts/ensemble_fm_ft_requirements.txt"
+  },
+  "did_not_write": [
+    "artifacts/lgbm_model.joblib",
+    "artifacts/lgbm_linear_tree_*",
+    "artifacts/linear_tree_*",
+    "artifacts/stack_lr_rf_lgbm_*",
+    "artifacts/lgbm_no_gender_emp_overlay_*",
+    "artifacts/lgbm_emp_in_no_gender_*",
+    "artifacts/lgbm_dart_monotone_*",
+    "artifacts/ensemble_no_gender_*"
+  ],
+  "notes": "Stack meta is fitted on OOF base PDs only and is NOT refit on full-train in-sample base PDs. PSI train side must be OOF ensemble PD. No monotone_constraints. No interaction_constraints. gender dropped. employment_status is a normal in-model feature. Neural preprocess fit on fold-train during OOF and on all 14000 train rows for the frozen models. Architecture was shrunk for CPU.",
+  "computed_after_freeze": true
+}

@@ -1,0 +1,226 @@
+{
+  "computed_after_freeze": true,
+  "freeze_timestamp_utc": "2026-08-31T11:31:24.259174+00:00",
+  "gender_in_model": false,
+  "employment_status_in_model": true,
+  "in_model_features": [
+    "age",
+    "marital_status",
+    "education_level",
+    "annual_income",
+    "monthly_income",
+    "employment_status",
+    "debt_to_income_ratio",
+    "credit_score",
+    "loan_amount",
+    "loan_purpose",
+    "interest_rate",
+    "loan_term",
+    "installment",
+    "grade_subgrade",
+    "num_of_open_accounts",
+    "total_credit_limit",
+    "current_balance",
+    "delinquency_history",
+    "public_records",
+    "num_of_delinquencies"
+  ],
+  "monotone_constraints": false,
+  "interaction_constraints": false,
+  "eval_never_fits": true,
+  "test_labels_used_to_fit_or_select": false,
+  "neural_impl": {
+    "modern_fm": {
+      "library": "torchfm",
+      "class": "torchfm.model.dfm.DeepFactorizationMachineModel",
+      "version": "0.7.0",
+      "note": "torchfm 0.7.0 has no DeepFM alias; class is DeepFactorizationMachineModel. CPU. Quantile-binned numeric + integer cat maps (same 20 columns)."
+    },
+    "ft_transformer": {
+      "library": "rtdl",
+      "class": "rtdl.FTTransformer",
+      "constructor": "rtdl.FTTransformer.make_baseline",
+      "version": "0.0.13",
+      "note": "rtdl.nn.FTTransformer does not exist in rtdl 0.0.13; using rtdl.modules.FTTransformer. rtdl pinned torch<2 so installed --no-deps on torch 2.13 CPU. make_baseline hardcodes attention_n_heads=8."
+    }
+  },
+  "package_versions": {
+    "python": "3.12.3",
+    "torch": "2.13.0+cu130",
+    "numpy": "2.4.4",
+    "pandas": "2.3.3",
+    "sklearn": "1.9.0",
+    "lightgbm": "4.7.0",
+    "catboost": "1.2.10",
+    "optuna": "4.9.0",
+    "shap": "0.52.0",
+    "joblib": "1.6.0",
+    "torchfm": "0.7.0",
+    "rtdl": "0.0.13"
+  },
+  "oof_selected_ensemble": "stack",
+  "which_ensemble_oof_would_select": "stack",
+  "oof_auc": {
+    "lr": 0.8806,
+    "modern_fm": 0.8768,
+    "ft_transformer": 0.8938,
+    "lgbm_gbdt": 0.8893,
+    "lgbm_dart": 0.8875,
+    "catboost": 0.8877,
+    "average": 0.8891,
+    "stack": 0.8938
+  },
+  "oof_ks": {
+    "lr": 0.5644,
+    "modern_fm": 0.5626,
+    "ft_transformer": 0.5866,
+    "lgbm_gbdt": 0.5823,
+    "lgbm_dart": 0.5799,
+    "catboost": 0.5785,
+    "average": 0.5799,
+    "stack": 0.5907
+  },
+  "test_metrics": {
+    "lr": {
+      "AUC": 0.8823,
+      "KS_Statistic": 0.5695,
+      "Gini": 0.7646,
+      "Validation_Rating": "Good (0.40 - 0.60)",
+      "Optimal_Cutoff_Probability": 0.1864,
+      "PSI": 0.0027,
+      "PSI_Status": "Stable (<0.10) - No action needed"
+    },
+    "modern_fm": {
+      "AUC": 0.8795,
+      "KS_Statistic": 0.5575,
+      "Gini": 0.7589,
+      "Validation_Rating": "Good (0.40 - 0.60)",
+      "Optimal_Cutoff_Probability": 0.1496,
+      "PSI": 0.0231,
+      "PSI_Status": "Stable (<0.10) - No action needed"
+    },
+    "ft_transformer": {
+      "AUC": 0.8963,
+      "KS_Statistic": 0.5947,
+      "Gini": 0.7927,
+      "Validation_Rating": "Good (0.40 - 0.60)",
+      "Optimal_Cutoff_Probability": 0.1488,
+      "PSI": 0.1297,
+      "PSI_Status": "Slight Shift (0.10 - 0.25) - Close monitoring advised"
+    },
+    "lgbm_gbdt": {
+      "AUC": 0.8895,
+      "KS_Statistic": 0.5816,
+      "Gini": 0.779,
+      "Validation_Rating": "Good (0.40 - 0.60)",
+      "Optimal_Cutoff_Probability": 0.1839,
+      "PSI": 0.0091,
+      "PSI_Status": "Stable (<0.10) - No action needed"
+    },
+    "lgbm_dart": {
+      "AUC": 0.8869,
+      "KS_Statistic": 0.5779,
+      "Gini": 0.7738,
+      "Validation_Rating": "Good (0.40 - 0.60)",
+      "Optimal_Cutoff_Probability": 0.1955,
+      "PSI": 0.0038,
+      "PSI_Status": "Stable (<0.10) - No action needed"
+    },
+    "catboost": {
+      "AUC": 0.8878,
+      "KS_Statistic": 0.5804,
+      "Gini": 0.7756,
+      "Validation_Rating": "Good (0.40 - 0.60)",
+      "Optimal_Cutoff_Probability": 0.2141,
+      "PSI": 0.0044,
+      "PSI_Status": "Stable (<0.10) - No action needed"
+    },
+    "average": {
+      "AUC": 0.8893,
+      "KS_Statistic": 0.5798,
+      "Gini": 0.7786,
+      "Validation_Rating": "Good (0.40 - 0.60)",
+      "Optimal_Cutoff_Probability": 0.2211,
+      "PSI": 0.0081,
+      "PSI_Status": "Stable (<0.10) - No action needed"
+    },
+    "stack": {
+      "AUC": 0.8951,
+      "KS_Statistic": 0.593,
+      "Gini": 0.7902,
+      "Validation_Rating": "Good (0.40 - 0.60)",
+      "Optimal_Cutoff_Probability": 0.1667,
+      "PSI": 0.0618,
+      "PSI_Status": "Stable (<0.10) - No action needed"
+    }
+  },
+  "beats_last_run": {
+    "average": {
+      "beats_last_run_0.8858": true,
+      "beats_pr2_stack_0.8885": true,
+      "beats_pr4_0.8859": true,
+      "beats_pr5_dart_0.7645": true,
+      "beats_pr6_stack_0.8883": true,
+      "beats_pr6_gbdt_alone_0.8895": false
+    },
+    "stack": {
+      "beats_last_run_0.8858": true,
+      "beats_pr2_stack_0.8885": true,
+      "beats_pr4_0.8859": true,
+      "beats_pr5_dart_0.7645": true,
+      "beats_pr6_stack_0.8883": true,
+      "beats_pr6_gbdt_alone_0.8895": true
+    }
+  },
+  "comparators": {
+    "last_run": {
+      "AUC": 0.8858,
+      "KS": 0.5777,
+      "Gini": 0.7715,
+      "PSI": 0.0021,
+      "CV": 0.8862
+    },
+    "pr2_stack_test_auc": 0.8885,
+    "pr4_test_auc": 0.8859,
+    "pr5_dart_test_auc": 0.7645,
+    "pr6_stack_test_auc": 0.8883,
+    "pr6_gbdt_alone_test_auc": 0.8895
+  },
+  "stack_meta_coefs": {
+    "pd_lr": -0.322604,
+    "pd_modern_fm": 0.433229,
+    "pd_ft_transformer": 5.456879,
+    "pd_lgbm_gbdt": 0.87954,
+    "pd_lgbm_dart": 0.549874,
+    "pd_catboost": 1.09548
+  },
+  "stack_meta_intercept": -3.295449,
+  "bases_trained": [
+    "lr",
+    "modern_fm",
+    "ft_transformer",
+    "lgbm_gbdt",
+    "lgbm_dart",
+    "catboost"
+  ],
+  "split": {
+    "source": "scripts/train.py::load_and_split UNCHANGED",
+    "test_size": 0.3,
+    "stratify": "default",
+    "random_state": 42,
+    "train_n": 14000,
+    "train_bad_rate": 0.2001,
+    "train_n_bads": 2801,
+    "test_n": 6000,
+    "test_bad_rate": 0.2002,
+    "test_n_bads": 1201,
+    "note": "Test labels persisted for eval only; not used to fit or select."
+  },
+  "cpu_architecture_notes": {
+    "shrunk_for_cpu": true,
+    "modern_fm": "embed_dim 8-16, MLP 1-2 layers width 32-64, max_epochs=20, patience=5, batch=512, n_bins=16, short grid n=8 (not 50 Optuna trials)",
+    "ft_transformer": "n_blocks 1-2, d_token 16-32, ffn_d_hidden 32-64, attention_n_heads=8 (rtdl.make_baseline hardcoded; requested 2-4 not available without forking), last_layer_query_idx=[-1], max_epochs=20, patience=5, batch=512, short grid n=8",
+    "device": "cpu",
+    "torch_cuda_available": false
+  }
+}
