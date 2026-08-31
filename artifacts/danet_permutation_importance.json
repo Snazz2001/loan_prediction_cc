@@ -1,0 +1,110 @@
+{
+  "method": "permutation importance on TRAIN sample n=500, seed=42, metric=AUC drop vs baseline AUC=0.910556 — danet",
+  "n_rows": 500,
+  "baseline_auc": 0.910556,
+  "auc_drop_by_feature": [
+    {
+      "feature": "employment_status",
+      "auc_drop": 0.25933,
+      "perm_auc": 0.651227
+    },
+    {
+      "feature": "debt_to_income_ratio",
+      "auc_drop": 0.101776,
+      "perm_auc": 0.80878
+    },
+    {
+      "feature": "credit_score",
+      "auc_drop": 0.09256,
+      "perm_auc": 0.817996
+    },
+    {
+      "feature": "delinquency_history",
+      "auc_drop": 0.009404,
+      "perm_auc": 0.901153
+    },
+    {
+      "feature": "installment",
+      "auc_drop": 0.00669,
+      "perm_auc": 0.903866
+    },
+    {
+      "feature": "current_balance",
+      "auc_drop": 0.006233,
+      "perm_auc": 0.904323
+    },
+    {
+      "feature": "grade_subgrade",
+      "auc_drop": 0.004621,
+      "perm_auc": 0.905935
+    },
+    {
+      "feature": "monthly_income",
+      "auc_drop": 0.003358,
+      "perm_auc": 0.907198
+    },
+    {
+      "feature": "marital_status",
+      "auc_drop": 0.002929,
+      "perm_auc": 0.907628
+    },
+    {
+      "feature": "loan_term",
+      "auc_drop": 0.002767,
+      "perm_auc": 0.907789
+    },
+    {
+      "feature": "total_credit_limit",
+      "auc_drop": 0.002579,
+      "perm_auc": 0.907977
+    },
+    {
+      "feature": "num_of_open_accounts",
+      "auc_drop": 0.002203,
+      "perm_auc": 0.908353
+    },
+    {
+      "feature": "loan_amount",
+      "auc_drop": 0.002069,
+      "perm_auc": 0.908488
+    },
+    {
+      "feature": "annual_income",
+      "auc_drop": 0.001585,
+      "perm_auc": 0.908971
+    },
+    {
+      "feature": "interest_rate",
+      "auc_drop": 0.001182,
+      "perm_auc": 0.909374
+    },
+    {
+      "feature": "num_of_delinquencies",
+      "auc_drop": 0.001128,
+      "perm_auc": 0.909428
+    },
+    {
+      "feature": "loan_purpose",
+      "auc_drop": 0.000914,
+      "perm_auc": 0.909643
+    },
+    {
+      "feature": "age",
+      "auc_drop": 0.000672,
+      "perm_auc": 0.909885
+    },
+    {
+      "feature": "public_records",
+      "auc_drop": -5.4e-05,
+      "perm_auc": 0.91061
+    },
+    {
+      "feature": "education_level",
+      "auc_drop": -0.003547,
+      "perm_auc": 0.914103
+    }
+  ],
+  "employment_status_rank": 1,
+  "gender_present": false,
+  "employment_status_present": true
+}
