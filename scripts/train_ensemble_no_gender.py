@@ -240,7 +240,7 @@ def _assert_load_and_split_unchanged() -> None:
             )
 
 
-def _assert_in_model_columns(columns: list[str], context: str) -> None:
+def _assert_in_model_columns(columns: list[str], context: str, *, require_order: bool = True) -> None:
     cols = list(columns)
     if "gender" in cols:
         raise RuntimeError(
@@ -262,7 +262,7 @@ def _assert_in_model_columns(columns: list[str], context: str) -> None:
         raise RuntimeError(
             f"{context}: in-model column set mismatch. got={cols} expected={EXPECTED_IN_MODEL_FEATURES}"
         )
-    if cols != EXPECTED_IN_MODEL_FEATURES:
+    if require_order and cols != EXPECTED_IN_MODEL_FEATURES:
         raise RuntimeError(
             f"{context}: in-model column ORDER mismatch. got={cols} expected={EXPECTED_IN_MODEL_FEATURES}"
         )
@@ -380,7 +380,7 @@ def _mean_abs_shap_ranking(shap_arr: np.ndarray, columns: list[str], method: str
         reverse=True,
     )
     shap_features = [r["feature"] for r in ranking]
-    _assert_in_model_columns(shap_features, f"SHAP table ({method})")
+    _assert_in_model_columns(shap_features, f"SHAP table ({method})", require_order=False)
     if "gender" in shap_features:
         raise RuntimeError("SHAP table contains gender")
     if "employment_status" not in shap_features:
@@ -482,7 +482,7 @@ def compute_lr_coef_ranking(model: LogisticRegression, columns: list[str]) -> di
         reverse=True,
     )
     names = [r["feature"] for r in ranking]
-    _assert_in_model_columns(names, "LR abs-coef table")
+    _assert_in_model_columns(names, "LR abs-coef table", require_order=False)
     return {
         "method": "absolute logistic coefficient ranking on TRAIN-fitted WOE columns",
         "intercept": round(float(model.intercept_[0]), 6),
