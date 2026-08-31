@@ -30,9 +30,16 @@ import torch
 from torchfm.model.dfm import DeepFactorizationMachineModel
 
 from train import load_and_split
+from train_ensemble_fm_ft import NeuralPreprocess
 from utils.config import ARTIFACTS_DIR, AUC_MIN, KS_MIN, RAW_TARGET_COL, TARGET
 from utils.risk_skills import calculate_psi, evaluate_discrimination_and_ks
 from utils.woe_encoding import apply_woe_encoder
+
+# joblib objects dumped by `python3 scripts/train_ensemble_fm_ft.py` pickle the
+# class as __main__.NeuralPreprocess; alias it so eval can load without refitting.
+import __main__ as _eval_main
+
+_eval_main.NeuralPreprocess = NeuralPreprocess
 
 LAST_RUN_TEST_AUC = 0.8858
 LAST_RUN_TEST_KS = 0.5777

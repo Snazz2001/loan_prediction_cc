@@ -1639,6 +1639,7 @@ def main() -> None:
 
     neural_prep_full = NeuralPreprocess(in_model_features, num_cols, cat_cols, n_bins=NEURAL_N_BINS)
     neural_prep_full.fit(raw_X_train)
+    NeuralPreprocess.__module__ = "train_ensemble_fm_ft"
     joblib.dump(neural_prep_full, NEURAL_PREP_PATH)
 
     fm_full = refit_fm_full(neural_prep_full, raw_X_train, y_train, fm_tune)

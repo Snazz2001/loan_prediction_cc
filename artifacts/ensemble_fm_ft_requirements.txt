@@ -1,0 +1,13 @@
+# Versions actually used by scripts/train_ensemble_fm_ft.py
+python==3.12.3
+torch==2.13.0+cu130
+numpy==2.4.4
+pandas==2.3.3
+sklearn==1.9.0
+lightgbm==4.7.0
+catboost==1.2.10
+optuna==4.9.0
+shap==0.52.0
+joblib==1.6.0
+torchfm==0.7.0
+rtdl==0.0.13
