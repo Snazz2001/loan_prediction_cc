@@ -1,0 +1,527 @@
+{
+  "model_type": "danet",
+  "freeze_timestamp_utc": "2026-08-31T12:30:49.710780+00:00",
+  "test_looked_at": true,
+  "test_metrics": {
+    "AUC": 0.8655,
+    "KS_Statistic": 0.5412,
+    "Gini": 0.731,
+    "Validation_Rating": "Good (0.40 - 0.60)",
+    "Optimal_Cutoff_Probability": 0.2293,
+    "PSI": 0.0329,
+    "PSI_Status": "Stable (<0.10) - No action needed",
+    "psi_above_0.10": false
+  },
+  "test_labels_used_to_fit_or_select": false,
+  "monotone_constraints": false,
+  "interaction_constraints": false,
+  "gender_in_model": false,
+  "employment_status_in_model": true,
+  "in_model_features": [
+    "age",
+    "marital_status",
+    "education_level",
+    "annual_income",
+    "monthly_income",
+    "employment_status",
+    "debt_to_income_ratio",
+    "credit_score",
+    "loan_amount",
+    "loan_purpose",
+    "interest_rate",
+    "loan_term",
+    "installment",
+    "grade_subgrade",
+    "num_of_open_accounts",
+    "total_credit_limit",
+    "current_balance",
+    "delinquency_history",
+    "public_records",
+    "num_of_delinquencies"
+  ],
+  "dropped_from_model": [
+    "gender"
+  ],
+  "n_in_model_features": 20,
+  "loan_paid_back_in_features": false,
+  "iv_drop": false,
+  "vif_drop": false,
+  "cv_folds": 5,
+  "neural_impl": {
+    "library": "vendored WhatAShot/DANet (official)",
+    "class": "third_party.danet.DANet.DANet",
+    "version": "b007c57121ec9082f6ef19ec7465d9df70767c26",
+    "constructor": "DANet(input_dim=20, num_classes=2, layer_num=2, base_outdim=16, k=8, virtual_batch_size=256, drop_rate=0.2)",
+    "constructor_kwargs": {
+      "input_dim": 20,
+      "num_classes": 2,
+      "layer_num": 2,
+      "base_outdim": 16,
+      "k": 8,
+      "virtual_batch_size": 256,
+      "drop_rate": 0.2
+    },
+    "source_url": "https://github.com/WhatAShot/DANet",
+    "upstream_commit": "b007c57121ec9082f6ef19ec7465d9df70767c26",
+    "abstlay": "AbstractLayer + LearnableLocality(Entmax15 k-masks)",
+    "fallback": "not used; official vendored subset imported successfully",
+    "paper": "Chen et al., DANets, AAAI 2022 (Huang et al. listing in task refers to this paper)",
+    "objective": "CrossEntropyLoss over 2 classes; PD = softmax(logits)[:, 1]",
+    "optimizer": "Adam (official repo uses QHAdam; Adam used here to avoid qhoptim on CPU)"
+  },
+  "package_versions": {
+    "python": "3.12.3",
+    "torch": "2.13.0+cpu",
+    "numpy": "2.4.4",
+    "pandas": "3.0.5",
+    "sklearn": "1.9.0",
+    "joblib": "1.6.0",
+    "danet_library": "vendored WhatAShot/DANet (official)",
+    "danet_upstream_commit": "b007c57121ec9082f6ef19ec7465d9df70767c26",
+    "danet_source_url": "https://github.com/WhatAShot/DANet"
+  },
+  "cpu_architecture_notes": {
+    "shrunk_for_cpu": true,
+    "notes": "Official default is layer=20, k=5, base_outdim=64, max_epochs=4000, batch=8192. CPU grid: layer_num in {2,4}, k in {3,5,8}, base_outdim in {16,32}, max_epochs=20, patience=5, batch=512, virtual_batch_size=256, grid n=6 (not 50 Optuna trials). n_epochs_final = mean fold best epoch.",
+    "winner_hyperparams": {
+      "layer_num": 2,
+      "k": 8,
+      "base_outdim": 16,
+      "drop_rate": 0.2,
+      "lr": 0.003
+    },
+    "n_epochs_final": 14,
+    "n_layers": 2,
+    "k": 8,
+    "width": 16,
+    "drop_rate": 0.2,
+    "lr": 0.003,
+    "max_epochs_search": 20,
+    "patience": 5,
+    "batch_size": 512,
+    "virtual_batch_size": 256,
+    "fold_best_epochs": [
+      11,
+      14,
+      11,
+      18,
+      17
+    ],
+    "epochs_ran_full_train": 14,
+    "device": "cpu",
+    "torch_cuda_available": false,
+    "grid": [
+      {
+        "layer_num": 2,
+        "k": 5,
+        "base_outdim": 16,
+        "drop_rate": 0.1,
+        "lr": 0.001
+      },
+      {
+        "layer_num": 2,
+        "k": 5,
+        "base_outdim": 32,
+        "drop_rate": 0.1,
+        "lr": 0.001
+      },
+      {
+        "layer_num": 2,
+        "k": 3,
+        "base_outdim": 16,
+        "drop_rate": 0.0,
+        "lr": 0.0003
+      },
+      {
+        "layer_num": 4,
+        "k": 5,
+        "base_outdim": 16,
+        "drop_rate": 0.1,
+        "lr": 0.001
+      },
+      {
+        "layer_num": 2,
+        "k": 8,
+        "base_outdim": 16,
+        "drop_rate": 0.2,
+        "lr": 0.003
+      },
+      {
+        "layer_num": 4,
+        "k": 5,
+        "base_outdim": 32,
+        "drop_rate": 0.2,
+        "lr": 0.0003
+      }
+    ],
+    "n_quantiles": 1000,
+    "preprocess": "integer category maps (0=unknown) + sklearn QuantileTransformer output_distribution=normal on the 20-col matrix; fit on fold-train during OOF and on all 14000 train rows for the frozen model"
+  },
+  "num_cols": [
+    "age",
+    "annual_income",
+    "monthly_income",
+    "debt_to_income_ratio",
+    "credit_score",
+    "loan_amount",
+    "interest_rate",
+    "installment",
+    "num_of_open_accounts",
+    "total_credit_limit",
+    "current_balance",
+    "num_of_delinquencies"
+  ],
+  "cat_cols": [
+    "marital_status",
+    "education_level",
+    "employment_status",
+    "loan_purpose",
+    "loan_term",
+    "grade_subgrade",
+    "delinquency_history",
+    "public_records"
+  ],
+  "split": {
+    "source": "scripts/train.py::load_and_split UNCHANGED",
+    "test_size": 0.3,
+    "stratify": "default",
+    "random_state": 42,
+    "train_n": 14000,
+    "train_bad_rate": 0.2001,
+    "train_n_bads": 2801,
+    "test_n": 6000,
+    "test_bad_rate": 0.2002,
+    "test_n_bads": 1201,
+    "note": "Test labels persisted for eval only; not used to fit or select."
+  },
+  "hyperparams": {
+    "search": {
+      "layer_num": 2,
+      "k": 8,
+      "base_outdim": 16,
+      "drop_rate": 0.2,
+      "lr": 0.003
+    },
+    "grid_scores": [
+      {
+        "layer_num": 2,
+        "k": 5,
+        "base_outdim": 16,
+        "drop_rate": 0.1,
+        "lr": 0.001,
+        "oof_auc": 0.855594,
+        "oof_ks": 0.520349,
+        "fold_aucs": [
+          0.854019,
+          0.853665,
+          0.85672,
+          0.860867,
+          0.855138
+        ],
+        "fold_best_epochs": [
+          18,
+          18,
+          20,
+          19,
+          20
+        ],
+        "n_epochs_final": 19
+      },
+      {
+        "layer_num": 2,
+        "k": 5,
+        "base_outdim": 32,
+        "drop_rate": 0.1,
+        "lr": 0.001,
+        "oof_auc": 0.859765,
+        "oof_ks": 0.523817,
+        "fold_aucs": [
+          0.858867,
+          0.85727,
+          0.8635,
+          0.86471,
+          0.863176
+        ],
+        "fold_best_epochs": [
+          18,
+          19,
+          20,
+          20,
+          20
+        ],
+        "n_epochs_final": 19
+      },
+      {
+        "layer_num": 2,
+        "k": 3,
+        "base_outdim": 16,
+        "drop_rate": 0.0,
+        "lr": 0.0003,
+        "oof_auc": 0.841602,
+        "oof_ks": 0.490818,
+        "fold_aucs": [
+          0.831683,
+          0.843671,
+          0.842643,
+          0.849458,
+          0.848692
+        ],
+        "fold_best_epochs": [
+          20,
+          19,
+          19,
+          20,
+          18
+        ],
+        "n_epochs_final": 19
+      },
+      {
+        "layer_num": 4,
+        "k": 5,
+        "base_outdim": 16,
+        "drop_rate": 0.1,
+        "lr": 0.001,
+        "oof_auc": 0.853899,
+        "oof_ks": 0.517064,
+        "fold_aucs": [
+          0.850907,
+          0.851929,
+          0.860322,
+          0.859039,
+          0.855435
+        ],
+        "fold_best_epochs": [
+          18,
+          19,
+          18,
+          19,
+          15
+        ],
+        "n_epochs_final": 18
+      },
+      {
+        "layer_num": 2,
+        "k": 8,
+        "base_outdim": 16,
+        "drop_rate": 0.2,
+        "lr": 0.003,
+        "oof_auc": 0.862352,
+        "oof_ks": 0.52224,
+        "fold_aucs": [
+          0.865098,
+          0.865656,
+          0.864418,
+          0.870922,
+          0.861584
+        ],
+        "fold_best_epochs": [
+          11,
+          14,
+          11,
+          18,
+          17
+        ],
+        "n_epochs_final": 14
+      },
+      {
+        "layer_num": 4,
+        "k": 5,
+        "base_outdim": 32,
+        "drop_rate": 0.2,
+        "lr": 0.0003,
+        "oof_auc": 0.84785,
+        "oof_ks": 0.505366,
+        "fold_aucs": [
+          0.847436,
+          0.847359,
+          0.848162,
+          0.849665,
+          0.848736
+        ],
+        "fold_best_epochs": [
+          18,
+          19,
+          20,
+          20,
+          19
+        ],
+        "n_epochs_final": 19
+      }
+    ],
+    "n_epochs_final": 14,
+    "fold_best_epochs": [
+      11,
+      14,
+      11,
+      18,
+      17
+    ],
+    "fold_aucs": [
+      0.8650980548469387,
+      0.8656560905612246,
+      0.8644180484693877,
+      0.8709219547193878,
+      0.8615835468947415
+    ],
+    "fold_ks": [
+      0.553125,
+      0.540625,
+      0.5236607142857143,
+      0.5397321428571429,
+      0.530728560862812
+    ],
+    "lr": 0.003,
+    "max_epochs": 20,
+    "patience": 5,
+    "batch_size": 512,
+    "virtual_batch_size": 256
+  },
+  "oof_metrics": {
+    "AUC": 0.8624,
+    "Gini": 0.7247,
+    "KS_Statistic": 0.5222,
+    "Optimal_Cutoff_Probability": 0.2535,
+    "Validation_Rating": "Good (0.40 - 0.60)"
+  },
+  "oof_auc": 0.8624,
+  "oof_ks": 0.5222,
+  "oof_gini": 0.7247,
+  "train_explains": {
+    "danet_permutation": {
+      "method": "permutation importance on TRAIN sample n=500, seed=42, metric=AUC drop vs baseline AUC=0.910556 — danet",
+      "n_rows": 500,
+      "baseline_auc": 0.910556,
+      "auc_drop_by_feature": [
+        {
+          "feature": "employment_status",
+          "auc_drop": 0.25933,
+          "perm_auc": 0.651227
+        },
+        {
+          "feature": "debt_to_income_ratio",
+          "auc_drop": 0.101776,
+          "perm_auc": 0.80878
+        },
+        {
+          "feature": "credit_score",
+          "auc_drop": 0.09256,
+          "perm_auc": 0.817996
+        },
+        {
+          "feature": "delinquency_history",
+          "auc_drop": 0.009404,
+          "perm_auc": 0.901153
+        },
+        {
+          "feature": "installment",
+          "auc_drop": 0.00669,
+          "perm_auc": 0.903866
+        },
+        {
+          "feature": "current_balance",
+          "auc_drop": 0.006233,
+          "perm_auc": 0.904323
+        },
+        {
+          "feature": "grade_subgrade",
+          "auc_drop": 0.004621,
+          "perm_auc": 0.905935
+        },
+        {
+          "feature": "monthly_income",
+          "auc_drop": 0.003358,
+          "perm_auc": 0.907198
+        },
+        {
+          "feature": "marital_status",
+          "auc_drop": 0.002929,
+          "perm_auc": 0.907628
+        },
+        {
+          "feature": "loan_term",
+          "auc_drop": 0.002767,
+          "perm_auc": 0.907789
+        },
+        {
+          "feature": "total_credit_limit",
+          "auc_drop": 0.002579,
+          "perm_auc": 0.907977
+        },
+        {
+          "feature": "num_of_open_accounts",
+          "auc_drop": 0.002203,
+          "perm_auc": 0.908353
+        },
+        {
+          "feature": "loan_amount",
+          "auc_drop": 0.002069,
+          "perm_auc": 0.908488
+        },
+        {
+          "feature": "annual_income",
+          "auc_drop": 0.001585,
+          "perm_auc": 0.908971
+        },
+        {
+          "feature": "interest_rate",
+          "auc_drop": 0.001182,
+          "perm_auc": 0.909374
+        },
+        {
+          "feature": "num_of_delinquencies",
+          "auc_drop": 0.001128,
+          "perm_auc": 0.909428
+        },
+        {
+          "feature": "loan_purpose",
+          "auc_drop": 0.000914,
+          "perm_auc": 0.909643
+        },
+        {
+          "feature": "age",
+          "auc_drop": 0.000672,
+          "perm_auc": 0.909885
+        },
+        {
+          "feature": "public_records",
+          "auc_drop": -5.4e-05,
+          "perm_auc": 0.91061
+        },
+        {
+          "feature": "education_level",
+          "auc_drop": -0.003547,
+          "perm_auc": 0.914103
+        }
+      ],
+      "employment_status_rank": 1,
+      "gender_present": false,
+      "employment_status_present": true
+    }
+  },
+  "permutation_skip_reason": null,
+  "artifact_paths": {
+    "model": "artifacts/danet_model.pt",
+    "preprocess": "artifacts/danet_preprocess.joblib",
+    "meta": "artifacts/danet_meta.json",
+    "oof_pds": "artifacts/danet_oof_pds.csv",
+    "X_train": "artifacts/danet_X_train.csv",
+    "y_train": "artifacts/danet_y_train.csv",
+    "X_test": "artifacts/danet_X_test.csv",
+    "y_test": "artifacts/danet_y_test.csv",
+    "requirements": "artifacts/danet_requirements.txt",
+    "permutation": "artifacts/danet_permutation_importance.json"
+  },
+  "did_not_write": [
+    "artifacts/lgbm_model.joblib",
+    "artifacts/lgbm_linear_tree_*",
+    "artifacts/linear_tree_*",
+    "artifacts/stack_lr_rf_lgbm_*",
+    "artifacts/lgbm_no_gender_emp_overlay_*",
+    "artifacts/lgbm_emp_in_no_gender_*",
+    "artifacts/lgbm_dart_monotone_*",
+    "artifacts/ensemble_no_gender_*",
+    "artifacts/ensemble_fm_ft_*"
+  ],
+  "notes": "ONE DANet model. No stack / extra bases / blend. gender dropped. employment_status is a normal in-model feature. No monotone_constraints. No interaction_constraints. Preprocess fit on fold-train during OOF and on all 14000 train rows for the frozen model. Architecture shrunk for CPU. This train script does not compute Test AUC/KS/Gini/PSI.",
+  "computed_after_freeze": true
+}

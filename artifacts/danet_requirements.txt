@@ -1,0 +1,10 @@
+# Versions actually used by scripts/train_danet.py
+python==3.12.3
+torch==2.13.0+cpu
+numpy==2.4.4
+pandas==3.0.5
+sklearn==1.9.0
+joblib==1.6.0
+danet_library==vendored WhatAShot/DANet (official)
+danet_upstream_commit==b007c57121ec9082f6ef19ec7465d9df70767c26
+danet_source_url==https://github.com/WhatAShot/DANet
