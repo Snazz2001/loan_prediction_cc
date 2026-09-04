@@ -14,6 +14,12 @@
 # pytabkit provides RealMLP_TD_Classifier (Holzmüller et al., NeurIPS 2024).
 # autogluon.tabular provides TabularPredictor.
 #
-# If either package fails to install or import, the matching train path STOPs
-# and writes artifacts/autogluon_FAILURE.md or artifacts/realmlp_FAILURE.md.
-# Do not swap in a different architecture and call it AutoGluon or RealMLP.
+# AutoGluon predictor persistence:
+# The unpacked predictor directory can exceed GitHub's 100MB file cap
+# (sklearn ExtraTrees pickles). After freeze, train writes a pruned predictor
+# plus a split gzip archive:
+#   artifacts/autogluon_predictor.tar.gz.part00
+#   artifacts/autogluon_predictor.tar.gz.part01
+# Eval reconstructs via ensure_ag_predictor_dir() if the directory is absent.
+# This is persistence only — it does not refit and does not look at Test labels.
+
