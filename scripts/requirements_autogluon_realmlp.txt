@@ -1,0 +1,25 @@
+# CPU install notes for the AutoGluon + RealMLP pack.
+# Do not treat this file as a lockfile; actual versions are written at freeze
+# time to artifacts/ag_realmlp_requirements.txt.
+#
+# This VM has no GPU. Extreme AutoGluon presets require CUDA; this pack uses
+# presets="best_quality" with num_gpus=0.
+#
+# Suggested install order (Python 3.12):
+#   python3 -m pip install --index-url https://download.pytorch.org/whl/cpu torch
+#   python3 -m pip install pandas scikit-learn joblib lightgbm shap statsmodels
+#   python3 -m pip install pytabkit
+#   python3 -m pip install autogluon.tabular
+#
+# pytabkit provides RealMLP_TD_Classifier (Holzmüller et al., NeurIPS 2024).
+# autogluon.tabular provides TabularPredictor.
+#
+# AutoGluon predictor persistence:
+# The unpacked predictor directory can exceed GitHub's 100MB file cap
+# (sklearn ExtraTrees pickles). After freeze, train writes a pruned predictor
+# plus a split gzip archive:
+#   artifacts/autogluon_predictor.tar.gz.part00
+#   artifacts/autogluon_predictor.tar.gz.part01
+# Eval reconstructs via ensure_ag_predictor_dir() if the directory is absent.
+# This is persistence only — it does not refit and does not look at Test labels.
+
