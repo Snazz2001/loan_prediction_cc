@@ -139,6 +139,8 @@ FORBIDDEN_PREFIXES = (
 )
 
 AG_PREDICTOR_DIR = os.path.join(ARTIFACTS_DIR, "autogluon_predictor")
+AG_ARCHIVE_TAR = os.path.join(ARTIFACTS_DIR, "autogluon_predictor.tar.gz")
+AG_ARCHIVE_PART_PREFIX = os.path.join(ARTIFACTS_DIR, "autogluon_predictor.tar.gz.part")
 AG_LEADERBOARD_PATH = os.path.join(ARTIFACTS_DIR, "autogluon_leaderboard.csv")
 AG_FI_PATH = os.path.join(ARTIFACTS_DIR, "autogluon_feature_importance.csv")
 AG_MANIFEST_PATH = os.path.join(ARTIFACTS_DIR, "autogluon_predictor_manifest.json")
@@ -179,7 +181,10 @@ ALLOWED_WRITE_PATHS = [
     REQS_PATH,
 ]
 
-ALLOWED_DIR_PREFIXES = (os.path.abspath(AG_PREDICTOR_DIR) + os.sep,)
+ALLOWED_DIR_PREFIXES = (
+    os.path.abspath(AG_PREDICTOR_DIR) + os.sep,
+    os.path.abspath(AG_ARCHIVE_PART_PREFIX),
+)
 
 REALMLP_FIT_KWARGS = {
     "device": "cpu",
@@ -297,7 +302,11 @@ def _assert_allowed_writes(paths: list[str]) -> None:
     allowed_set = {os.path.abspath(p) for p in ALLOWED_WRITE_PATHS}
     for path in paths:
         abs_path = os.path.abspath(path)
-        if abs_path not in allowed_set and not any(abs_path.startswith(p) for p in ALLOWED_DIR_PREFIXES):
+        if (
+            abs_path not in allowed_set
+            and not any(abs_path.startswith(p) for p in ALLOWED_DIR_PREFIXES)
+            and not os.path.basename(abs_path).startswith("autogluon_predictor.tar.gz.part")
+        ):
             raise RuntimeError(f"Refusing to write undeclared artifact: {path}")
         if _path_is_forbidden(path):
             raise RuntimeError(f"Refusing to write forbidden artifact name: {path}")
@@ -357,6 +366,67 @@ def _dir_manifest(root: str) -> dict:
         "aggregate_sha256": h_all.hexdigest(),
         "files": files,
     }
+
+
+def write_ag_split_archive(part_size_bytes: int = 90 * 1024 * 1024) -> list[str]:
+    """GitHub-safe split of the pruned predictor. Does not refit."""
+    import glob
+    import tarfile
+
+    if not os.path.isdir(AG_PREDICTOR_DIR):
+        raise FileNotFoundError(AG_PREDICTOR_DIR)
+    for old in glob.glob(AG_ARCHIVE_PART_PREFIX + "*"):
+        os.remove(old)
+    if os.path.exists(AG_ARCHIVE_TAR):
+        os.remove(AG_ARCHIVE_TAR)
+    with tarfile.open(AG_ARCHIVE_TAR, "w:gz") as tar:
+        tar.add(AG_PREDICTOR_DIR, arcname="autogluon_predictor")
+    parts = []
+    with open(AG_ARCHIVE_TAR, "rb") as src:
+        idx = 0
+        while True:
+            chunk = src.read(part_size_bytes)
+            if not chunk:
+                break
+            part = f"{AG_ARCHIVE_PART_PREFIX}{idx:02d}"
+            with open(part, "wb") as dest:
+                dest.write(chunk)
+            parts.append(part)
+            idx += 1
+    os.remove(AG_ARCHIVE_TAR)
+    return parts
+
+
+def ensure_ag_predictor_dir() -> str:
+    """Load path for TabularPredictor. Reconstruct from split archive if needed. Never fits."""
+    import glob
+    import tarfile
+    import tempfile
+
+    marker = os.path.join(AG_PREDICTOR_DIR, "metadata.json")
+    models_dir = os.path.join(AG_PREDICTOR_DIR, "models")
+    if os.path.isfile(marker) and os.path.isdir(models_dir):
+        return AG_PREDICTOR_DIR
+    parts = sorted(glob.glob(AG_ARCHIVE_PART_PREFIX + "*"))
+    if not parts:
+        raise FileNotFoundError(
+            f"AutoGluon predictor missing at {AG_PREDICTOR_DIR} and no split archive "
+            f"{AG_ARCHIVE_PART_PREFIX}* found"
+        )
+    os.makedirs(ARTIFACTS_DIR, exist_ok=True)
+    with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp:
+        tmp_path = tmp.name
+        for part in parts:
+            with open(part, "rb") as fh:
+                tmp.write(fh.read())
+    try:
+        with tarfile.open(tmp_path, "r:gz") as tar:
+            tar.extractall(ARTIFACTS_DIR)
+    finally:
+        os.remove(tmp_path)
+    if not os.path.isfile(marker):
+        raise FileNotFoundError(f"Extracted AutoGluon predictor missing {marker}")
+    return AG_PREDICTOR_DIR
 
 
 def _assert_load_and_split_unchanged() -> None:
@@ -667,7 +737,6 @@ def train_autogluon(train_frame: pd.DataFrame, y_train: pd.Series, prep: Feature
                 silent=True,
                 subsample_size=PERM_N,
                 num_shuffle_sets=5,
-                random_state=RANDOM_STATE,
             )
             fi.to_csv(AG_FI_PATH)
             ag_fi = {
@@ -689,6 +758,21 @@ def train_autogluon(train_frame: pd.DataFrame, y_train: pd.Series, prep: Feature
         except Exception as exc:  # noqa: BLE001
             print(f"[train_ag] feature_importance failed: {type(exc).__name__}: {exc}", flush=True)
             ag_fi = {"method": "failed", "error": f"{type(exc).__name__}: {exc}"}
+
+        # Keep only models required to score the frozen best ensemble so the
+        # predictor can be SHA-matched and pushed (GitHub 100MB file cap).
+        # This does not refit and does not look at Test labels. OOF PDs are
+        # already extracted from the full bagged fit.
+        n_before = len(predictor.model_names())
+        predictor.delete_models(models_to_keep="best", dry_run=False)
+        n_after = len(predictor.model_names())
+        print(
+            f"[train_ag] pruned unused models for persistence: {n_before} -> {n_after} "
+            f"(kept best={predictor.model_best})",
+            flush=True,
+        )
+        archive_parts = write_ag_split_archive()
+        print(f"[train_ag] wrote GitHub-safe split archive: {archive_parts}", flush=True)
 
         manifest = _dir_manifest(AG_PREDICTOR_DIR)
         with open(AG_MANIFEST_PATH, "w", encoding="utf-8") as fh:
@@ -712,6 +796,11 @@ def train_autogluon(train_frame: pd.DataFrame, y_train: pd.Series, prep: Feature
             "test_passed_to_fit": False,
             "best_model": str(best_model),
             "model_names": model_names,
+            "persistence_pruned": True,
+            "n_models_before_prune": int(n_before),
+            "n_models_after_prune": int(n_after),
+            "models_kept_for_inference": [str(n) for n in predictor.model_names()],
+            "predictor_archive_parts": archive_parts,
             "leaderboard_top": top_rows,
             "tabpfn_tabm_realmlp_seats": seats,
             "oof_available": oof_ok,

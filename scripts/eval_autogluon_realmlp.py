@@ -46,6 +46,7 @@ from train_autogluon_realmlp import (
     _assert_in_model_columns,
     _clip_pd,
     _realmlp_pd,
+    ensure_ag_predictor_dir,
 )
 from utils.config import ARTIFACTS_DIR, AUC_MIN, KS_MIN, PSI_WATCH, RAW_TARGET_COL, TARGET
 from utils.risk_skills import calculate_psi, evaluate_discrimination_and_ks
@@ -232,11 +233,10 @@ def main() -> None:
     }
 
     if ag_ok:
-        if not os.path.isdir(AG_PREDICTOR_DIR):
-            raise FileNotFoundError(f"Frozen AutoGluon predictor missing at {AG_PREDICTOR_DIR}")
+        predictor_path = ensure_ag_predictor_dir()
         from autogluon.tabular import TabularPredictor
 
-        predictor = TabularPredictor.load(AG_PREDICTOR_DIR)
+        predictor = TabularPredictor.load(predictor_path)
         try:
             ag_feat_list = list(predictor.features())
         except Exception:  # noqa: BLE001

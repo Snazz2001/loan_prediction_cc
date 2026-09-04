@@ -1,0 +1,110 @@
+{
+  "method": "permutation importance on TRAIN sample n=500, seed=42, metric=AUC drop vs baseline AUC=0.918993 — realmlp",
+  "n_rows": 500,
+  "baseline_auc": 0.918993,
+  "auc_drop_by_feature": [
+    {
+      "feature": "employment_status",
+      "auc_drop": 0.244472,
+      "perm_auc": 0.674521
+    },
+    {
+      "feature": "debt_to_income_ratio",
+      "auc_drop": 0.110965,
+      "perm_auc": 0.808028
+    },
+    {
+      "feature": "credit_score",
+      "auc_drop": 0.098659,
+      "perm_auc": 0.820334
+    },
+    {
+      "feature": "grade_subgrade",
+      "auc_drop": 0.012386,
+      "perm_auc": 0.906607
+    },
+    {
+      "feature": "delinquency_history",
+      "auc_drop": 0.001639,
+      "perm_auc": 0.917354
+    },
+    {
+      "feature": "annual_income",
+      "auc_drop": 0.000752,
+      "perm_auc": 0.918241
+    },
+    {
+      "feature": "num_of_open_accounts",
+      "auc_drop": 0.000699,
+      "perm_auc": 0.918294
+    },
+    {
+      "feature": "total_credit_limit",
+      "auc_drop": 0.000457,
+      "perm_auc": 0.918536
+    },
+    {
+      "feature": "installment",
+      "auc_drop": 0.00043,
+      "perm_auc": 0.918563
+    },
+    {
+      "feature": "education_level",
+      "auc_drop": 0.000403,
+      "perm_auc": 0.91859
+    },
+    {
+      "feature": "current_balance",
+      "auc_drop": 0.000269,
+      "perm_auc": 0.918724
+    },
+    {
+      "feature": "loan_purpose",
+      "auc_drop": 0.000215,
+      "perm_auc": 0.918778
+    },
+    {
+      "feature": "num_of_delinquencies",
+      "auc_drop": 0.000215,
+      "perm_auc": 0.918778
+    },
+    {
+      "feature": "loan_term",
+      "auc_drop": 5.4e-05,
+      "perm_auc": 0.918939
+    },
+    {
+      "feature": "interest_rate",
+      "auc_drop": 0.0,
+      "perm_auc": 0.918993
+    },
+    {
+      "feature": "age",
+      "auc_drop": -0.000107,
+      "perm_auc": 0.9191
+    },
+    {
+      "feature": "monthly_income",
+      "auc_drop": -0.000134,
+      "perm_auc": 0.919127
+    },
+    {
+      "feature": "loan_amount",
+      "auc_drop": -0.000242,
+      "perm_auc": 0.919235
+    },
+    {
+      "feature": "public_records",
+      "auc_drop": -0.000242,
+      "perm_auc": 0.919235
+    },
+    {
+      "feature": "marital_status",
+      "auc_drop": -0.000349,
+      "perm_auc": 0.919342
+    }
+  ],
+  "employment_status_rank": 1,
+  "gender_present": false,
+  "employment_status_present": true
+}

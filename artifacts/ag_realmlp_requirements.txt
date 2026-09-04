@@ -1,0 +1,13 @@
+# Versions actually used by scripts/train_autogluon_realmlp.py
+python==3.12.3
+autogluon==1.6.1
+autogluon.tabular==1.6.1
+torch==2.14.0+cpu
+pytabkit==1.7.3
+sklearn==1.9.0
+pandas==2.3.3
+numpy==2.4.4
+joblib==1.6.0
+lightgbm==4.7.0
+xgboost==3.4.1
+catboost==1.2.10
