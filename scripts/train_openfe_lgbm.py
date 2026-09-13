@@ -389,7 +389,13 @@ def lgbm_params_template() -> dict:
     }
 
 
-def run_oof_cv(params: dict, X: pd.DataFrame, y: pd.Series, skf: StratifiedKFold) -> dict:
+def run_oof_cv(
+    params: dict,
+    X: pd.DataFrame,
+    y: pd.Series,
+    skf: StratifiedKFold,
+    categorical_feature: list[str] | None = None,
+) -> dict:
     oof = np.zeros(len(X), dtype=float)
     fold_aucs = []
     fold_ks = []
@@ -398,12 +404,13 @@ def run_oof_cv(params: dict, X: pd.DataFrame, y: pd.Series, skf: StratifiedKFold
         X_tr, y_tr = X.iloc[tr_idx], y.iloc[tr_idx]
         X_va, y_va = X.iloc[va_idx], y.iloc[va_idx]
         model = lgb.LGBMClassifier(**params)
-        model.fit(
-            X_tr,
-            y_tr,
-            eval_set=[(X_va, y_va)],
-            callbacks=[lgb.early_stopping(stopping_rounds=EARLY_STOPPING_ROUNDS, verbose=False)],
-        )
+        fit_kwargs = {
+            "eval_set": [(X_va, y_va)],
+            "callbacks": [lgb.early_stopping(stopping_rounds=EARLY_STOPPING_ROUNDS, verbose=False)],
+        }
+        if categorical_feature:
+            fit_kwargs["categorical_feature"] = categorical_feature
+        model.fit(X_tr, y_tr, **fit_kwargs)
         pred = model.predict_proba(X_va)[:, 1]
         oof[va_idx] = pred
         fold_aucs.append(float(roc_auc_score(y_va, pred)))
@@ -425,7 +432,23 @@ def run_oof_cv(params: dict, X: pd.DataFrame, y: pd.Series, skf: StratifiedKFold
     }
 
 
-def tune_lgbm(name: str, X: pd.DataFrame, y: pd.Series, n_trials: int) -> dict:
+def _assert_numeric_frame(X: pd.DataFrame, context: str) -> None:
+    bad = []
+    for col, dtype in X.dtypes.items():
+        if not (pd.api.types.is_integer_dtype(dtype) or pd.api.types.is_float_dtype(dtype) or pd.api.types.is_bool_dtype(dtype)):
+            bad.append(f"{col}: {dtype}")
+    if bad:
+        raise TypeError(f"{context}: LightGBM requires int/float/bool dtypes. Bad columns: {bad}")
+
+
+def tune_lgbm(
+    name: str,
+    X: pd.DataFrame,
+    y: pd.Series,
+    n_trials: int,
+    categorical_feature: list[str] | None = None,
+) -> dict:
+    _assert_numeric_frame(X, name)
     skf = StratifiedKFold(n_splits=CV_FOLDS, shuffle=True, random_state=RANDOM_STATE)
 
     def objective(trial: optuna.Trial) -> float:
@@ -444,7 +467,7 @@ def tune_lgbm(name: str, X: pd.DataFrame, y: pd.Series, n_trials: int) -> dict:
             }
         )
         print(f"[{name}] trial {trial.number:03d}/{n_trials - 1} starting", flush=True)
-        cv_res = run_oof_cv(params, X, y, skf)
+        cv_res = run_oof_cv(params, X, y, skf, categorical_feature=categorical_feature)
         trial.set_user_attr("oof_ks", cv_res["oof_ks"])
         trial.set_user_attr("fold_best_iterations", cv_res["best_iterations"])
         print(
@@ -462,7 +485,7 @@ def tune_lgbm(name: str, X: pd.DataFrame, y: pd.Series, n_trials: int) -> dict:
     winning.update(dict(study.best_params))
     winning["n_estimators"] = N_ESTIMATORS_TUNE
     print(f"[{name}] Re-running winning 5-fold OOF to freeze n_estimators_final...", flush=True)
-    winner_cv = run_oof_cv(winning, X, y, skf)
+    winner_cv = run_oof_cv(winning, X, y, skf, categorical_feature=categorical_feature)
     n_estimators_final = max(50, int(round(float(np.mean(winner_cv["best_iterations"])))))
     final_params = dict(winning)
     final_params["n_estimators"] = n_estimators_final
@@ -473,7 +496,10 @@ def tune_lgbm(name: str, X: pd.DataFrame, y: pd.Series, n_trials: int) -> dict:
         flush=True,
     )
     final_model = lgb.LGBMClassifier(**final_params)
-    final_model.fit(X, y)
+    if categorical_feature:
+        final_model.fit(X, y, categorical_feature=categorical_feature)
+    else:
+        final_model.fit(X, y)
     return {
         "study": study,
         "best_search": dict(study.best_params),
@@ -487,7 +513,7 @@ def tune_lgbm(name: str, X: pd.DataFrame, y: pd.Series, n_trials: int) -> dict:
 
 
 class FeaturePrep:
-    """Train-only category levels. Applied to already-transformed frames."""
+    """Train-only category → integer codes. LightGBM 4.x + pandas 3 reject str/category."""
 
     def __init__(self, categorical_columns: list[str], category_levels: dict[str, list]):
         self.categorical_columns = list(categorical_columns)
@@ -498,8 +524,18 @@ class FeaturePrep:
         for col in self.categorical_columns:
             if col not in out.columns:
                 continue
-            levels = self.category_levels[col]
-            out[col] = pd.Categorical(out[col].astype("string"), categories=levels)
+            mapping = {v: i for i, v in enumerate(self.category_levels[col])}
+            codes = pd.Series(out[col].astype("string"), index=out.index).map(mapping)
+            out[col] = pd.to_numeric(codes, errors="coerce")
+        for col in out.columns:
+            if col in self.categorical_columns:
+                continue
+            if not (
+                pd.api.types.is_integer_dtype(out[col])
+                or pd.api.types.is_float_dtype(out[col])
+                or pd.api.types.is_bool_dtype(out[col])
+            ):
+                out[col] = pd.to_numeric(out[col], errors="coerce")
         return out
 
 
@@ -507,7 +543,8 @@ def fit_prep(df: pd.DataFrame) -> FeaturePrep:
     cat_cols = []
     levels = {}
     for col in df.columns:
-        if str(df[col].dtype) in ("object", "string", "category") or isinstance(df[col].dtype, pd.CategoricalDtype):
+        dtype = df[col].dtype
+        if str(dtype) in ("object", "string", "str", "category") or isinstance(dtype, pd.CategoricalDtype):
             cat_cols.append(col)
             # Train levels only. Unseen test levels become NaN (LightGBM-safe).
             cats = pd.Index(pd.Series(df[col]).astype("string").dropna().unique())
@@ -734,9 +771,21 @@ def main() -> None:
     )
 
     print("[train_openfe_lgbm] Tuning LightGBM gbdt on OpenFE+base TRAIN features only...", flush=True)
-    openfe_tune = tune_lgbm("openfe_lgbm", X_train, y_train, N_TRIALS_OPENFE)
+    openfe_tune = tune_lgbm(
+        "openfe_lgbm",
+        X_train,
+        y_train,
+        N_TRIALS_OPENFE,
+        categorical_feature=prep.categorical_columns,
+    )
     print("[train_openfe_lgbm] Tuning baseline LightGBM gbdt on raw 20 TRAIN features only...", flush=True)
-    baseline_tune = tune_lgbm("baseline_raw20", X_train_raw, y_train, N_TRIALS_BASELINE)
+    baseline_tune = tune_lgbm(
+        "baseline_raw20",
+        X_train_raw,
+        y_train,
+        N_TRIALS_BASELINE,
+        categorical_feature=baseline_prep.categorical_columns,
+    )
 
     openfe_model = openfe_tune["final_model"]
     baseline_model = baseline_tune["final_model"]
@@ -884,6 +933,8 @@ def main() -> None:
             "openfe_lgbm": train_refit_metrics,
             "baseline_raw20": baseline_refit_metrics,
         },
+        "categorical_columns_openfe": prep.categorical_columns,
+        "categorical_columns_baseline": baseline_prep.categorical_columns,
         "in_model_features": in_model_all,
         "base_20_features": in_model_features,
         "openfe_feature_names": fe_names,
@@ -1008,6 +1059,8 @@ def main() -> None:
 
     meta["sha256"] = {os.path.basename(line.split("  ", 1)[1]): line.split("  ", 1)[0] for line in sha_lines}
     _safe_dump_json(META_PATH, _json_ready(meta))
+    if os.path.exists(FAILURE_PATH):
+        os.remove(FAILURE_PATH)
 
     print(f"[train_openfe_lgbm] Wrote {MODEL_PATH}", flush=True)
     print(f"[train_openfe_lgbm] Wrote {OPENFE_OBJ_PATH} + {FORMULAS_PATH}", flush=True)
