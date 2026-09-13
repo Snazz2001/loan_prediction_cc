@@ -1,0 +1,17 @@
+{
+  "package_versions": {
+    "python": "3.12.3",
+    "openfe": "0.0.12",
+    "lightgbm": "4.7.0",
+    "sklearn": "1.9.1",
+    "pandas": "3.0.5",
+    "numpy": "2.4.4",
+    "joblib": "1.6.0",
+    "optuna": "5.0.0"
+  },
+  "device": {
+    "device": "cpu",
+    "n_cpus": 4,
+    "note": "This VM has no GPU; OpenFE and LightGBM run on CPU."
+  }
+}

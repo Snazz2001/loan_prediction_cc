@@ -1,0 +1,1112 @@
+{
+  "algorithm": "OpenFE + lightgbm.LGBMClassifier",
+  "openfe": {
+    "package": "openfe",
+    "version": "0.0.12",
+    "paper": "Zhang et al., ICML 2023",
+    "n_jobs": 4,
+    "n_generated": 1935,
+    "n_stage2_ranked": 762,
+    "n_selected": 50,
+    "top_k_cap": 50,
+    "base_20_kept": true,
+    "selection_method": "OpenFE two-stage selection on TRAIN only: stage1=predictive successive feature-wise halving (n_data_blocks=8, min_candidate_features=2000); stage2=gain_importance. Keep formulas with stage2 gain>0, capped at TOP_K=50. Original base 20 columns are KEPT.",
+    "categorical_features": [
+      "marital_status",
+      "education_level",
+      "employment_status",
+      "loan_purpose",
+      "grade_subgrade"
+    ],
+    "ordinal_features": [
+      "age",
+      "loan_term",
+      "num_of_open_accounts",
+      "delinquency_history",
+      "public_records",
+      "num_of_delinquencies"
+    ],
+    "numerical_features": [
+      "annual_income",
+      "monthly_income",
+      "debt_to_income_ratio",
+      "credit_score",
+      "loan_amount",
+      "interest_rate",
+      "installment",
+      "total_credit_limit",
+      "current_balance"
+    ],
+    "n_data_blocks": 8,
+    "min_candidate_features": 2000,
+    "stage1_metric": "predictive",
+    "stage2_metric": "gain_importance",
+    "feature_boosting": false,
+    "metric": "auc",
+    "task": "classification",
+    "seed": 42,
+    "order": 1,
+    "formulas": [
+      "GroupByThenNUnique(num_of_open_accounts,employment_status)",
+      "(debt_to_income_ratio/credit_score)",
+      "(credit_score+age)",
+      "CombineThenFreq(employment_status,age)",
+      "GroupByThenRank(credit_score,age)",
+      "(credit_score-age)",
+      "GroupByThenRank(credit_score,marital_status)",
+      "CombineThenFreq(employment_status,grade_subgrade)",
+      "(debt_to_income_ratio*interest_rate)",
+      "(credit_score-num_of_open_accounts)",
+      "Combine(employment_status,public_records)",
+      "GroupByThenMin(interest_rate,grade_subgrade)",
+      "GroupByThenRank(credit_score,num_of_open_accounts)",
+      "(credit_score+interest_rate)",
+      "GroupByThenRank(debt_to_income_ratio,age)",
+      "(credit_score+loan_term)",
+      "(credit_score/interest_rate)",
+      "(credit_score-loan_term)",
+      "GroupByThenRank(credit_score,delinquency_history)",
+      "GroupByThenRank(credit_score,num_of_delinquencies)",
+      "GroupByThenRank(credit_score,public_records)",
+      "GroupByThenMax(num_of_delinquencies,employment_status)",
+      "(annual_income+total_credit_limit)",
+      "(debt_to_income_ratio*num_of_delinquencies)",
+      "(debt_to_income_ratio*total_credit_limit)",
+      "GroupByThenRank(debt_to_income_ratio,num_of_delinquencies)",
+      "(debt_to_income_ratio-credit_score)",
+      "(debt_to_income_ratio*credit_score)",
+      "residual(installment)",
+      "Combine(grade_subgrade,num_of_open_accounts)",
+      "(current_balance/num_of_open_accounts)",
+      "(annual_income/total_credit_limit)",
+      "(total_credit_limit/current_balance)",
+      "CombineThenFreq(education_level,employment_status)",
+      "GroupByThenRank(debt_to_income_ratio,loan_purpose)",
+      "(current_balance*num_of_delinquencies)",
+      "(debt_to_income_ratio*num_of_open_accounts)",
+      "(total_credit_limit/num_of_open_accounts)",
+      "Combine(loan_purpose,num_of_open_accounts)",
+      "min(credit_score,loan_amount)",
+      "GroupByThenRank(debt_to_income_ratio,delinquency_history)",
+      "(monthly_income/debt_to_income_ratio)",
+      "(debt_to_income_ratio*age)",
+      "(credit_score-interest_rate)",
+      "GroupByThenMean(interest_rate,age)",
+      "(debt_to_income_ratio-loan_term)",
+      "GroupByThenMedian(interest_rate,grade_subgrade)",
+      "GroupByThenRank(debt_to_income_ratio,num_of_open_accounts)",
+      "(monthly_income/num_of_delinquencies)",
+      "CombineThenFreq(grade_subgrade,age)"
+    ],
+    "autoFE_columns": [
+      "autoFE_f_0",
+      "autoFE_f_1",
+      "autoFE_f_2",
+      "autoFE_f_3",
+      "autoFE_f_4",
+      "autoFE_f_5",
+      "autoFE_f_6",
+      "autoFE_f_7",
+      "autoFE_f_8",
+      "autoFE_f_9",
+      "autoFE_f_10",
+      "autoFE_f_11",
+      "autoFE_f_12",
+      "autoFE_f_13",
+      "autoFE_f_14",
+      "autoFE_f_15",
+      "autoFE_f_16",
+      "autoFE_f_17",
+      "autoFE_f_18",
+      "autoFE_f_19",
+      "autoFE_f_20",
+      "autoFE_f_21",
+      "autoFE_f_22",
+      "autoFE_f_23",
+      "autoFE_f_24",
+      "autoFE_f_25",
+      "autoFE_f_26",
+      "autoFE_f_27",
+      "autoFE_f_28",
+      "autoFE_f_29",
+      "autoFE_f_30",
+      "autoFE_f_31",
+      "autoFE_f_32",
+      "autoFE_f_33",
+      "autoFE_f_34",
+      "autoFE_f_35",
+      "autoFE_f_36",
+      "autoFE_f_37",
+      "autoFE_f_38",
+      "autoFE_f_39",
+      "autoFE_f_40",
+      "autoFE_f_41",
+      "autoFE_f_42",
+      "autoFE_f_43",
+      "autoFE_f_44",
+      "autoFE_f_45",
+      "autoFE_f_46",
+      "autoFE_f_47",
+      "autoFE_f_48",
+      "autoFE_f_49"
+    ]
+  },
+  "lgbm_openfe": {
+    "boosting_type": "gbdt",
+    "best_hyperparameters": {
+      "learning_rate": 0.04318321693373985,
+      "num_leaves": 57,
+      "max_depth": 3,
+      "min_child_samples": 61,
+      "subsample": 0.962029747855441,
+      "colsample_bytree": 0.6571958731133117,
+      "reg_alpha": 0.004663260912619185,
+      "reg_lambda": 0.0021051189482196196
+    },
+    "n_estimators_final": 96,
+    "final_params": {
+      "objective": "binary",
+      "metric": "auc",
+      "boosting_type": "gbdt",
+      "verbosity": -1,
+      "random_state": 42,
+      "n_jobs": 4,
+      "subsample_freq": 1,
+      "monotone_constraints": null,
+      "interaction_constraints": null,
+      "learning_rate": 0.04318321693373985,
+      "num_leaves": 57,
+      "max_depth": 3,
+      "min_child_samples": 61,
+      "subsample": 0.962029747855441,
+      "colsample_bytree": 0.6571958731133117,
+      "reg_alpha": 0.004663260912619185,
+      "reg_lambda": 0.0021051189482196196,
+      "n_estimators": 96
+    },
+    "n_trials_requested": 25,
+    "n_trials_completed": 25,
+    "winning_fold_best_iterations": [
+      102,
+      128,
+      97,
+      87,
+      66
+    ],
+    "winning_fold_aucs": [
+      0.878434,
+      0.882036,
+      0.890118,
+      0.888029,
+      0.878025
+    ],
+    "search_note": "Optuna TPESampler seed=42, 25 trials, StratifiedKFold(5, shuffle=True, random_state=42), maximize OOF AUC. n_estimators_final = mean fold best_iteration (early_stopping=50, n_estimators_tune=1000)."
+  },
+  "lgbm_baseline_raw20": {
+    "boosting_type": "gbdt",
+    "best_hyperparameters": {
+      "learning_rate": 0.05114887999875145,
+      "num_leaves": 49,
+      "max_depth": 4,
+      "min_child_samples": 93,
+      "subsample": 0.9257561913600343,
+      "colsample_bytree": 0.6658291091289779,
+      "reg_alpha": 0.018244204800646154,
+      "reg_lambda": 0.054886277157605176
+    },
+    "n_estimators_final": 195,
+    "final_params": {
+      "objective": "binary",
+      "metric": "auc",
+      "boosting_type": "gbdt",
+      "verbosity": -1,
+      "random_state": 42,
+      "n_jobs": 4,
+      "subsample_freq": 1,
+      "monotone_constraints": null,
+      "interaction_constraints": null,
+      "learning_rate": 0.05114887999875145,
+      "num_leaves": 49,
+      "max_depth": 4,
+      "min_child_samples": 93,
+      "subsample": 0.9257561913600343,
+      "colsample_bytree": 0.6658291091289779,
+      "reg_alpha": 0.018244204800646154,
+      "reg_lambda": 0.054886277157605176,
+      "n_estimators": 195
+    },
+    "n_trials_requested": 20,
+    "n_trials_completed": 20,
+    "winning_fold_best_iterations": [
+      205,
+      166,
+      127,
+      183,
+      296
+    ],
+    "winning_fold_aucs": [
+      0.886826,
+      0.88923,
+      0.896463,
+      0.89262,
+      0.894519
+    ],
+    "search_note": "Same Optuna protocol on raw 20 only (20 trials). Train-only. Not used to select the OpenFE candidate."
+  },
+  "oof_metrics": {
+    "openfe_lgbm": {
+      "AUC": 0.8829,
+      "Gini": 0.7658,
+      "KS_Statistic": 0.5611,
+      "Optimal_Cutoff_Probability": 0.1798,
+      "Validation_Rating": "Good (0.40 - 0.60)"
+    },
+    "baseline_raw20": {
+      "AUC": 0.8918,
+      "Gini": 0.7836,
+      "KS_Statistic": 0.584,
+      "Optimal_Cutoff_Probability": 0.1954,
+      "Validation_Rating": "Good (0.40 - 0.60)"
+    }
+  },
+  "train_refit_metrics": {
+    "openfe_lgbm": {
+      "AUC": 0.9116,
+      "Gini": 0.8232,
+      "KS_Statistic": 0.6368,
+      "Optimal_Cutoff_Probability": 0.1862,
+      "Validation_Rating": "Suspicious / Extreme (>0.60)"
+    },
+    "baseline_raw20": {
+      "AUC": 0.9222,
+      "Gini": 0.8444,
+      "KS_Statistic": 0.665,
+      "Optimal_Cutoff_Probability": 0.2034,
+      "Validation_Rating": "Suspicious / Extreme (>0.60)"
+    }
+  },
+  "categorical_columns_openfe": [
+    "marital_status",
+    "education_level",
+    "employment_status",
+    "loan_purpose",
+    "grade_subgrade",
+    "autoFE_f_10",
+    "autoFE_f_29",
+    "autoFE_f_38"
+  ],
+  "categorical_columns_baseline": [
+    "marital_status",
+    "education_level",
+    "employment_status",
+    "loan_purpose",
+    "grade_subgrade"
+  ],
+  "in_model_features": [
+    "age",
+    "marital_status",
+    "education_level",
+    "annual_income",
+    "monthly_income",
+    "employment_status",
+    "debt_to_income_ratio",
+    "credit_score",
+    "loan_amount",
+    "loan_purpose",
+    "interest_rate",
+    "loan_term",
+    "installment",
+    "grade_subgrade",
+    "num_of_open_accounts",
+    "total_credit_limit",
+    "current_balance",
+    "delinquency_history",
+    "public_records",
+    "num_of_delinquencies",
+    "autoFE_f_0",
+    "autoFE_f_1",
+    "autoFE_f_2",
+    "autoFE_f_3",
+    "autoFE_f_4",
+    "autoFE_f_5",
+    "autoFE_f_6",
+    "autoFE_f_7",
+    "autoFE_f_8",
+    "autoFE_f_9",
+    "autoFE_f_10",
+    "autoFE_f_11",
+    "autoFE_f_12",
+    "autoFE_f_13",
+    "autoFE_f_14",
+    "autoFE_f_15",
+    "autoFE_f_16",
+    "autoFE_f_17",
+    "autoFE_f_18",
+    "autoFE_f_19",
+    "autoFE_f_20",
+    "autoFE_f_21",
+    "autoFE_f_22",
+    "autoFE_f_23",
+    "autoFE_f_24",
+    "autoFE_f_25",
+    "autoFE_f_26",
+    "autoFE_f_27",
+    "autoFE_f_28",
+    "autoFE_f_29",
+    "autoFE_f_30",
+    "autoFE_f_31",
+    "autoFE_f_32",
+    "autoFE_f_33",
+    "autoFE_f_34",
+    "autoFE_f_35",
+    "autoFE_f_36",
+    "autoFE_f_37",
+    "autoFE_f_38",
+    "autoFE_f_39",
+    "autoFE_f_40",
+    "autoFE_f_41",
+    "autoFE_f_42",
+    "autoFE_f_43",
+    "autoFE_f_44",
+    "autoFE_f_45",
+    "autoFE_f_46",
+    "autoFE_f_47",
+    "autoFE_f_48",
+    "autoFE_f_49"
+  ],
+  "base_20_features": [
+    "age",
+    "marital_status",
+    "education_level",
+    "annual_income",
+    "monthly_income",
+    "employment_status",
+    "debt_to_income_ratio",
+    "credit_score",
+    "loan_amount",
+    "loan_purpose",
+    "interest_rate",
+    "loan_term",
+    "installment",
+    "grade_subgrade",
+    "num_of_open_accounts",
+    "total_credit_limit",
+    "current_balance",
+    "delinquency_history",
+    "public_records",
+    "num_of_delinquencies"
+  ],
+  "openfe_feature_names": [
+    "autoFE_f_0",
+    "autoFE_f_1",
+    "autoFE_f_2",
+    "autoFE_f_3",
+    "autoFE_f_4",
+    "autoFE_f_5",
+    "autoFE_f_6",
+    "autoFE_f_7",
+    "autoFE_f_8",
+    "autoFE_f_9",
+    "autoFE_f_10",
+    "autoFE_f_11",
+    "autoFE_f_12",
+    "autoFE_f_13",
+    "autoFE_f_14",
+    "autoFE_f_15",
+    "autoFE_f_16",
+    "autoFE_f_17",
+    "autoFE_f_18",
+    "autoFE_f_19",
+    "autoFE_f_20",
+    "autoFE_f_21",
+    "autoFE_f_22",
+    "autoFE_f_23",
+    "autoFE_f_24",
+    "autoFE_f_25",
+    "autoFE_f_26",
+    "autoFE_f_27",
+    "autoFE_f_28",
+    "autoFE_f_29",
+    "autoFE_f_30",
+    "autoFE_f_31",
+    "autoFE_f_32",
+    "autoFE_f_33",
+    "autoFE_f_34",
+    "autoFE_f_35",
+    "autoFE_f_36",
+    "autoFE_f_37",
+    "autoFE_f_38",
+    "autoFE_f_39",
+    "autoFE_f_40",
+    "autoFE_f_41",
+    "autoFE_f_42",
+    "autoFE_f_43",
+    "autoFE_f_44",
+    "autoFE_f_45",
+    "autoFE_f_46",
+    "autoFE_f_47",
+    "autoFE_f_48",
+    "autoFE_f_49"
+  ],
+  "n_in_model_features": 70,
+  "gender_in_model": false,
+  "employment_status_in_model": true,
+  "monotone_constraints": false,
+  "interaction_constraints": false,
+  "iv_drop": false,
+  "vif_drop": false,
+  "loan_paid_back_in_features": false,
+  "feature_importances_gain": [
+    {
+      "feature": "autoFE_f_1",
+      "importance": 122
+    },
+    {
+      "feature": "autoFE_f_29",
+      "importance": 57
+    },
+    {
+      "feature": "employment_status",
+      "importance": 55
+    },
+    {
+      "feature": "autoFE_f_0",
+      "importance": 50
+    },
+    {
+      "feature": "autoFE_f_4",
+      "importance": 39
+    },
+    {
+      "feature": "autoFE_f_8",
+      "importance": 38
+    },
+    {
+      "feature": "autoFE_f_2",
+      "importance": 29
+    },
+    {
+      "feature": "autoFE_f_5",
+      "importance": 21
+    },
+    {
+      "feature": "autoFE_f_38",
+      "importance": 20
+    },
+    {
+      "feature": "autoFE_f_15",
+      "importance": 18
+    },
+    {
+      "feature": "autoFE_f_10",
+      "importance": 17
+    },
+    {
+      "feature": "debt_to_income_ratio",
+      "importance": 15
+    },
+    {
+      "feature": "autoFE_f_3",
+      "importance": 14
+    },
+    {
+      "feature": "autoFE_f_13",
+      "importance": 14
+    },
+    {
+      "feature": "autoFE_f_12",
+      "importance": 12
+    },
+    {
+      "feature": "autoFE_f_34",
+      "importance": 12
+    },
+    {
+      "feature": "autoFE_f_17",
+      "importance": 10
+    },
+    {
+      "feature": "autoFE_f_43",
+      "importance": 10
+    },
+    {
+      "feature": "autoFE_f_42",
+      "importance": 8
+    },
+    {
+      "feature": "autoFE_f_47",
+      "importance": 8
+    },
+    {
+      "feature": "autoFE_f_9",
+      "importance": 7
+    },
+    {
+      "feature": "autoFE_f_14",
+      "importance": 7
+    },
+    {
+      "feature": "autoFE_f_26",
+      "importance": 6
+    },
+    {
+      "feature": "loan_amount",
+      "importance": 5
+    },
+    {
+      "feature": "autoFE_f_6",
+      "importance": 5
+    },
+    {
+      "feature": "autoFE_f_16",
+      "importance": 5
+    },
+    {
+      "feature": "autoFE_f_40",
+      "importance": 5
+    },
+    {
+      "feature": "autoFE_f_20",
+      "importance": 4
+    },
+    {
+      "feature": "autoFE_f_36",
+      "importance": 4
+    },
+    {
+      "feature": "installment",
+      "importance": 3
+    },
+    {
+      "feature": "grade_subgrade",
+      "importance": 3
+    },
+    {
+      "feature": "autoFE_f_18",
+      "importance": 3
+    },
+    {
+      "feature": "autoFE_f_24",
+      "importance": 3
+    },
+    {
+      "feature": "autoFE_f_25",
+      "importance": 3
+    },
+    {
+      "feature": "autoFE_f_35",
+      "importance": 3
+    },
+    {
+      "feature": "autoFE_f_44",
+      "importance": 3
+    },
+    {
+      "feature": "autoFE_f_7",
+      "importance": 2
+    },
+    {
+      "feature": "autoFE_f_11",
+      "importance": 2
+    },
+    {
+      "feature": "autoFE_f_23",
+      "importance": 2
+    },
+    {
+      "feature": "autoFE_f_27",
+      "importance": 2
+    },
+    {
+      "feature": "autoFE_f_33",
+      "importance": 2
+    },
+    {
+      "feature": "autoFE_f_49",
+      "importance": 2
+    },
+    {
+      "feature": "delinquency_history",
+      "importance": 1
+    },
+    {
+      "feature": "autoFE_f_21",
+      "importance": 1
+    },
+    {
+      "feature": "autoFE_f_22",
+      "importance": 1
+    },
+    {
+      "feature": "autoFE_f_31",
+      "importance": 1
+    },
+    {
+      "feature": "autoFE_f_37",
+      "importance": 1
+    },
+    {
+      "feature": "autoFE_f_46",
+      "importance": 1
+    },
+    {
+      "feature": "autoFE_f_48",
+      "importance": 1
+    },
+    {
+      "feature": "age",
+      "importance": 0
+    },
+    {
+      "feature": "marital_status",
+      "importance": 0
+    },
+    {
+      "feature": "education_level",
+      "importance": 0
+    },
+    {
+      "feature": "annual_income",
+      "importance": 0
+    },
+    {
+      "feature": "monthly_income",
+      "importance": 0
+    },
+    {
+      "feature": "credit_score",
+      "importance": 0
+    },
+    {
+      "feature": "loan_purpose",
+      "importance": 0
+    },
+    {
+      "feature": "interest_rate",
+      "importance": 0
+    },
+    {
+      "feature": "loan_term",
+      "importance": 0
+    },
+    {
+      "feature": "num_of_open_accounts",
+      "importance": 0
+    },
+    {
+      "feature": "total_credit_limit",
+      "importance": 0
+    },
+    {
+      "feature": "current_balance",
+      "importance": 0
+    },
+    {
+      "feature": "public_records",
+      "importance": 0
+    },
+    {
+      "feature": "num_of_delinquencies",
+      "importance": 0
+    },
+    {
+      "feature": "autoFE_f_19",
+      "importance": 0
+    },
+    {
+      "feature": "autoFE_f_28",
+      "importance": 0
+    },
+    {
+      "feature": "autoFE_f_30",
+      "importance": 0
+    },
+    {
+      "feature": "autoFE_f_32",
+      "importance": 0
+    },
+    {
+      "feature": "autoFE_f_39",
+      "importance": 0
+    },
+    {
+      "feature": "autoFE_f_41",
+      "importance": 0
+    },
+    {
+      "feature": "autoFE_f_45",
+      "importance": 0
+    }
+  ],
+  "employment_status_gain_rank": 3,
+  "employment_status_permutation_rank_train": 3,
+  "permutation_importance_train": {
+    "n_sample": 4000,
+    "n_repeats": 3,
+    "scoring": "roc_auc",
+    "ranking": [
+      {
+        "feature": "autoFE_f_0",
+        "importance": 0.06814720530149206
+      },
+      {
+        "feature": "autoFE_f_1",
+        "importance": 0.0452442477935705
+      },
+      {
+        "feature": "employment_status",
+        "importance": 0.025852720617699276
+      },
+      {
+        "feature": "autoFE_f_29",
+        "importance": 0.013403036639694554
+      },
+      {
+        "feature": "autoFE_f_4",
+        "importance": 0.0064508221286110334
+      },
+      {
+        "feature": "autoFE_f_2",
+        "importance": 0.006404487950083082
+      },
+      {
+        "feature": "autoFE_f_8",
+        "importance": 0.00637916578274796
+      },
+      {
+        "feature": "autoFE_f_3",
+        "importance": 0.0025881140709762183
+      },
+      {
+        "feature": "autoFE_f_38",
+        "importance": 0.0024455421873370207
+      },
+      {
+        "feature": "autoFE_f_5",
+        "importance": 0.002410118091543715
+      },
+      {
+        "feature": "autoFE_f_10",
+        "importance": 0.0021522495311022314
+      },
+      {
+        "feature": "autoFE_f_12",
+        "importance": 0.0017034545228018134
+      },
+      {
+        "feature": "autoFE_f_15",
+        "importance": 0.001361739956157626
+      },
+      {
+        "feature": "autoFE_f_13",
+        "importance": 0.0008191990517657141
+      },
+      {
+        "feature": "debt_to_income_ratio",
+        "importance": 0.0007843810716800329
+      },
+      {
+        "feature": "autoFE_f_17",
+        "importance": 0.0007576446343607879
+      },
+      {
+        "feature": "autoFE_f_9",
+        "importance": 0.0007529304010802651
+      },
+      {
+        "feature": "autoFE_f_43",
+        "importance": 0.0007188532290815323
+      },
+      {
+        "feature": "autoFE_f_16",
+        "importance": 0.0005628794536877516
+      },
+      {
+        "feature": "autoFE_f_24",
+        "importance": 0.0005357389392302384
+      },
+      {
+        "feature": "autoFE_f_26",
+        "importance": 0.000523953356029061
+      },
+      {
+        "feature": "autoFE_f_34",
+        "importance": 0.000494455724931305
+      },
+      {
+        "feature": "autoFE_f_47",
+        "importance": 0.0004498725473359351
+      },
+      {
+        "feature": "loan_amount",
+        "importance": 0.0004257626114158401
+      },
+      {
+        "feature": "autoFE_f_25",
+        "importance": 0.0003678448882558453
+      },
+      {
+        "feature": "autoFE_f_6",
+        "importance": 0.00027113575981655796
+      },
+      {
+        "feature": "autoFE_f_14",
+        "importance": 0.00025941752280511654
+      },
+      {
+        "feature": "grade_subgrade",
+        "importance": 0.0002268219669801693
+      },
+      {
+        "feature": "autoFE_f_20",
+        "importance": 0.00017415724661840049
+      },
+      {
+        "feature": "autoFE_f_40",
+        "importance": 0.00017321439996235513
+      },
+      {
+        "feature": "autoFE_f_35",
+        "importance": 0.00012863122236709637
+      },
+      {
+        "feature": "delinquency_history",
+        "importance": 0.0001039825169291501
+      },
+      {
+        "feature": "autoFE_f_42",
+        "importance": 9.20622413485006e-05
+      },
+      {
+        "feature": "autoFE_f_23",
+        "importance": 8.849289329337928e-05
+      },
+      {
+        "feature": "autoFE_f_48",
+        "importance": 8.229704383907095e-05
+      },
+      {
+        "feature": "autoFE_f_44",
+        "importance": 7.744811817911312e-05
+      },
+      {
+        "feature": "installment",
+        "importance": 6.99053449304543e-05
+      },
+      {
+        "feature": "autoFE_f_18",
+        "importance": 6.424826499388618e-05
+      },
+      {
+        "feature": "autoFE_f_37",
+        "importance": 5.4954490812349675e-05
+      },
+      {
+        "feature": "autoFE_f_49",
+        "importance": 4.444848521586072e-05
+      },
+      {
+        "feature": "autoFE_f_21",
+        "importance": 4.1485252868104595e-05
+      },
+      {
+        "feature": "autoFE_f_33",
+        "importance": 4.081179097092935e-05
+      },
+      {
+        "feature": "autoFE_f_46",
+        "importance": 6.465234213215432e-06
+      },
+      {
+        "feature": "autoFE_f_36",
+        "importance": 2.963232347830136e-06
+      },
+      {
+        "feature": "autoFE_f_31",
+        "importance": 2.6938475887009855e-07
+      },
+      {
+        "feature": "age",
+        "importance": 0.0
+      },
+      {
+        "feature": "marital_status",
+        "importance": 0.0
+      },
+      {
+        "feature": "education_level",
+        "importance": 0.0
+      },
+      {
+        "feature": "annual_income",
+        "importance": 0.0
+      },
+      {
+        "feature": "monthly_income",
+        "importance": 0.0
+      },
+      {
+        "feature": "credit_score",
+        "importance": 0.0
+      },
+      {
+        "feature": "loan_purpose",
+        "importance": 0.0
+      },
+      {
+        "feature": "interest_rate",
+        "importance": 0.0
+      },
+      {
+        "feature": "loan_term",
+        "importance": 0.0
+      },
+      {
+        "feature": "num_of_open_accounts",
+        "importance": 0.0
+      },
+      {
+        "feature": "total_credit_limit",
+        "importance": 0.0
+      },
+      {
+        "feature": "current_balance",
+        "importance": 0.0
+      },
+      {
+        "feature": "public_records",
+        "importance": 0.0
+      },
+      {
+        "feature": "num_of_delinquencies",
+        "importance": 0.0
+      },
+      {
+        "feature": "autoFE_f_19",
+        "importance": 0.0
+      },
+      {
+        "feature": "autoFE_f_28",
+        "importance": 0.0
+      },
+      {
+        "feature": "autoFE_f_30",
+        "importance": 0.0
+      },
+      {
+        "feature": "autoFE_f_32",
+        "importance": 0.0
+      },
+      {
+        "feature": "autoFE_f_39",
+        "importance": 0.0
+      },
+      {
+        "feature": "autoFE_f_41",
+        "importance": 0.0
+      },
+      {
+        "feature": "autoFE_f_45",
+        "importance": 0.0
+      },
+      {
+        "feature": "autoFE_f_27",
+        "importance": -1.0101928458072784e-05
+      },
+      {
+        "feature": "autoFE_f_22",
+        "importance": -1.670185505079728e-05
+      },
+      {
+        "feature": "autoFE_f_11",
+        "importance": -1.9261010260026207e-05
+      },
+      {
+        "feature": "autoFE_f_7",
+        "importance": -0.0002812376882746677
+      }
+    ]
+  },
+  "split": {
+    "source": "scripts/train.py::load_and_split UNCHANGED",
+    "test_size": 0.3,
+    "stratify": "default",
+    "random_state": 42,
+    "train_n": 14000,
+    "train_bad_rate": 0.2001,
+    "train_n_bads": 2801,
+    "test_n": 6000,
+    "test_bad_rate": 0.2002,
+    "test_n_bads": 1201,
+    "note": "Test labels persisted for eval only; not used to fit or select."
+  },
+  "freeze": {
+    "timestamp_utc": "2026-09-13T15:24:52.579483+00:00",
+    "selection_rule": "OpenFE fit + LGBM Optuna maximize train OOF AUC (test not used)",
+    "test_looked_at": false,
+    "test_metrics": null,
+    "test_labels_used_to_fit_or_select": false
+  },
+  "gates": {
+    "AUC_MIN": 0.7,
+    "KS_MIN": 0.3,
+    "PSI_WATCH": 0.1
+  },
+  "package_versions": {
+    "python": "3.12.3",
+    "openfe": "0.0.12",
+    "lightgbm": "4.7.0",
+    "sklearn": "1.9.1",
+    "pandas": "3.0.5",
+    "numpy": "2.4.4",
+    "joblib": "1.6.0",
+    "optuna": "5.0.0"
+  },
+  "device": {
+    "device": "cpu",
+    "n_cpus": 4,
+    "note": "This VM has no GPU; OpenFE and LightGBM run on CPU."
+  },
+  "artifact_paths": {
+    "model": "artifacts/openfe_lgbm_model.joblib",
+    "baseline_model": "artifacts/openfe_lgbm_baseline_model.joblib",
+    "openfe_object": "artifacts/openfe_lgbm_openfe.joblib",
+    "features": "artifacts/openfe_lgbm_features.joblib",
+    "formulas": "artifacts/openfe_lgbm_formulas.json",
+    "prep": "artifacts/openfe_lgbm_prep.joblib",
+    "meta": "artifacts/openfe_lgbm_meta.json",
+    "oof_pds": "artifacts/openfe_lgbm_oof_pds.csv",
+    "X_train_csv": "artifacts/openfe_lgbm_X_train.csv",
+    "X_test_csv": "artifacts/openfe_lgbm_X_test.csv",
+    "X_train_joblib": "artifacts/openfe_lgbm_X_train.joblib",
+    "X_test_joblib": "artifacts/openfe_lgbm_X_test.joblib"
+  },
+  "did_not_write": [
+    "artifacts/lgbm_model.joblib",
+    "artifacts/lgbm_linear_tree_*",
+    "artifacts/stack_lr_rf_lgbm_*",
+    "artifacts/lgbm_emp_overlay_*",
+    "artifacts/lgbm_emp_in_*",
+    "artifacts/dart_monotone_*",
+    "artifacts/ensemble_no_gender_*",
+    "artifacts/ensemble_fm_ft_*",
+    "artifacts/danet_*",
+    "artifacts/ag_realmlp_*",
+    "artifacts/autogluon_*",
+    "artifacts/realmlp_*"
+  ],
+  "leakage_note": "OpenFE.fit used TRAIN rows and TRAIN labels only. openfe.transform applies the frozen formulas; it does not refit or use labels. OpenFE's official transform concatenates train+test solely so GroupByThen*/freq operators can evaluate (library design). Test labels were never used. Feature selection never included test rows or test labels.",
+  "computed_after_freeze": false,
+  "sha256": {
+    "openfe_lgbm_model.joblib": "7523aa46f63fc818cf59e95917a3b6928288e8b1affceabc8c9601bcb6c5c988",
+    "openfe_lgbm_baseline_model.joblib": "52b476045d38e9d23a86e03c04595d7a0fa21802410e7b76cd3f27c081d45d60",
+    "openfe_lgbm_openfe.joblib": "d75c0a43624624d2cb3b69b0d52bea148ebc2091ef5ec90b5718d62ec454ea61",
+    "openfe_lgbm_features.joblib": "db6ee3b342207ba8c210d5fb4fb8d3dd5ded654095bd0681c364b4fe16b83c41",
+    "openfe_lgbm_formulas.json": "8faec9aa0b738325f06997b945f1e8ff9164ef0a606c71f39329fd3ff6774b14",
+    "openfe_lgbm_prep.joblib": "e18a5dee64f71c5da59b628dcea8cbb9306be4253fa63c02d4e80899f0069934",
+    "openfe_lgbm_X_train.joblib": "6492ba8c7e73a834007bbd7cdb7cfb344128405db20e7c41b1b615020d288ed4",
+    "openfe_lgbm_X_test.joblib": "79f7c5d06b41ac8930a74b74e9da35adfd385897a321b7928ec56e32f5e5261a",
+    "openfe_lgbm_X_train_raw20.joblib": "db7b713d3d6640774a285f3314e7546b7cbe8744082a227355e80600a2b6c095",
+    "openfe_lgbm_X_test_raw20.joblib": "bb41ce7c4fa6e3618705b6015f0cdcf7dce951babd2ae6fcd4065901f2b39a2f"
+  }
+}
