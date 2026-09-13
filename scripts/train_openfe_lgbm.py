@@ -149,6 +149,8 @@ X_TRAIN_JOBLIB = os.path.join(ARTIFACTS_DIR, "openfe_lgbm_X_train.joblib")
 X_TEST_JOBLIB = os.path.join(ARTIFACTS_DIR, "openfe_lgbm_X_test.joblib")
 X_TRAIN_BASE_JOBLIB = os.path.join(ARTIFACTS_DIR, "openfe_lgbm_X_train_base.joblib")
 X_TEST_BASE_JOBLIB = os.path.join(ARTIFACTS_DIR, "openfe_lgbm_X_test_base.joblib")
+X_TRAIN_RAW_JOBLIB = os.path.join(ARTIFACTS_DIR, "openfe_lgbm_X_train_raw20.joblib")
+X_TEST_RAW_JOBLIB = os.path.join(ARTIFACTS_DIR, "openfe_lgbm_X_test_raw20.joblib")
 SHA_PATH = os.path.join(ARTIFACTS_DIR, "openfe_lgbm_sha256.txt")
 REQS_COPY_PATH = os.path.join(ARTIFACTS_DIR, "openfe_lgbm_requirements.txt")
 VERSIONS_PATH = os.path.join(ARTIFACTS_DIR, "openfe_lgbm_versions.json")
@@ -173,6 +175,8 @@ ALLOWED_WRITE_PATHS = {
         X_TEST_JOBLIB,
         X_TRAIN_BASE_JOBLIB,
         X_TEST_BASE_JOBLIB,
+        X_TRAIN_RAW_JOBLIB,
+        X_TEST_RAW_JOBLIB,
         SHA_PATH,
         REQS_COPY_PATH,
         VERSIONS_PATH,
@@ -1022,7 +1026,6 @@ def main() -> None:
             "openfe_version": versions["openfe"],
         },
     )
-    _safe_joblib_dump(PREP_PATH, {"openfe": prep, "baseline": baseline_prep})
     _safe_dump_json(FORMULAS_PATH, formulas_payload)
     _safe_df_csv(OOF_PDS_PATH, oof_df)
     _safe_df_csv(X_TRAIN_PATH, X_train)
@@ -1033,6 +1036,21 @@ def main() -> None:
     _safe_joblib_dump(X_TEST_JOBLIB, X_test)
     _safe_joblib_dump(X_TRAIN_BASE_JOBLIB, X_train_base)
     _safe_joblib_dump(X_TEST_BASE_JOBLIB, X_test_base)
+    _safe_joblib_dump(X_TRAIN_RAW_JOBLIB, X_train_raw)
+    _safe_joblib_dump(X_TEST_RAW_JOBLIB, X_test_raw)
+    _safe_joblib_dump(
+        PREP_PATH,
+        {
+            "openfe": {
+                "categorical_columns": prep.categorical_columns,
+                "category_levels": prep.category_levels,
+            },
+            "baseline": {
+                "categorical_columns": baseline_prep.categorical_columns,
+                "category_levels": baseline_prep.category_levels,
+            },
+        },
+    )
     _safe_dump_json(VERSIONS_PATH, {"package_versions": versions, "device": device})
 
     reqs_src = os.path.join("scripts", "requirements_openfe_lgbm.txt")

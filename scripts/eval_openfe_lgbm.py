@@ -24,6 +24,7 @@ import numpy as np
 import pandas as pd
 
 from train import load_and_split
+from train_openfe_lgbm import FeaturePrep  # noqa: F401  — required to unpickle artifacts/openfe_lgbm_prep.joblib
 from utils.config import ARTIFACTS_DIR, AUC_MIN, KS_MIN, PSI_WATCH, TARGET
 from utils.risk_skills import calculate_psi, evaluate_discrimination_and_ks
 
@@ -39,6 +40,8 @@ X_TRAIN_JOBLIB = os.path.join(ARTIFACTS_DIR, "openfe_lgbm_X_train.joblib")
 X_TEST_JOBLIB = os.path.join(ARTIFACTS_DIR, "openfe_lgbm_X_test.joblib")
 X_TRAIN_BASE_JOBLIB = os.path.join(ARTIFACTS_DIR, "openfe_lgbm_X_train_base.joblib")
 X_TEST_BASE_JOBLIB = os.path.join(ARTIFACTS_DIR, "openfe_lgbm_X_test_base.joblib")
+X_TRAIN_RAW_JOBLIB = os.path.join(ARTIFACTS_DIR, "openfe_lgbm_X_train_raw20.joblib")
+X_TEST_RAW_JOBLIB = os.path.join(ARTIFACTS_DIR, "openfe_lgbm_X_test_raw20.joblib")
 Y_TRAIN_PATH = os.path.join(ARTIFACTS_DIR, "openfe_lgbm_y_train.csv")
 Y_TEST_PATH = os.path.join(ARTIFACTS_DIR, "openfe_lgbm_y_test.csv")
 REPORT_PATH = os.path.join(ARTIFACTS_DIR, "openfe_lgbm_run_report.md")
@@ -201,10 +204,21 @@ def main() -> None:
     X_test_base = joblib.load(X_TEST_BASE_JOBLIB)
     y_train = pd.read_csv(Y_TRAIN_PATH)[TARGET].astype(int)
     y_test = pd.read_csv(Y_TEST_PATH)[TARGET].astype(int)
-    prep_bundle = joblib.load(PREP_PATH)
-    baseline_prep = prep_bundle["baseline"]
-    X_train_raw = baseline_prep.transform(X_train_base)
-    X_test_raw = baseline_prep.transform(X_test_base)
+    if os.path.exists(X_TRAIN_RAW_JOBLIB) and os.path.exists(X_TEST_RAW_JOBLIB):
+        X_train_raw = joblib.load(X_TRAIN_RAW_JOBLIB)
+        X_test_raw = joblib.load(X_TEST_RAW_JOBLIB)
+    else:
+        prep_bundle = joblib.load(PREP_PATH)
+        baseline_spec = prep_bundle["baseline"]
+        if isinstance(baseline_spec, FeaturePrep):
+            baseline_prep = baseline_spec
+        else:
+            baseline_prep = FeaturePrep(
+                baseline_spec["categorical_columns"],
+                baseline_spec["category_levels"],
+            )
+        X_train_raw = baseline_prep.transform(X_train_base)
+        X_test_raw = baseline_prep.transform(X_test_base)
 
     expected = list(meta["in_model_features"])
     if list(X_train.columns) != expected or list(X_test.columns) != expected:
